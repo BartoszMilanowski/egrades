@@ -1,28 +1,45 @@
 #Dodanie funkcji
-insert into functions (function_name) value ('uczeń');
-insert into functions (function_name) value ('nauczyciel');
-insert into functions (function_name) value ('administrator');
+insert into role (name) value ('ROLE_STUDENT');
+insert into role (name) value ('ROLE_TEACHER');
+insert into role (name) value ('ROLE_ADMIN');
 
 # Dodanie uczniów do bazy danych
-insert into users (email, first_name, last_name, password, function_id) values ('student1@students.pl', 'sName1', 'sSurname1', 'haslo', 1);
-insert into users (email, first_name, last_name, password, function_id) values ('student2@students.pl', 'sName2', 'sSurname2', 'haslo', 1);
-insert into users (email, first_name, last_name, password, function_id) values ('student3@students.pl', 'sName3', 'sSurname3', 'haslo', 1);
-insert into users (email, first_name, last_name, password, function_id) values ('student4@students.pl', 'sName4', 'sSurname4', 'haslo', 1);
-insert into users (email, first_name, last_name, password, function_id) values ('student5@students.pl', 'sName5', 'sSurname5', 'haslo', 1);
-insert into users (email, first_name, last_name, password, function_id) values ('student6@students.pl', 'sName6', 'sSurname6', 'haslo', 1);
-insert into users (email, first_name, last_name, password, function_id) values ('student7@students.pl', 'sName7', 'sSurname7', 'haslo', 1);
-insert into users (email, first_name, last_name, password, function_id) values ('student8@students.pl', 'sName8', 'sSurname8', 'haslo', 1);
-insert into users (email, first_name, last_name, password, function_id) values ('student9@students.pl', 'sName9', 'sSurname9', 'haslo', 1);
-insert into users (email, first_name, last_name, password, function_id) values ('student10@students.pl', 'sName10', 'sSurname10', 'haslo', 1);
+insert into users (email, first_name, last_name, password, enabled) values ('student1@students.pl', 'sName1', 'sSurname1', '$2a$12$aQ95vY7DFoQif0/h8dQX4.NPiWBDswcCw5cm0pNOp31gLanzinwaq', 1);
+insert into users (email, first_name, last_name, password, enabled) values ('student2@students.pl', 'sName2', 'sSurname2', 'haslo', 1);
+insert into users (email, first_name, last_name, password, enabled) values ('student3@students.pl', 'sName3', 'sSurname3', 'haslo', 1);
+insert into users (email, first_name, last_name, password, enabled) values ('student4@students.pl', 'sName4', 'sSurname4', 'haslo', 1);
+insert into users (email, first_name, last_name, password, enabled) values ('student5@students.pl', 'sName5', 'sSurname5', 'haslo', 1);
+insert into users (email, first_name, last_name, password, enabled) values ('student6@students.pl', 'sName6', 'sSurname6', 'haslo', 1);
+insert into users (email, first_name, last_name, password, enabled) values ('student7@students.pl', 'sName7', 'sSurname7', 'haslo', 1);
+insert into users (email, first_name, last_name, password, enabled) values ('student8@students.pl', 'sName8', 'sSurname8', 'haslo', 1);
+insert into users (email, first_name, last_name, password, enabled) values ('student9@students.pl', 'sName9', 'sSurname9', 'haslo', 1);
+insert into users (email, first_name, last_name, password, enabled) values ('student10@students.pl', 'sName10', 'sSurname10', 'haslo', 1);
 
 #Dodanie nauczycieli
-insert into users(email, first_name, last_name, password, function_id) VALUES ('teacher1@teachers.pl', 'tName1','tSurname1', 'haslo', 2);
-insert into users(email, first_name, last_name, password, function_id) VALUES ('teacher2@teachers.pl', 'tName2','tSurname2', 'haslo', 2);
-insert into users(email, first_name, last_name, password, function_id) VALUES ('teacher3@teachers.pl', 'tName3','tSurname3', 'haslo', 2);
-insert into users(email, first_name, last_name, password, function_id) VALUES ('teacher4@teachers.pl', 'tName4','tSurname4', 'haslo', 2);
-insert into users(email, first_name, last_name, password, function_id) VALUES ('teacher5@teachers.pl', 'tName5','tSurname5', 'haslo', 2);
-insert into users(email, first_name, last_name, password, function_id) VALUES ('teacher6admin@teachers.pl', 'tName6','tSurname6Admin', 'haslo', 3);
+insert into users(email, first_name, last_name, password, enabled) VALUES ('teacher1@teachers.pl', 'tName1','tSurname1', 'haslo', 1);
+insert into users(email, first_name, last_name, password, enabled) VALUES ('teacher2@teachers.pl', 'tName2','tSurname2', 'haslo', 1);
+insert into users(email, first_name, last_name, password, enabled) VALUES ('teacher3@teachers.pl', 'tName3','tSurname3', 'haslo', 1);
+insert into users(email, first_name, last_name, password, enabled) VALUES ('teacher4@teachers.pl', 'tName4','tSurname4', 'haslo', 1);
+insert into users(email, first_name, last_name, password, enabled) VALUES ('teacher5@teachers.pl', 'tName5','tSurname5', 'haslo', 1);
+insert into users(email, first_name, last_name, password, enabled) VALUES ('teacher6admin@teachers.pl', 'tName6','tSurname6Admin', 'haslo', 1);
 
+#Przypisanie ról
+insert into user_role (user_id, role_id) VALUES (1,1);
+insert into user_role (user_id, role_id) VALUES (2,1);
+insert into user_role (user_id, role_id) VALUES (3,1);
+insert into user_role (user_id, role_id) VALUES (4,1);
+insert into user_role (user_id, role_id) VALUES (5,1);
+insert into user_role (user_id, role_id) VALUES (6,1);
+insert into user_role (user_id, role_id) VALUES (7,1);
+insert into user_role (user_id, role_id) VALUES (8,1);
+insert into user_role (user_id, role_id) VALUES (9,1);
+insert into user_role (user_id, role_id) VALUES (10,1);
+insert into user_role (user_id, role_id) VALUES (11,2);
+insert into user_role (user_id, role_id) VALUES (12,2);
+insert into user_role (user_id, role_id) VALUES (13,2);
+insert into user_role (user_id, role_id) VALUES (14,2);
+insert into user_role (user_id, role_id) VALUES (15,2);
+insert into user_role (user_id, role_id) VALUES (16,3);
 #Stworzenie klas
 insert into classes (class_name, supervising_teacher_id) VALUES ('IA', 11);
 insert into classes (class_name, supervising_teacher_id) VALUES ('IB', 12);
