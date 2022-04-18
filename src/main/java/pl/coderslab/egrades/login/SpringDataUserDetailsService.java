@@ -1,4 +1,4 @@
-package pl.coderslab.egrades.service;
+package pl.coderslab.egrades.login;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import pl.coderslab.egrades.entity.User;
+import pl.coderslab.egrades.service.UserService;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,21 +17,19 @@ public class SpringDataUserDetailsService implements UserDetailsService {
     private UserService userService;
 
     @Autowired
-    public SpringDataUserDetailsService(UserService userService) {
+    public void setUserRepository(UserService userService) {
         this.userService = userService;
     }
 
-
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userService.findByEmail(email);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userService.findByEmail(username);
         if (user == null){
-            throw new UsernameNotFoundException(email);
+            throw new UsernameNotFoundException(username);
         }
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         user.getRoles().forEach(r ->
                 grantedAuthorities.add(new SimpleGrantedAuthority(r.getName())));
-        return new org.springframework.security.core.userdetails.User(
-                user.getEmail(), user.getPassword(), grantedAuthorities);
+        return new CurrentUser(user.getEmail(), user.getPassword(), grantedAuthorities, user);
     }
 }

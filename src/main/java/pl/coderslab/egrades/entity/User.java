@@ -39,7 +39,22 @@ public class User{
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<>();
+
+    public boolean hasRole(String roleName){
+        Iterator<Role> iterator = this.roles.iterator();
+        while ((iterator.hasNext())){
+            Role role = iterator.next();
+            if (role.getName().equals(roleName)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String getName(){
+        return firstName + " " + lastName;
+    }
 
     public Set<Role> getRoles() {
         return roles;

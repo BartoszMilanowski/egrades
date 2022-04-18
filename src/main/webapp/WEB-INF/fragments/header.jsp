@@ -5,13 +5,23 @@
 <!-- Sidebar -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-    <!-- Sidebar - Brand -->
+    <sec:authorize access="isAnonymous()">
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
         <div class="sidebar-brand-text mx-3">eGrades</div>
     </a>
+    </sec:authorize>
+    <sec:authorize access="isAuthenticated()">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard">
+        <div class="sidebar-brand-icon rotate-n-15">
+        <i class="fas fa-laugh-wink"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">eGrades</div>
+        </a>
+    </sec:authorize>
+
 
     <hr class="sidebar-divider my-0">
 
@@ -23,24 +33,15 @@
     </li>
     </sec:authorize>
 
-    <hr class="sidebar-divider d-none d-md-block">
-
     <sec:authorize access="isAuthenticated()">
         <form action="<c:url value="/logout"/>" method="post">
-            <input type="submit" value="Wyloguj" class="nav-link">
+            <input type="submit" value="Wyloguj" class="btn btn-primary btn-user">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
+
     </sec:authorize>
 
-<%--    <li class="nav-item active">--%>
-<%--        <a class="nav-link" href="/">--%>
-<%--            <i class="fas fa-fw fa-tachometer-alt"></i>--%>
-<%--            <span>O szkole</span></a>--%>
-<%--    </li>--%>
-
-<%--    <hr class="sidebar-divider d-none d-md-block">--%>
-
-
+    <hr class="sidebar-divider d-none d-md-block">
 
 
 </ul>
@@ -60,6 +61,8 @@
 
 <!-- Topbar Navbar -->
 <ul class="navbar-nav ml-auto">
+
+
 
     <!-- Nav Item - Search Dropdown (Visible Only XS) -->
     <li class="nav-item dropdown no-arrow d-sm-none">

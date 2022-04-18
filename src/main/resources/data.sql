@@ -5,23 +5,23 @@ insert into role (name) value ('ROLE_ADMIN');
 
 # Dodanie uczniów do bazy danych
 insert into users (email, first_name, last_name, password, enabled) values ('student1@students.pl', 'sName1', 'sSurname1', '$2a$12$aQ95vY7DFoQif0/h8dQX4.NPiWBDswcCw5cm0pNOp31gLanzinwaq', 1);
-insert into users (email, first_name, last_name, password, enabled) values ('student2@students.pl', 'sName2', 'sSurname2', 'haslo', 1);
-insert into users (email, first_name, last_name, password, enabled) values ('student3@students.pl', 'sName3', 'sSurname3', 'haslo', 1);
-insert into users (email, first_name, last_name, password, enabled) values ('student4@students.pl', 'sName4', 'sSurname4', 'haslo', 1);
-insert into users (email, first_name, last_name, password, enabled) values ('student5@students.pl', 'sName5', 'sSurname5', 'haslo', 1);
-insert into users (email, first_name, last_name, password, enabled) values ('student6@students.pl', 'sName6', 'sSurname6', 'haslo', 1);
-insert into users (email, first_name, last_name, password, enabled) values ('student7@students.pl', 'sName7', 'sSurname7', 'haslo', 1);
-insert into users (email, first_name, last_name, password, enabled) values ('student8@students.pl', 'sName8', 'sSurname8', 'haslo', 1);
-insert into users (email, first_name, last_name, password, enabled) values ('student9@students.pl', 'sName9', 'sSurname9', 'haslo', 1);
-insert into users (email, first_name, last_name, password, enabled) values ('student10@students.pl', 'sName10', 'sSurname10', 'haslo', 1);
+insert into users (email, first_name, last_name, password, enabled) values ('student2@students.pl', 'sName2', 'sSurname2', '$2a$12$aQ95vY7DFoQif0/h8dQX4.NPiWBDswcCw5cm0pNOp31gLanzinwaq', 1);
+insert into users (email, first_name, last_name, password, enabled) values ('student3@students.pl', 'sName3', 'sSurname3', '$2a$12$aQ95vY7DFoQif0/h8dQX4.NPiWBDswcCw5cm0pNOp31gLanzinwaq', 1);
+insert into users (email, first_name, last_name, password, enabled) values ('student4@students.pl', 'sName4', 'sSurname4', '$2a$12$aQ95vY7DFoQif0/h8dQX4.NPiWBDswcCw5cm0pNOp31gLanzinwaq', 1);
+insert into users (email, first_name, last_name, password, enabled) values ('student5@students.pl', 'sName5', 'sSurname5', '$2a$12$aQ95vY7DFoQif0/h8dQX4.NPiWBDswcCw5cm0pNOp31gLanzinwaq', 1);
+insert into users (email, first_name, last_name, password, enabled) values ('student6@students.pl', 'sName6', 'sSurname6', '$2a$12$aQ95vY7DFoQif0/h8dQX4.NPiWBDswcCw5cm0pNOp31gLanzinwaq', 1);
+insert into users (email, first_name, last_name, password, enabled) values ('student7@students.pl', 'sName7', 'sSurname7', '$2a$12$aQ95vY7DFoQif0/h8dQX4.NPiWBDswcCw5cm0pNOp31gLanzinwaq', 1);
+insert into users (email, first_name, last_name, password, enabled) values ('student8@students.pl', 'sName8', 'sSurname8', '$2a$12$aQ95vY7DFoQif0/h8dQX4.NPiWBDswcCw5cm0pNOp31gLanzinwaq', 1);
+insert into users (email, first_name, last_name, password, enabled) values ('student9@students.pl', 'sName9', 'sSurname9', '$2a$12$aQ95vY7DFoQif0/h8dQX4.NPiWBDswcCw5cm0pNOp31gLanzinwaq', 1);
+insert into users (email, first_name, last_name, password, enabled) values ('student10@students.pl', 'sName10', 'sSurname10', '$2a$12$aQ95vY7DFoQif0/h8dQX4.NPiWBDswcCw5cm0pNOp31gLanzinwaq', 1);
 
 #Dodanie nauczycieli
-insert into users(email, first_name, last_name, password, enabled) VALUES ('teacher1@teachers.pl', 'tName1','tSurname1', 'haslo', 1);
-insert into users(email, first_name, last_name, password, enabled) VALUES ('teacher2@teachers.pl', 'tName2','tSurname2', 'haslo', 1);
-insert into users(email, first_name, last_name, password, enabled) VALUES ('teacher3@teachers.pl', 'tName3','tSurname3', 'haslo', 1);
-insert into users(email, first_name, last_name, password, enabled) VALUES ('teacher4@teachers.pl', 'tName4','tSurname4', 'haslo', 1);
-insert into users(email, first_name, last_name, password, enabled) VALUES ('teacher5@teachers.pl', 'tName5','tSurname5', 'haslo', 1);
-insert into users(email, first_name, last_name, password, enabled) VALUES ('teacher6admin@teachers.pl', 'tName6','tSurname6Admin', 'haslo', 1);
+insert into users(email, first_name, last_name, password, enabled) VALUES ('teacher1@teachers.pl', 'tName1','tSurname1', '$2a$12$aQ95vY7DFoQif0/h8dQX4.NPiWBDswcCw5cm0pNOp31gLanzinwaq', 1);
+insert into users(email, first_name, last_name, password, enabled) VALUES ('teacher2@teachers.pl', 'tName2','tSurname2', '$2a$12$aQ95vY7DFoQif0/h8dQX4.NPiWBDswcCw5cm0pNOp31gLanzinwaq', 1);
+insert into users(email, first_name, last_name, password, enabled) VALUES ('teacher3@teachers.pl', 'tName3','tSurname3', '$2a$12$aQ95vY7DFoQif0/h8dQX4.NPiWBDswcCw5cm0pNOp31gLanzinwaq', 1);
+insert into users(email, first_name, last_name, password, enabled) VALUES ('teacher4@teachers.pl', 'tName4','tSurname4', '$2a$12$aQ95vY7DFoQif0/h8dQX4.NPiWBDswcCw5cm0pNOp31gLanzinwaq', 1);
+insert into users(email, first_name, last_name, password, enabled) VALUES ('teacher5@teachers.pl', 'tName5','tSurname5', '$2a$12$aQ95vY7DFoQif0/h8dQX4.NPiWBDswcCw5cm0pNOp31gLanzinwaq', 1);
+insert into users(email, first_name, last_name, password, enabled) VALUES ('teacher6admin@teachers.pl', 'tName6','tSurname6Admin', '$2a$12$aQ95vY7DFoQif0/h8dQX4.NPiWBDswcCw5cm0pNOp31gLanzinwaq', 1);
 
 #Przypisanie ról
 insert into user_role (user_id, role_id) VALUES (1,1);

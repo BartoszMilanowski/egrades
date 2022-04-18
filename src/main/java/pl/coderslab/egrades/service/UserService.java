@@ -7,7 +7,6 @@ import pl.coderslab.egrades.repository.UserRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -35,7 +34,7 @@ public class UserService{
         return userRepository.findAll();
     }
 
-    public User findByEmail(String email){
+    public User  findByEmail(String email){
         return userRepository.findByEmail(email);
     }
 

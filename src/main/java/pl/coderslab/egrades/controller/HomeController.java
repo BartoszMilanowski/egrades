@@ -1,12 +1,14 @@
 package pl.coderslab.egrades.controller;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import pl.coderslab.egrades.entity.User;
+import pl.coderslab.egrades.login.CurrentUser;
 import pl.coderslab.egrades.service.UserService;
 
 import javax.annotation.security.PermitAll;
-import java.time.LocalDateTime;
 
 @Controller
 public class HomeController {
@@ -17,10 +19,10 @@ public class HomeController {
         this.userService = userService;
     }
 
+
     @PermitAll
     @GetMapping("/")
-    String home(Model model){
-        model.addAttribute("now", LocalDateTime.now());
+    String home(){
         return "home";
     }
 
@@ -28,5 +30,14 @@ public class HomeController {
     String login(){
         return "login";
     }
+
+    @GetMapping("/dashboard")
+    String dashboard(@AuthenticationPrincipal CurrentUser currentUser, Model model){
+        User user = currentUser.getUser();
+        model.addAttribute("user", user);
+        return "dashboard";
+    }
+
+
 
 }

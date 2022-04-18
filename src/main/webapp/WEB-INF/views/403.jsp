@@ -1,6 +1,11 @@
-<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%--
+  Created by IntelliJ IDEA.
+  User: bartosz-m
+  Date: 18.04.2022
+  Time: 12:28
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -13,16 +18,13 @@
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
-    <title>eGrades ${user.name}</title>
+    <title>Brak uprawnień</title>
 </head>
 <body>
-<%@include file="../fragments/header.jsp"%>
-<div class="container-fluid">
 
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">${user.name}</h1>
-</div>
+Brak dostępu!
 
-</div>
+Wróć do <a href="/">strony głównej</a>
+
 </body>
 </html>
