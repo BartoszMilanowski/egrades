@@ -52,7 +52,11 @@
 <div id="content"/>
 
 <!-- Topbar -->
-<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"></nav>
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+    <sec:authorize access="isAuthenticated()">
+        <sec:authentication property="principal.user.name"/>
+    </sec:authorize>
+</nav>
 
 <!-- Sidebar Toggle (Topbar) -->
 <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -61,7 +65,6 @@
 
 <!-- Topbar Navbar -->
 <ul class="navbar-nav ml-auto">
-
 
 
     <!-- Nav Item - Search Dropdown (Visible Only XS) -->

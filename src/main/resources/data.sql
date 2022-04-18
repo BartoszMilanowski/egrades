@@ -72,7 +72,6 @@ insert into users_classes (user_id, class_id) VALUES (1,1);
 insert into users_classes (user_id, class_id) VALUES (2,1);
 insert into users_classes (user_id, class_id) VALUES (3,1);
 insert into users_classes (user_id, class_id) VALUES (4,1);
-insert into users_classes (user_id, class_id) VALUES (4,1);
 insert into users_classes (user_id, class_id) VALUES (5,1);
 insert into users_classes (user_id, class_id) VALUES (6,2);
 insert into users_classes (user_id, class_id) VALUES (7,2);
