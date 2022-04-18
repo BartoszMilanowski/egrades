@@ -40,7 +40,7 @@
                 <c:forEach var="subject" items="${subjects}">
                     <tr>
                         <td>${subject.subjectName}</td>
-                        <td><a href="/student/grades/${subject.id}">Szczegóły</a></td>
+                        <td><a href="/student/grades/${subject.subjectName}">Szczegóły</a></td>
                     </tr>
                 </c:forEach>
                 </tbody>
