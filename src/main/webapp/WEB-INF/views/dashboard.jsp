@@ -33,16 +33,20 @@
                 <thead>
                     <tr>
                         <th scope="col">Przedmiot</th>
-                        <th scope="col"></th>
+                        <th scope="col">Oceny</th>
                     </tr>
                 </thead>
                 <tbody>
                 <c:forEach var="subject" items="${subjects}">
                     <tr>
                         <td>${subject.subjectName}</td>
-                        <td><a href="/student/grades/${subject.subjectName}">Szczegóły</a></td>
+                        <td><a href="/student/grades/${subject.subjectName}">Pokaż</a></td>
                     </tr>
                 </c:forEach>
+                <tr>
+                    <td><b>Średnia semestralna</b></td>
+                    <td>${avg}</td>
+                </tr>
                 </tbody>
             </table>
         </div>

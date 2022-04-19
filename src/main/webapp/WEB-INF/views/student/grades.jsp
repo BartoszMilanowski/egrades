@@ -1,6 +1,7 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -24,6 +25,7 @@
   <div class="card shadow mb-4">
       <div class="card-header py-3">
           <h6 class="m-0 font-weight-bold text-primary">${subjectName}</h6>
+          Ocena końcowa: ${finalGrade}
       </div>
       <div class="card-body">
           <table class="table">
@@ -38,7 +40,7 @@
               <tbody>
               <c:forEach var="grade" items="${grades}">
                   <tr>
-                      <td>${grade.gradeValue}</td>
+                      <td id="gradeValue">${grade.gradeValue}</td>
                       <td>${grade.teacher}</td>
                       <td>${grade.gradeDescription}</td>
                       <td>${grade.dateTime}</td>
