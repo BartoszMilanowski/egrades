@@ -1,6 +1,7 @@
 package pl.coderslab.egrades.service;
 
 import org.springframework.stereotype.Service;
+import pl.coderslab.egrades.entity.Class;
 import pl.coderslab.egrades.entity.Role;
 import pl.coderslab.egrades.entity.User;
 import pl.coderslab.egrades.repository.UserRepository;
@@ -45,5 +46,13 @@ public class UserService{
 
     public Optional<User> findById(Long id){
         return userRepository.findById(id);
+    }
+
+    public List<User> findStudentByClasses(Class group){
+        return userRepository.findStudentByClasses(group);
+    }
+
+    public User findByOpt(Optional<User> userOptional){
+        return userRepository.findByOpt(userOptional);
     }
 }

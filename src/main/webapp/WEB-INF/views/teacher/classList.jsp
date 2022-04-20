@@ -14,48 +14,42 @@
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
-    <title>${subjectName}</title>
+    <title>${group.className}</title>
 </head>
 <body>
 
 <%@include file="../../fragments/header.jsp"%>
 
-
 <div class="container-fluid">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Dziennik elektroniczny eGrades</h1>
     </div>
-  <div class="card shadow mb-4">
-      <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">${subjectName}</h6>
-          Ocena końcowa: ${finalGrade}
-      </div>
-      <div class="card-body">
-          <table class="table">
-              <thead>
-              <tr>
-                  <th scope="col">Ocena</th>
-                  <th scope="col">Nauczyciel</th>
-                  <th scope="col">Opis</th>
-                  <th scope="col">Data</th>
-              </tr>
-              </thead>
-              <tbody>
-              <c:forEach var="grade" items="${grades}">
-                  <tr>
-                      <td id="gradeValue">${grade.gradeValue}</td>
-                      <td>${grade.teacher}</td>
-                      <td>${grade.gradeDescription}</td>
-                      <td>${grade.dateTime}</td>
-                  </tr>
-              </c:forEach>
-              </tbody>
-          </table>
-      </div>
-  </div>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Klasa ${group.className}, przedmiot: ${subject.subjectName}</h6>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Nazwisko</th>
+                    <th scope="col">Imię</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${students}" var="student">
+                    <tr>
+                        <td>${student.lastName}</td>
+                        <td>${student.firstName}</td>
+                        <td><a href="/teacher/class/${group.id}/${subject.id}/${student.id}">Oceny</a></td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </div>
     <a href="/dashboard" class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Wróć</a>
 </div>
-
-
 </body>
 </html>

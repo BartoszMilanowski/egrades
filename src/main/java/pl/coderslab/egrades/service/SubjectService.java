@@ -2,6 +2,7 @@ package pl.coderslab.egrades.service;
 
 import org.springframework.stereotype.Service;
 import pl.coderslab.egrades.entity.Subject;
+import pl.coderslab.egrades.entity.User;
 import pl.coderslab.egrades.repository.SubjectRepository;
 
 import javax.transaction.Transactional;
@@ -40,5 +41,13 @@ public class SubjectService {
 
     public Optional<Subject> findById(Long id){
         return subjectRepository.findById(id);
+    }
+
+    public List<Subject> findByTeachers(User teacher){
+        return subjectRepository.findByTeachers(teacher);
+    }
+
+    public Subject findByOpt(Optional<Subject> subjectOptional){
+        return subjectRepository.findByOpt(subjectOptional);
     }
 }
