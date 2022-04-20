@@ -64,7 +64,9 @@
                 <tr>
                     <th scope="col">Klasa</th>
                     <th scope="col">Wychowawca</th>
+                    <c:forEach var="subject" items="${subjects}">
                     <th scope="col"></th>
+                    </c:forEach>
                 </tr>
                 </thead>
                 <tbody>
@@ -72,7 +74,9 @@
                     <tr>
                         <td>${group.className}</td>
                         <td>${group.supervisingTeacher}</td>
-                        <td><a href="/">Lista uczniów</a></td>
+                        <c:forEach var="subject" items="${subjects}">
+                        <td><a href="/teacher/class/${group.id}/${subject.id}">${subject.subjectName}</a></td>
+                        </c:forEach>
                     </tr>
                 </c:forEach>
                 </tbody>

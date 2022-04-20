@@ -33,8 +33,11 @@ public class ClassService {
     public Optional<Class> findById(Long id){
         return classRepository.findById(id);
     }
-
     public List<Class> findAll(){
         return classRepository.findAll();
+    }
+
+    public Class findByOpt(Optional<Class> group){
+        return classRepository.findByOpt(group);
     }
 }

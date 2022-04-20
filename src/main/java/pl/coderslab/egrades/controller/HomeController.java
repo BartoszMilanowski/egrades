@@ -51,7 +51,7 @@ public class HomeController {
     String dashboard(@AuthenticationPrincipal CurrentUser currentUser, Model model){
         User user = currentUser.getUser();
         model.addAttribute("user", user);
-
+//Pulpit studenta
         if (user.hasRole("ROLE_STUDENT")){
             List<Subject> subjects = subjectService.findAll();
             model.addAttribute("subjects", subjects);
@@ -66,8 +66,12 @@ public class HomeController {
                avg = sum / finalGrades.size();
                model.addAttribute("avg", df.format(avg));
            }
+
+           //Pulpit nauczyciela
         } else if (user.hasRole("ROLE_TEACHER")){
             List<Class> classes = classService.findAll();
+            List<Subject> subjects = subjectService.findByTeachers(user);
+            model.addAttribute("subjects", subjects);
             model.addAttribute("classes", classes);
         }
         return "dashboard";
