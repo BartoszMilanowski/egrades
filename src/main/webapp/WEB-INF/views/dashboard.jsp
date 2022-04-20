@@ -20,8 +20,40 @@
 <div class="container-fluid">
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">${user.name}</h1>
+    <h1 class="h3 mb-0 text-gray-800">Dziennik elektroniczny eGrades</h1>
 </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Twoje oceny</h6>
+        </div>
+
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Przedmiot</th>
+                        <th scope="col">Oceny</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="subject" items="${subjects}">
+                    <tr>
+                        <td>${subject.subjectName}</td>
+                        <td><a href="/student/grades/${subject.subjectName}">Pokaż</a></td>
+                    </tr>
+                </c:forEach>
+                <tr>
+                    <td><b>Średnia semestralna</b></td>
+                    <td>${avg}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+
 
 </div>
 </body>

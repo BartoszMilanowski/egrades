@@ -7,6 +7,7 @@ import pl.coderslab.egrades.repository.UserRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -40,5 +41,9 @@ public class UserService{
 
     public List<User> findByRoles(Role role){
         return userRepository.findByRoles(role);
+    }
+
+    public Optional<User> findById(Long id){
+        return userRepository.findById(id);
     }
 }

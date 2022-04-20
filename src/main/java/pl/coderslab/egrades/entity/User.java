@@ -29,10 +29,10 @@ public class User{
     private String password;
 
     @NotEmpty
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "users_classes", joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "class_id"))
-    private List<Class> classes = new ArrayList<>();
+    private Set<Class> classes = new HashSet<>();
 
     private int enabled;
 
@@ -115,24 +115,16 @@ public class User{
     }
 
 
-    public List<Class> getClasses() {
+    public Set<Class> getClasses() {
         return classes;
     }
 
-    public void setClasses(List<Class> classes) {
+    public void setClasses(Set<Class> classes) {
         this.classes = classes;
     }
 
-
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", classes=" + classes +
-                '}';
+        return firstName + " " + lastName;
     }
 }
