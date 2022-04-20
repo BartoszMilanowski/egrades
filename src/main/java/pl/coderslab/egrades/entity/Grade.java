@@ -32,11 +32,10 @@ public class Grade {
     @Max(6)
     private double gradeValue;
 
-    @NotBlank
-    @Size(min = 5, max = 250)
+    @NotBlank(message = "Opis nie może pozostać pusty")
+    @Size(min = 5, max = 250, message = "Opis powinien zawierać od 5 do 250 znaków")
     private String gradeDescription;
 
-    @NotBlank
     private LocalDateTime dateTime;
 
     public Long getId() {
@@ -75,7 +74,7 @@ public class Grade {
         return gradeValue;
     }
 
-    public void setGradeValue(int gradeValue) {
+    public void setGradeValue(double gradeValue) {
         this.gradeValue = gradeValue;
     }
 
@@ -106,4 +105,5 @@ public class Grade {
                 ", dateTime=" + dateTime +
                 '}';
     }
+
 }
