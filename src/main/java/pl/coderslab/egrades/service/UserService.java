@@ -44,15 +44,12 @@ public class UserService{
         return userRepository.findByRoles(role);
     }
 
-    public Optional<User> findById(Long id){
-        return userRepository.findById(id);
+    public User findById(Long id){
+        Optional<User> optionalUser = userRepository.findById(id);
+        return userRepository.findByOpt(optionalUser);
     }
 
     public List<User> findStudentByClasses(Class group){
         return userRepository.findStudentByClasses(group);
-    }
-
-    public User findByOpt(Optional<User> userOptional){
-        return userRepository.findByOpt(userOptional);
     }
 }

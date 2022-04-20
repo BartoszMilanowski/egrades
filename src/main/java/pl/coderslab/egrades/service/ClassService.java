@@ -30,14 +30,11 @@ public class ClassService {
         classRepository.deleteById(id);
     }
 
-    public Optional<Class> findById(Long id){
-        return classRepository.findById(id);
+    public Class findById(Long id){
+        Optional<Class> classOptional = classRepository.findById(id);
+        return classRepository.findByOpt(classOptional);
     }
     public List<Class> findAll(){
         return classRepository.findAll();
-    }
-
-    public Class findByOpt(Optional<Class> group){
-        return classRepository.findByOpt(group);
     }
 }

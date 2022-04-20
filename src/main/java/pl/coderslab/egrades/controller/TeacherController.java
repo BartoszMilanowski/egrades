@@ -5,12 +5,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pl.coderslab.egrades.entity.*;
 import pl.coderslab.egrades.entity.Class;
+import pl.coderslab.egrades.entity.*;
 import pl.coderslab.egrades.service.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/teacher")
@@ -35,11 +34,9 @@ public class TeacherController {
     @GetMapping("/class/{classId}/{subjectId}")
     public String showStudents(Model model, @PathVariable Long classId, @PathVariable Long subjectId){
 
-        Optional<Subject> subjectOptional = subjectService.findById(subjectId);
-        Subject subject = subjectService.findByOpt(subjectOptional);
+        Subject subject = subjectService.findById(subjectId);
         model.addAttribute("subject", subject);
-        Optional<Class> optionalClass = classService.findById(classId);
-        Class group = classService.findByOpt(optionalClass);
+        Class group = classService.findById(classId);
         model.addAttribute("group", group);
         List<User> students = userService.findStudentByClasses(group);
 
@@ -53,12 +50,10 @@ public class TeacherController {
     public String showGrades(Model model, @PathVariable Long classId,
                              @PathVariable Long subjectId, @PathVariable Long studentId){
 
-        Optional<Subject> subjectOptional = subjectService.findById(subjectId);
-        Subject subject = subjectService.findByOpt(subjectOptional);
-        Optional<User> userOptional = userService.findById(studentId);
-        User student = userService.findByOpt(userOptional);
-        Optional<Class> optionalClass = classService.findById(classId);
-        Class group = classService.findByOpt(optionalClass);
+
+        Subject subject = subjectService.findById(subjectId);
+        User student = userService.findById(studentId);
+        Class group = classService.findById(classId);
         FinalGrade finalGrade = finalGradeService.findBySubjectAndStudent(subject.getId(), student.getId());
 
         model.addAttribute("group", group);

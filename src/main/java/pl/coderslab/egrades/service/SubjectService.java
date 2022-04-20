@@ -39,15 +39,13 @@ public class SubjectService {
         return subjectRepository.findBySubjectName(subjectName);
     }
 
-    public Optional<Subject> findById(Long id){
-        return subjectRepository.findById(id);
+    public Subject findById(Long id){
+        Optional<Subject> optionalSubject = subjectRepository.findById(id);
+        return subjectRepository.findByOpt(optionalSubject);
     }
 
     public List<Subject> findByTeachers(User teacher){
         return subjectRepository.findByTeachers(teacher);
     }
 
-    public Subject findByOpt(Optional<Subject> subjectOptional){
-        return subjectRepository.findByOpt(subjectOptional);
-    }
 }

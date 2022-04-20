@@ -54,7 +54,8 @@
             </table>
         </div>
     </div>
-    <a href="/teacher/class/${group.id}/${subject.id}" class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Wróć</a>
+    <a href="/teacher/class/${group.id}/${subject.id}" class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">
+        Wróć</a>
 </div>
 
 </body>
