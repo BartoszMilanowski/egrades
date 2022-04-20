@@ -4,14 +4,12 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import pl.coderslab.egrades.entity.Class;
 import pl.coderslab.egrades.entity.FinalGrade;
 import pl.coderslab.egrades.entity.Subject;
 import pl.coderslab.egrades.entity.User;
 import pl.coderslab.egrades.login.CurrentUser;
-import pl.coderslab.egrades.service.FinalGradeService;
-import pl.coderslab.egrades.service.GradeService;
-import pl.coderslab.egrades.service.SubjectService;
-import pl.coderslab.egrades.service.UserService;
+import pl.coderslab.egrades.service.*;
 
 import javax.annotation.security.PermitAll;
 import java.text.DecimalFormat;
@@ -23,15 +21,17 @@ public class HomeController {
     private final UserService userService;
     private final GradeService gradeService;
     private final SubjectService subjectService;
-
     private final FinalGradeService finalGradeService;
+    private final ClassService classService;
 
     public HomeController(UserService userService, GradeService gradeService,
-                          SubjectService subjectService, FinalGradeService finalGradeService) {
+                          SubjectService subjectService, FinalGradeService finalGradeService,
+                          ClassService classService) {
         this.userService = userService;
         this.gradeService = gradeService;
         this.subjectService = subjectService;
         this.finalGradeService = finalGradeService;
+        this.classService = classService;
     }
 
     private static final DecimalFormat df = new DecimalFormat("0.00");
@@ -66,6 +66,9 @@ public class HomeController {
                avg = sum / finalGrades.size();
                model.addAttribute("avg", df.format(avg));
            }
+        } else if (user.hasRole("ROLE_TEACHER")){
+            List<Class> classes = classService.findAll();
+            model.addAttribute("classes", classes);
         }
         return "dashboard";
     }

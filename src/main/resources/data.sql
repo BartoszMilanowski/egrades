@@ -3,6 +3,7 @@ insert into egrades.role (name) value ('ROLE_STUDENT');
 insert into egrades.role (name) value ('ROLE_TEACHER');
 insert into egrades.role (name) value ('ROLE_ADMIN');
 
+#Wszyscy użytkownicy mają hasło "haslo"
 # Dodanie uczniów do bazy danych
 insert into egrades.users (email, first_name, last_name, password, enabled) values ('student1@students.pl', 'sName1', 'sSurname1', '$2a$12$aQ95vY7DFoQif0/h8dQX4.NPiWBDswcCw5cm0pNOp31gLanzinwaq', 1);
 insert into egrades.users (email, first_name, last_name, password, enabled) values ('student2@students.pl', 'sName2', 'sSurname2', '$2a$12$aQ95vY7DFoQif0/h8dQX4.NPiWBDswcCw5cm0pNOp31gLanzinwaq', 1);
