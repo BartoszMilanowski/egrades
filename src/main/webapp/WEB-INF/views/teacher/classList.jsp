@@ -1,7 +1,6 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -35,6 +34,7 @@
                     <th scope="col">Nazwisko</th>
                     <th scope="col">Imię</th>
                     <th scope="col"></th>
+                    <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -43,6 +43,7 @@
                         <td>${student.lastName}</td>
                         <td>${student.firstName}</td>
                         <td><a href="/teacher/class/${group.id}/${subject.id}/${student.id}">Oceny</a></td>
+                        <td><a href="/teacher/grade/add/${subject.id}/${student.id}">Dodaj ocenę</a></td>
                     </tr>
                 </c:forEach>
                 </tbody>

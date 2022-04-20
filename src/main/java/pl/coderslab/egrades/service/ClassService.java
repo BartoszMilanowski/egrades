@@ -2,6 +2,7 @@ package pl.coderslab.egrades.service;
 
 import org.springframework.stereotype.Service;
 import pl.coderslab.egrades.entity.Class;
+import pl.coderslab.egrades.entity.User;
 import pl.coderslab.egrades.repository.ClassRepository;
 
 import javax.transaction.Transactional;
@@ -36,5 +37,9 @@ public class ClassService {
     }
     public List<Class> findAll(){
         return classRepository.findAll();
+    }
+
+    public Class findByStudent(User student){
+        return classRepository.findByStudent(student);
     }
 }
