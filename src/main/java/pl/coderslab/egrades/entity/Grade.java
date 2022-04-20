@@ -30,7 +30,7 @@ public class Grade {
     @NotNull
     @Min(1)
     @Max(6)
-    private int gradeValue;
+    private double gradeValue;
 
     @NotBlank
     @Size(min = 5, max = 250)
@@ -71,7 +71,7 @@ public class Grade {
         this.subject = subject;
     }
 
-    public int getGradeValue() {
+    public double getGradeValue() {
         return gradeValue;
     }
 

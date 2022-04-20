@@ -14,7 +14,7 @@ public class FinalGrade {
 
     @Min(1)
     @Max(6)
-    private int gradeValue;
+    private double gradeValue;
 
     @ManyToOne
     @JoinColumn(name = "student_id")
@@ -36,7 +36,7 @@ public class FinalGrade {
         Id = id;
     }
 
-    public int getGradeValue() {
+    public double getGradeValue() {
         return gradeValue;
     }
 
