@@ -52,4 +52,8 @@ public class UserService{
     public List<User> findStudentByClasses(Class group){
         return userRepository.findStudentByClasses(group);
     }
+
+    public User findStudentByGradeId(Long gradeId){
+        return userRepository.findStudentByGradeId(gradeId);
+    }
 }

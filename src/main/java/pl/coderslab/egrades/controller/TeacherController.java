@@ -164,4 +164,16 @@ public class TeacherController {
         finalGradeService.update(finalGrade);
         return "redirect:/teacher/class/" + group.getId() + "/" + subjectId + "/" + studentId;
     }
+
+    @GetMapping("/grade/delete/{gradeId}")
+    public String deleteGrade(@PathVariable Long gradeId){
+
+        Long studentId = userService.findStudentByGradeId(gradeId).getId();
+        Long subjectId = subjectService.findSubjectByGradeId(gradeId).getId();
+        Long groupId = classService.findByStudent(userService.findById(studentId)).getId();
+
+        gradeService.deleteById(gradeId);
+
+        return "redirect:/teacher/class/" + groupId + "/" + subjectId + "/" + studentId;
+    }
 }

@@ -39,6 +39,7 @@
                     <th scope="col">Nauczyciel</th>
                     <th scope="col">Opis</th>
                     <th scope="col">Data</th>
+                    <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -48,6 +49,7 @@
                         <td>${grade.teacher}</td>
                         <td>${grade.gradeDescription}</td>
                         <td>${grade.dateTime}</td>
+                        <td><a href="/teacher/grade/delete/${grade.id}">Usuń</a></td>
                     </tr>
                 </c:forEach>
                 </tbody>

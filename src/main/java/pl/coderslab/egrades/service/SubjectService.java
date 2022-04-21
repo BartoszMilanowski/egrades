@@ -48,4 +48,7 @@ public class SubjectService {
         return subjectRepository.findByTeachers(teacher);
     }
 
+    public Subject findSubjectByGradeId(Long gradeId){
+        return subjectRepository.findSubjectByGradeId(gradeId);
+    }
 }

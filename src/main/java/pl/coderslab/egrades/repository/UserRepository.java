@@ -23,6 +23,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("select u from User u where u = ?1")
     User findByOpt(Optional<User> userOptional);
 
-
-
+    @Query("select g.student from Grade g where g.id =?1")
+    User findStudentByGradeId(Long gradeId);
 }
