@@ -6,6 +6,7 @@ import pl.coderslab.egrades.repository.GradeRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -35,5 +36,10 @@ public class GradeService {
 
     public List<Grade> findBySubjectAndStudent(Long subjectId, Long studentId){
         return gradeRepository.findBySubjectAndStudent(subjectId, studentId);
+    }
+
+    public Grade findById(Long gradeId){
+        Optional<Grade> gradeOptional = gradeRepository.findById(gradeId);
+        return gradeRepository.findByOpt(gradeOptional);
     }
 }

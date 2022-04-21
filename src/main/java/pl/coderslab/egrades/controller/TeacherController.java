@@ -13,11 +13,9 @@ import pl.coderslab.egrades.login.CurrentUser;
 import pl.coderslab.egrades.service.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/teacher")
@@ -103,14 +101,8 @@ public class TeacherController {
         grade.setStudent(userService.findById(studentId));
         Class group = classService.findByStudent(userService.findById(studentId));
 
-        Set<ConstraintViolation<Grade>> violations = validator.validate(grade);
-
-        if (!violations.isEmpty()){
-            return "redirect:/teacher/grade/add/" + subjectId + "/" + studentId;
-        } else {
             gradeService.save(grade);
             return "redirect:/teacher/class/" + group.getId() + "/" + subjectId + "/" + studentId;
-        }
     }
 
     @GetMapping("/final-grade/{subjectId}/{studentId}")
@@ -174,6 +166,38 @@ public class TeacherController {
 
         gradeService.deleteById(gradeId);
 
+        return "redirect:/teacher/class/" + groupId + "/" + subjectId + "/" + studentId;
+    }
+
+    @GetMapping("/grade/edit/{gradeId}")
+    public String editGradeForm(Model model, @PathVariable Long gradeId){
+
+        User student = userService.findStudentByGradeId(gradeId);
+        Subject subject = subjectService.findSubjectByGradeId(gradeId);
+        Class group = classService.findByStudent(student);
+        Grade grade = gradeService.findById(gradeId);
+        model.addAttribute("student", student);
+        model.addAttribute("subject", subject);
+        model.addAttribute("group", group);
+        model.addAttribute("grade", grade);
+
+        return "teacher/editGradeForm";
+    }
+
+    @PostMapping("/grade/edit/{gradeId}")
+    public String editGrade(Grade grade, @PathVariable Long gradeId,HttpServletRequest request,
+                            @AuthenticationPrincipal CurrentUser currentUser){
+        Long studentId = Long.parseLong(request.getParameter("student"));
+        Long subjectId = Long.parseLong(request.getParameter("subject"));
+        User teacher = currentUser.getUser();
+        grade.setDateTime(LocalDateTime.now());
+        grade.setSubject(subjectService.findById(subjectId));
+        grade.setTeacher(teacher);
+        grade.setStudent(userService.findById(studentId));
+        Long groupId = classService.findByStudent(userService.findById(studentId)).getId();
+
+        gradeService.deleteById(gradeId);
+        gradeService.update(grade);
         return "redirect:/teacher/class/" + groupId + "/" + subjectId + "/" + studentId;
     }
 }
