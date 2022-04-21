@@ -3,7 +3,10 @@ package pl.coderslab.egrades.controller;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import pl.coderslab.egrades.entity.Class;
 import pl.coderslab.egrades.entity.*;
 import pl.coderslab.egrades.login.CurrentUser;
@@ -13,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -38,12 +40,6 @@ public class TeacherController {
         this.finalGradeService = finalGradeService;
         this.classService = classService;
         this.validator = validator;
-    }
-
-    @ModelAttribute("gradeList")
-    public List<Double> gradeList(){
-        return Arrays.asList(0.0, 1.0, 1.5, 1.75, 2.0, 2.5, 2.75, 3.0, 3.5, 3.75,
-                4.0, 4.5, 4.75, 5.0, 5.5, 6.0);
     }
 
     @GetMapping("/class/{classId}/{subjectId}")
@@ -84,14 +80,14 @@ public class TeacherController {
         return "teacher/studentGrades";
     }
     @GetMapping("/grade/add/{subjectId}/{studentId}")
-    public String addGradeForm(Model model, @PathVariable Long subjectId, @PathVariable Long studentId,
-                                 @AuthenticationPrincipal CurrentUser currentUser){
-        User teacher = currentUser.getUser();
+    public String addGradeForm(Model model, @PathVariable Long subjectId, @PathVariable Long studentId){
         User student = userService.findById(studentId);
         Subject subject = subjectService.findById(subjectId);
+        Class group = classService.findByStudent(student);
         model.addAttribute("grade",new Grade());
         model.addAttribute("student", student);
         model.addAttribute("subject", subject);
+        model.addAttribute("group", group);
         return "teacher/addGradeForm";
     }
 
@@ -115,7 +111,57 @@ public class TeacherController {
             gradeService.save(grade);
             return "redirect:/teacher/class/" + group.getId() + "/" + subjectId + "/" + studentId;
         }
+    }
 
+    @GetMapping("/final-grade/{subjectId}/{studentId}")
+    public String finalGradeForm(Model model, @PathVariable Long subjectId,
+                                 @PathVariable Long studentId){
+        User student = userService.findById(studentId);
+        Subject subject = subjectService.findById(subjectId);
+        Class group = classService.findByStudent(student);
+        model.addAttribute("student", student);
+        model.addAttribute("subject", subject);
+        model.addAttribute("group", group);
 
+        FinalGrade finalGrade = finalGradeService.findBySubjectAndStudent(subjectId, studentId);
+        if (finalGrade == null){
+            model.addAttribute("finalGrade", new FinalGrade());
+            return "teacher/finalGradeForm";
+        } else {
+            model.addAttribute("finalGrade", finalGrade);
+            return "teacher/finalGradeEdit";
+        }
+    }
+
+    @PostMapping("/final-grade/add")
+    public String addFinalGrade(FinalGrade finalGrade, HttpServletRequest request,
+                                @AuthenticationPrincipal CurrentUser currentUser){
+        Long studentId = Long.parseLong(request.getParameter("student"));
+        Long subjectId = Long.parseLong(request.getParameter("subject"));
+        User teacher = currentUser.getUser();
+        finalGrade.setTeacher(teacher);
+        finalGrade.setStudent(userService.findById(studentId));
+        finalGrade.setSubject(subjectService.findById(subjectId));
+        Class group = classService.findByStudent(userService.findById(studentId));
+
+        finalGradeService.save(finalGrade);
+        return "redirect:/teacher/class/" + group.getId() + "/" + subjectId + "/" + studentId;
+    }
+
+    @PostMapping("/final-grade/edit")
+    public String editFinalGrade(FinalGrade finalGrade, HttpServletRequest request,
+                                @AuthenticationPrincipal CurrentUser currentUser){
+        Long studentId = Long.parseLong(request.getParameter("student"));
+        Long subjectId = Long.parseLong(request.getParameter("subject"));
+        User teacher = currentUser.getUser();
+        finalGrade.setTeacher(teacher);
+        finalGrade.setStudent(userService.findById(studentId));
+        finalGrade.setSubject(subjectService.findById(subjectId));
+        Class group = classService.findByStudent(userService.findById(studentId));
+        FinalGrade prevFinalGrade = finalGradeService.findBySubjectAndStudent(subjectId, studentId);
+        finalGradeService.delete(prevFinalGrade.getId());
+
+        finalGradeService.update(finalGrade);
+        return "redirect:/teacher/class/" + group.getId() + "/" + subjectId + "/" + studentId;
     }
 }

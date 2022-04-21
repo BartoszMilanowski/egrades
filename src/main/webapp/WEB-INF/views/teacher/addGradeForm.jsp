@@ -31,10 +31,9 @@
       uczeń: ${student.lastName} ${student.firstName}</h6>
     </div>
     <div class="card-body">
-
       <form:form action="/teacher/grade/add" method="post" modelAttribute="grade" id="gradeForm">
-         <input type="hidden" name="subject" value="${subject.id}">
-         <input type="hidden" name="student" value="${student.id}">
+         ${subject.subjectName}<input type="hidden" name="subject" value="${subject.id}"><br/>
+         ${student.firstName} ${student.lastName}<input type="hidden" name="student" value="${student.id}"><br/>
        Ocena: <form:select path="gradeValue">
           <form:option value="1.0" label="1"/>
           <form:option value="2.0" label="2"/>
@@ -57,7 +56,8 @@
       </form:form>
     </div>
     </div>
-    <a href="/dashboard" class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Wróć</a>
+    <a href="/teacher/class/${group.id}/${subject.id}/${student.id}"
+       class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Anuluj</a>
 </div>
 </body>
 </html>

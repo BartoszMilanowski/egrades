@@ -54,6 +54,8 @@
             </table>
         </div>
     </div>
+    <a href="/teacher/final-grade/${subject.id}/${student.id}"
+       class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Wystaw ocenę końcową</a>
     <a href="/teacher/class/${group.id}/${subject.id}" class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">
         Wróć</a>
 </div>
