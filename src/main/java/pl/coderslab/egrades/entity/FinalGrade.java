@@ -3,6 +3,7 @@ package pl.coderslab.egrades.entity;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "final_grades")
@@ -12,6 +13,7 @@ public class FinalGrade {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long Id;
 
+    @NotNull
     @Min(1)
     @Max(6)
     private double gradeValue;
@@ -40,7 +42,7 @@ public class FinalGrade {
         return gradeValue;
     }
 
-    public void setGradeValue(int gradeValue) {
+    public void setGradeValue(double gradeValue) {
         this.gradeValue = gradeValue;
     }
 
