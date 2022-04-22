@@ -13,7 +13,7 @@
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
-    <title>${user.firstName} ${user.lastName}</title>
+    <title>eGrades ${user.name}</title>
 </head>
 <body>
 <%@include file="../../fragments/header.jsp"%>
@@ -23,40 +23,33 @@
         <h1 class="h3 mb-0 text-gray-800">Dziennik elektroniczny eGrades</h1>
     </div>
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">${user.firstName} ${user.lastName}</h6>
-        </div>
+        <div class="card-header py-3"/>
         <div class="card-body">
             <table class="table">
                 <thead>
                 <tr>
-                    <th scope="col"></th>
+                    <th scope="col">Imię</th>
+                    <th scope="col">Nazwisko</th>
+                    <th scope="col">Rola</th>
+                    <th scope="col">Adres e-mail</th>
                     <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>Imię:</td>
-                    <td>${user.firstName}</td>
-                </tr>
-                <tr>
-                    <td>Nazwisko</td>
-                    <td>${user.lastName}</td>
-                </tr>
-                <tr>
-                    <td>Adres e-mail</td>
-                    <td>${user.email}</td>
-                </tr>
-                <c:choose>
-                    <c:when test="${role=='ROLE_STUDENT'}">
-                        <td>Klasa</td>
-                        <td>${group.className}</td>
-                    </c:when>
-                </c:choose>
+                <c:forEach items="${users}" var="user">
+                    <tr>
+                        <td>${user.firstName}</td>
+                        <td>${user.lastName}</td>
+                        <td>${user.roles}</td>
+                        <td>${user.email}</td>
+                        <td><a href="/admin/user/${user.id}">Szczegóły</a></td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
 </body>
 </html>

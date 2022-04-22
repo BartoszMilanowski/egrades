@@ -85,35 +85,8 @@
     </div>
     </sec:authorize>
         <sec:authorize access="hasRole('ROLE_ADMIN')">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Lista użytkowników</h6>
-                </div>
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th scope="col">Imię</th>
-                            <th scope="col">Nazwisko</th>
-                            <th scope="col">Rola</th>
-                            <th scope="col">Adres e-mail</th>
-                            <th scope="col"></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach items="${users}" var="user">
-                            <tr>
-                                <td>${user.firstName}</td>
-                                <td>${user.lastName}</td>
-                                <td>${user.roles}</td>
-                                <td>${user.email}</td>
-                                <td><a href="/admin/user/${user.id}">Szczegóły</a></td>
-                            </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <a href="/admin/user/students">Uczniowie</a><br/>
+            <a href="/admin/user/teachers">Nauczyciele</a>
         </sec:authorize>
     </div>
 </body>

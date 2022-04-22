@@ -37,4 +37,9 @@ public class RoleService {
     public void deleteById(int id){
         roleRepository.deleteById(id);
     }
+
+    public Role findById(int id){
+        Optional<Role> roleOptional = roleRepository.findById(id);
+        return roleRepository.findByOpt(roleOptional);
+    }
 }
