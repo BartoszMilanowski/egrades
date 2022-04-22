@@ -97,7 +97,7 @@
                             <th scope="col">Nazwisko</th>
                             <th scope="col">Rola</th>
                             <th scope="col">Adres e-mail</th>
-
+                            <th scope="col"></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -107,6 +107,7 @@
                                 <td>${user.lastName}</td>
                                 <td>${user.roles}</td>
                                 <td>${user.email}</td>
+                                <td><a href="/admin/user/${user.id}">Szczegóły</a></td>
                             </tr>
                         </c:forEach>
                         </tbody>
@@ -114,11 +115,6 @@
                 </div>
             </div>
         </sec:authorize>
-
-
-
-
-
     </div>
 </body>
 </html>
