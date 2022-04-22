@@ -13,6 +13,8 @@ public class Role {
     private int id;
     private String name;
 
+    private String namePl;
+
     public int getId() {
         return id;
     }
@@ -27,5 +29,18 @@ public class Role {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getNamePl() {
+        return namePl;
+    }
+
+    public void setNamePl(String namePl) {
+        this.namePl = namePl;
+    }
+
+    @Override
+    public String toString() {
+        return namePl;
     }
 }

@@ -51,7 +51,7 @@
                 </table>
             </div>
         </div>
-</sec:authorize>
+    </sec:authorize>
 
     <sec:authorize access="hasRole('ROLE_TEACHER')">
     <div class="card shadow mb-4">
@@ -82,11 +82,43 @@
                 </tbody>
             </table>
         </div>
-        </div>
+    </div>
     </sec:authorize>
+        <sec:authorize access="hasRole('ROLE_ADMIN')">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Lista użytkowników</h6>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Imię</th>
+                            <th scope="col">Nazwisko</th>
+                            <th scope="col">Rola</th>
+                            <th scope="col">Adres e-mail</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${users}" var="user">
+                            <tr>
+                                <td>${user.firstName}</td>
+                                <td>${user.lastName}</td>
+                                <td>${user.roles}</td>
+                                <td>${user.email}</td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </sec:authorize>
 
 
 
-</div>
+
+
+    </div>
 </body>
 </html>

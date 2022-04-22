@@ -73,6 +73,9 @@ public class HomeController {
             List<Subject> subjects = subjectService.findByTeachers(user);
             model.addAttribute("subjects", subjects);
             model.addAttribute("classes", classes);
+        } else if (user.hasRole("ROLE_ADMIN")){
+            List<User> users = userService.findAll();
+            model.addAttribute("users", users);
         }
         return "dashboard";
     }
