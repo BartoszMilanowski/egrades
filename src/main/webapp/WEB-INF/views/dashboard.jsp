@@ -51,7 +51,7 @@
                 </table>
             </div>
         </div>
-</sec:authorize>
+    </sec:authorize>
 
     <sec:authorize access="hasRole('ROLE_TEACHER')">
     <div class="card shadow mb-4">
@@ -82,11 +82,12 @@
                 </tbody>
             </table>
         </div>
-        </div>
+    </div>
     </sec:authorize>
-
-
-
-</div>
+        <sec:authorize access="hasRole('ROLE_ADMIN')">
+            <a href="/admin/user/students">Uczniowie</a><br/>
+            <a href="/admin/user/teachers">Nauczyciele</a>
+        </sec:authorize>
+    </div>
 </body>
 </html>

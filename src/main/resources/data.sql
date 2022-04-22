@@ -1,7 +1,7 @@
 #Dodanie funkcji
-insert into egrades.role (name) value ('ROLE_STUDENT');
-insert into egrades.role (name) value ('ROLE_TEACHER');
-insert into egrades.role (name) value ('ROLE_ADMIN');
+insert into egrades.role (name, name_pl) value ('ROLE_STUDENT', 'uczeń');
+insert into egrades.role (name, name_pl) value ('ROLE_TEACHER', 'nauczyciel');
+insert into egrades.role (name, name_pl) value ('ROLE_ADMIN', 'administrator');
 
 #Wszyscy użytkownicy mają hasło "haslo"
 # Dodanie uczniów do bazy danych
