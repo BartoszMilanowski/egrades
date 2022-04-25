@@ -32,11 +32,21 @@ public class Grade {
     @Max(6)
     private double gradeValue;
 
-    @NotBlank(message = "Opis nie może pozostać pusty")
+    @Column(columnDefinition = "boolean default false")
+    private boolean isFinal;
+
     @Size(min = 5, max = 250, message = "Opis powinien zawierać od 5 do 250 znaków")
     private String gradeDescription;
 
     private LocalDate dateTime;
+
+    public boolean isFinal() {
+        return isFinal;
+    }
+
+    public void setFinal(boolean aFinal) {
+        isFinal = aFinal;
+    }
 
     public Long getId() {
         return id;

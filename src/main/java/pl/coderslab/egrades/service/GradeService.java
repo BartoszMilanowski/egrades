@@ -42,4 +42,25 @@ public class GradeService {
         Optional<Grade> gradeOptional = gradeRepository.findById(gradeId);
         return gradeRepository.findByOpt(gradeOptional);
     }
+
+    public Grade findFinalBySubjectAndStudent(Long subjectId, Long studentId){
+        return gradeRepository.findFinalBySubjectAndStudent(subjectId, studentId);
+    }
+
+    public List<Grade> findFinalByStudent(Long studentId){
+        return gradeRepository.findFinalByStudent(studentId);
+    }
+
+    public double averageFinalGrade(List<Grade> finalGrades) {
+        int sum = 0;
+        double avg = 0;
+        if (!finalGrades.isEmpty()) {
+            for (int i = 0; i < finalGrades.size(); i++) {
+                sum += finalGrades.get(i).getGradeValue();
+            }
+            avg = sum / finalGrades.size();
+        }
+        return avg;
+    }
+
 }
