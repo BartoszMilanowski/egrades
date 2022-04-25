@@ -55,17 +55,9 @@ public class HomeController {
         if (user.hasRole("ROLE_STUDENT")){
             List<Subject> subjects = subjectService.findAll();
             model.addAttribute("subjects", subjects);
-
            List<FinalGrade> finalGrades  =finalGradeService.findByStudent(user.getId());
-           int sum = 0;
-           double avg = 0;
-           if (!finalGrades.isEmpty()){
-               for (int i = 0; i < finalGrades.size(); i++){
-                   sum += finalGrades.get(i).getGradeValue();
-               }
-               avg = sum / finalGrades.size();
-               model.addAttribute("avg", df.format(avg));
-           }
+           double avg = finalGradeService.averageFinalGrade(finalGrades);
+           model.addAttribute("avg", df.format(avg));
 
            //Pulpit nauczyciela
         } else if (user.hasRole("ROLE_TEACHER")){
