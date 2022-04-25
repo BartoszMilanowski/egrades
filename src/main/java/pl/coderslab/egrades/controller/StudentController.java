@@ -51,10 +51,6 @@ public class StudentController {
        if (finalGrade != null){
            model.addAttribute("finalGrade", finalGrade.getGradeValue());
        }
-
-
-
-
         return "student/grades";
     }
 }

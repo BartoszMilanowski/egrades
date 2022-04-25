@@ -14,7 +14,7 @@ import pl.coderslab.egrades.service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Validator;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -92,7 +92,7 @@ public class TeacherController {
     @PostMapping("/grade/add")
     public String addGrade(Grade grade, HttpServletRequest request,
                            @AuthenticationPrincipal CurrentUser currentUser){
-        grade.setDateTime(LocalDateTime.now());
+        grade.setDateTime(LocalDate.now());
         Long studentId = Long.parseLong(request.getParameter("student"));
         Long subjectId = Long.parseLong(request.getParameter("subject"));
         User teacher = currentUser.getUser();
@@ -190,7 +190,7 @@ public class TeacherController {
         Long studentId = Long.parseLong(request.getParameter("student"));
         Long subjectId = Long.parseLong(request.getParameter("subject"));
         User teacher = currentUser.getUser();
-        grade.setDateTime(LocalDateTime.now());
+        grade.setDateTime(LocalDate.now());
         grade.setSubject(subjectService.findById(subjectId));
         grade.setTeacher(teacher);
         grade.setStudent(userService.findById(studentId));
