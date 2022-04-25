@@ -4,10 +4,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import pl.coderslab.egrades.entity.*;
 import pl.coderslab.egrades.entity.Class;
-import pl.coderslab.egrades.entity.FinalGrade;
-import pl.coderslab.egrades.entity.Subject;
-import pl.coderslab.egrades.entity.User;
 import pl.coderslab.egrades.login.CurrentUser;
 import pl.coderslab.egrades.service.*;
 
@@ -21,16 +19,13 @@ public class HomeController {
     private final UserService userService;
     private final GradeService gradeService;
     private final SubjectService subjectService;
-    private final FinalGradeService finalGradeService;
     private final ClassService classService;
 
     public HomeController(UserService userService, GradeService gradeService,
-                          SubjectService subjectService, FinalGradeService finalGradeService,
-                          ClassService classService) {
+                          SubjectService subjectService, ClassService classService) {
         this.userService = userService;
         this.gradeService = gradeService;
         this.subjectService = subjectService;
-        this.finalGradeService = finalGradeService;
         this.classService = classService;
     }
 
@@ -55,8 +50,8 @@ public class HomeController {
         if (user.hasRole("ROLE_STUDENT")){
             List<Subject> subjects = subjectService.findAll();
             model.addAttribute("subjects", subjects);
-           List<FinalGrade> finalGrades  =finalGradeService.findByStudent(user.getId());
-           double avg = finalGradeService.averageFinalGrade(finalGrades);
+           List<Grade> finalGrades  = gradeService.findFinalByStudent(user.getId());
+           double avg = gradeService.averageFinalGrade(finalGrades);
            model.addAttribute("avg", df.format(avg));
 
            //Pulpit nauczyciela

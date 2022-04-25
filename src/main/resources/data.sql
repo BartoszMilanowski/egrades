@@ -104,4 +104,4 @@ insert into egrades.grades (date_time, grade_description, grade_value, student_i
 insert into egrades.grades (date_time, grade_description, grade_value, student_id, subject_id, teacher_id) VALUES (CURDATE(), 'Praca domowa', 4, 1,1,11);
 
 #Oceny końcowe
-insert into egrades.final_grades (grade_value, student_id, subject_id, teacher_id) VALUES (3, 1, 1, 1);
+insert into egrades.grades (date_time, grade_value, student_id, subject_id, teacher_id, is_final) VALUES ( CURDATE(),3, 1, 1, 1, true);

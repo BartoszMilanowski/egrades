@@ -6,12 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pl.coderslab.egrades.entity.FinalGrade;
 import pl.coderslab.egrades.entity.Grade;
 import pl.coderslab.egrades.entity.Subject;
 import pl.coderslab.egrades.entity.User;
 import pl.coderslab.egrades.login.CurrentUser;
-import pl.coderslab.egrades.service.FinalGradeService;
 import pl.coderslab.egrades.service.GradeService;
 import pl.coderslab.egrades.service.SubjectService;
 import pl.coderslab.egrades.service.UserService;
@@ -27,14 +25,11 @@ public class StudentController {
     private final GradeService gradeService;
     private final SubjectService subjectService;
 
-    private final FinalGradeService finalGradeService;
 
-    public StudentController(UserService userService, GradeService gradeService,
-                             SubjectService subjectService, FinalGradeService finalGradeService) {
+    public StudentController(UserService userService, GradeService gradeService, SubjectService subjectService) {
         this.userService = userService;
         this.gradeService = gradeService;
         this.subjectService = subjectService;
-        this.finalGradeService = finalGradeService;
     }
 
     @GetMapping("/grades/{subjectName}")
@@ -44,7 +39,7 @@ public class StudentController {
         User student = currentUser.getUser();
         Subject subject = subjectService.findByName(subjectName);
         List<Grade> gradeList = gradeService.findBySubjectAndStudent(subject.getId(), student.getId());
-        FinalGrade finalGrade = finalGradeService.findBySubjectAndStudent(subject.getId(), student.getId());
+        Grade finalGrade = gradeService.findFinalBySubjectAndStudent(subject.getId(), student.getId());
 
         model.addAttribute("grades", gradeList);
         model.addAttribute("subjectName", subjectName);

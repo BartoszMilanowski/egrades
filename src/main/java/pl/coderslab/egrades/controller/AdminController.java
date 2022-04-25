@@ -19,17 +19,14 @@ public class AdminController {
     private final UserService userService;
     private final GradeService gradeService;
     private final SubjectService subjectService;
-    private final FinalGradeService finalGradeService;
     private final ClassService classService;
     private final RoleService roleService;
 
-    public AdminController(UserService userService,
-                           GradeService gradeService, SubjectService subjectService,
-                           FinalGradeService finalGradeService, ClassService classService, RoleService roleService) {
+    public AdminController(UserService userService, GradeService gradeService,
+                           SubjectService subjectService, ClassService classService, RoleService roleService) {
         this.userService = userService;
         this.gradeService = gradeService;
         this.subjectService = subjectService;
-        this.finalGradeService = finalGradeService;
         this.classService = classService;
         this.roleService = roleService;
     }
