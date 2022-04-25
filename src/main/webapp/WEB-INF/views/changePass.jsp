@@ -1,7 +1,6 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -14,40 +13,35 @@
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
-    <title>Ocena końcowa</title>
+    <title>Zmiana hasła</title>
+    <script type="text/javascript" src="/js/newPassValid.js"></script>
 </head>
 <body>
-
-<%@include file="../../fragments/header.jsp"%>
-
+<%@include file="../fragments/header.jsp"%>
 <div class="container-fluid">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Dziennik elektroniczny eGrades</h1>
     </div>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Edytuj ocenę końcową</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Zmiana hasła</h6>
         </div>
         <div class="card-body">
-            <form:form action="/teacher/final-grade/edit" method="post" modelAttribute="finalGrade">
-                ${subject.subjectName}<input type="hidden" name="subject" value="${subject.id}"><br/>
-                ${student.firstName} ${student.lastName}<input type="hidden" name="student" value="${student.id}"><br/>
-                Nowa ocena: <form:select path="gradeValue">
-                <form:option value="1.0" label="1"/>
-                <form:option value="2.0" label="2"/>
-                <form:option value="3.0" label="3"/>
-                <form:option value="4.0" label="4"/>
-                <form:option value="5.0" label="5"/>
-                <form:option value="6.0" label="6"/>
-            </form:select><br/><br/>
-                <input type="submit" value="Wystaw ocenę" class="btn btn-primary btn-user">
-            </form:form>
+            <form class="user" method="post" id="form">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                <div class="form-group"><br/>
+                    <label>Hasło: <input type="password"
+                                         name="password" id="pass" class="form-control form-control-user"/></label><br/>
+                    <label>Powtórz hasło: <input type="password"
+                                         name="password2" id="pass2" class="form-control form-control-user"/></label><br/>
+                   <br/><input type="submit" value="Zmień hasło" class="btn btn-primary btn-user">
+                </div>
+            </form>
         </div>
     </div>
-    <a href="/teacher/class/${group.id}/${subject.id}/${student.id}"
-       class="d-none d-inline-block btn btn-sm btn-primary shadow-sm"
+    <a href="/user/my-account"
+       class="d-none d-inline-block btn btn-sm btn-primary shadow-sm" id="cancel"
        onclick="return confirm('Podane dane nie zostaną zapisane!')">Anuluj</a>
 </div>
-
 </body>
 </html>

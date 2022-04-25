@@ -97,6 +97,8 @@
         </div>
     </sec:authorize>
     </div>
+    <a href="/user/change-password"
+       class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Zmień hasło</a>
     <a href="/dashboard"
        class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Wróć</a>
 </div>

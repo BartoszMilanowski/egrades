@@ -1,9 +1,11 @@
 package pl.coderslab.egrades.controller;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import pl.coderslab.egrades.entity.Class;
 import pl.coderslab.egrades.entity.Grade;
 import pl.coderslab.egrades.entity.Subject;
@@ -15,6 +17,7 @@ import pl.coderslab.egrades.service.SubjectService;
 import pl.coderslab.egrades.service.UserService;
 
 import javax.annotation.security.PermitAll;
+import javax.servlet.http.HttpServletRequest;
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -26,12 +29,16 @@ public class HomeController {
     private final SubjectService subjectService;
     private final ClassService classService;
 
+    private final BCryptPasswordEncoder passwordEncoder;
+
     public HomeController(UserService userService, GradeService gradeService,
-                          SubjectService subjectService, ClassService classService) {
+                          SubjectService subjectService, ClassService classService,
+                          BCryptPasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.gradeService = gradeService;
         this.subjectService = subjectService;
         this.classService = classService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     private static final DecimalFormat df = new DecimalFormat("0.00");
@@ -72,7 +79,7 @@ public class HomeController {
         return "dashboard";
     }
 
-    @GetMapping("/my-account")
+    @GetMapping("/user/my-account")
     public String userMyAccount(Model model, @AuthenticationPrincipal CurrentUser currentUser){
 
 
@@ -87,5 +94,21 @@ public class HomeController {
             model.addAttribute("subjects", subjects);
         }
         return "myAccount";
+    }
+
+    @GetMapping("/user/change-password")
+    public String changePassForm(Model model, @AuthenticationPrincipal CurrentUser currentUser){
+        User user = currentUser.getUser();
+        model.addAttribute("user", user);
+        return "changePass";
+    }
+
+    @PostMapping("/user/change-password")
+    public String changePass(HttpServletRequest request, @AuthenticationPrincipal CurrentUser currentUser){
+        User user = currentUser.getUser();
+        String pass = request.getParameter("password");
+        user.setPassword(passwordEncoder.encode(pass));
+        userService.save(user);
+        return "passChanged";
     }
 }

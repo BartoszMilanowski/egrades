@@ -45,7 +45,8 @@
         </div>
     </div>
     <a href="/teacher/class/${group.id}/${subject.id}/${student.id}"
-       class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Anuluj</a>
+       class="d-none d-inline-block btn btn-sm btn-primary shadow-sm"
+       onclick="return confirm('Podane dane nie zostaną zapisane!')">Anuluj</a>
 </div>
 
 </body>

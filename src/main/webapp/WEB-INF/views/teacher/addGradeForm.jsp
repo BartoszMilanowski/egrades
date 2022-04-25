@@ -31,8 +31,9 @@
       uczeń: ${student.lastName} ${student.firstName}</h6>
     </div>
     <div class="card-body">
-      <form:form action="/teacher/grade/add" method="post" modelAttribute="grade" id="gradeForm">
-         ${subject.subjectName}<input type="hidden" name="subject" value="${subject.id}"><br/>
+      <form:form cssClass="user" action="/teacher/grade/add" method="post" modelAttribute="grade" id="gradeForm">
+          <div class="form-group"><br/>
+          ${subject.subjectName}<input type="hidden" name="subject" value="${subject.id}"><br/>
          ${student.firstName} ${student.lastName}<input type="hidden" name="student" value="${student.id}"><br/>
        Ocena: <form:select path="gradeValue">
           <form:option value="1.0" label="1"/>
@@ -53,11 +54,13 @@
           <form:errors path="gradeDescription" cssClass="error" element="p"/>
           <br/><br/>
           <input type="submit" value="Dodaj ocenę" class="btn btn-primary btn-user">
+          </div>
       </form:form>
     </div>
     </div>
     <a href="/teacher/class/${group.id}/${subject.id}/${student.id}"
-       class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Anuluj</a>
+       class="d-none d-inline-block btn btn-sm btn-primary shadow-sm"
+       onclick="return confirm('Podane dane nie zostaną zapisane!')">Anuluj</a>
 </div>
 </body>
 </html>

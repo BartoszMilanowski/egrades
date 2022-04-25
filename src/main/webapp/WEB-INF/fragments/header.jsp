@@ -28,7 +28,7 @@
 
     <sec:authorize access="isAuthenticated()">
         <li class="nav-item active">
-            <a class="nav-link" href="/my-account">
+            <a class="nav-link" href="/user/my-account">
 <%--                <i class="fas fa-fw fa-tachometer-alt"></i>--%>
                 <span>Mój profil</span></a>
         </li>
