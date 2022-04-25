@@ -4,10 +4,15 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import pl.coderslab.egrades.entity.*;
 import pl.coderslab.egrades.entity.Class;
+import pl.coderslab.egrades.entity.Grade;
+import pl.coderslab.egrades.entity.Subject;
+import pl.coderslab.egrades.entity.User;
 import pl.coderslab.egrades.login.CurrentUser;
-import pl.coderslab.egrades.service.*;
+import pl.coderslab.egrades.service.ClassService;
+import pl.coderslab.egrades.service.GradeService;
+import pl.coderslab.egrades.service.SubjectService;
+import pl.coderslab.egrades.service.UserService;
 
 import javax.annotation.security.PermitAll;
 import java.text.DecimalFormat;
@@ -65,5 +70,22 @@ public class HomeController {
             model.addAttribute("users", users);
         }
         return "dashboard";
+    }
+
+    @GetMapping("/my-account")
+    public String userMyAccount(Model model, @AuthenticationPrincipal CurrentUser currentUser){
+
+
+        User user = currentUser.getUser();
+        model.addAttribute("user", user);
+
+        if (user.hasRole("ROLE_STUDENT")){
+            Class group = classService.findByStudent(user);
+            model.addAttribute("group", group);
+        } else if (user.hasRole("ROLE_TEACHER") || user.hasRole("ROLE_ADMIN")){
+            List<Subject> subjects = subjectService.findByTeachers(user);
+            model.addAttribute("subjects", subjects);
+        }
+        return "myAccount";
     }
 }

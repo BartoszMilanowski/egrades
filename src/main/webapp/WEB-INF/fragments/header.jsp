@@ -13,13 +13,25 @@
         <div class="sidebar-brand-text mx-3">eGrades</div>
     </a>
     </sec:authorize>
+
+
     <sec:authorize access="isAuthenticated()">
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard">
-        <div class="sidebar-brand-icon rotate-n-15">
-        <i class="fas fa-laugh-wink"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">eGrades</div>
+            <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fas fa-laugh-wink"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3">eGrades</div>
         </a>
+    </sec:authorize>
+
+    <hr class="sidebar-divider my-0">
+
+    <sec:authorize access="isAuthenticated()">
+        <li class="nav-item active">
+            <a class="nav-link" href="/my-account">
+<%--                <i class="fas fa-fw fa-tachometer-alt"></i>--%>
+                <span>Mój profil</span></a>
+        </li>
     </sec:authorize>
 
 
@@ -34,10 +46,12 @@
     </sec:authorize>
 
     <sec:authorize access="isAuthenticated()">
-        <form action="<c:url value="/logout"/>" method="post">
-            <input type="submit" value="Wyloguj" class="btn btn-primary btn-user">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        </form>
+        <li class="nav-item active">
+            <form action="<c:url value="/logout"/>" method="post">
+                <input type="submit" value="Wyloguj" class="btn btn-primary btn-user nav-link">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            </form>
+        </li>
 
     </sec:authorize>
 
