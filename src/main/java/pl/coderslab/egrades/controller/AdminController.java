@@ -11,8 +11,6 @@ import pl.coderslab.egrades.entity.User;
 import pl.coderslab.egrades.service.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Controller
 @RequestMapping("/admin")
@@ -65,10 +63,7 @@ public class AdminController {
     @GetMapping("/user/teachers")
     private String teachersList(Model model){
 
-        List<User> teachers = userService.findByRoles(roleService.findById(2));
-        List<User> admins = userService.findByRoles(roleService.findById(3));
-        Stream<User> usersStream = Stream.concat(teachers.stream(), admins.stream());
-        List<User> users = usersStream.collect(Collectors.toList());
+        List<User> users = userService.findTeachersAndAdmins();
         model.addAttribute("users", users);
         return "admin/userList";
     }

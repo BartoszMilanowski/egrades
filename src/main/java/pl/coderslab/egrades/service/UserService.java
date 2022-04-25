@@ -9,6 +9,8 @@ import pl.coderslab.egrades.repository.UserRepository;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Transactional
@@ -16,8 +18,11 @@ public class UserService{
 
     private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
+    private final RoleService roleService;
+
+    public UserService(UserRepository userRepository, RoleService roleService) {
         this.userRepository = userRepository;
+        this.roleService = roleService;
     }
 
     public void save(User user){
@@ -55,5 +60,11 @@ public class UserService{
 
     public User findStudentByGradeId(Long gradeId){
         return userRepository.findStudentByGradeId(gradeId);
+    }
+
+    public List<User> findTeachersAndAdmins(){
+        List<User> teachers = findByRoles(roleService.findById(2));
+        List<User> admins = findByRoles(roleService.findById(3));
+        return Stream.concat(teachers.stream(), admins.stream()).collect(Collectors.toList());
     }
 }
