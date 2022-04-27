@@ -30,8 +30,9 @@ public class RoleService {
         return roleRepository.findAll();
     }
 
-    public Optional<Role> findByName(String name){
-        return roleRepository.findByName(name);
+    public Role  findByName(String name){
+        Optional<Role> roleOptional = roleRepository.findByName(name);
+        return roleRepository.findByOpt(roleOptional);
     }
 
     public void deleteById(int id){
