@@ -1,6 +1,6 @@
 package pl.coderslab.egrades.controller;
 
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,15 +24,21 @@ public class AdminController {
     private final ClassService classService;
     private final RoleService roleService;
 
-    private final String subject = "Zarejestrowano w dzienniku elektronicznym eGrades";
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    public AdminController(UserService userService, GradeService gradeService,
-                           SubjectService subjectService, ClassService classService, RoleService roleService) {
+   private final EmailSender emailSender;
+
+
+    public AdminController(UserService userService, GradeService gradeService, SubjectService subjectService,
+                           ClassService classService, RoleService roleService, BCryptPasswordEncoder passwordEncoder,
+                           EmailSender emailSender) {
         this.userService = userService;
         this.gradeService = gradeService;
         this.subjectService = subjectService;
         this.classService = classService;
         this.roleService = roleService;
+        this.passwordEncoder = passwordEncoder;
+        this.emailSender = emailSender;
     }
 
     @ModelAttribute(name = "classes")
@@ -100,34 +106,30 @@ public class AdminController {
     @PostMapping("/add-user/{roleName}")
     public String addUser(User user, @PathVariable String roleName){
 
+        String redirect = new String();
+
         Role role = new Role();
         if (roleName.equals("student")){
             role = roleService.findByName("ROLE_STUDENT");
+            redirect = "redirect:/admin/user/students";
         } else if (roleName.equals("teacher")){
             role = roleService.findByName("ROLE_TEACHER");
+            redirect = "redirect:/admin/user/teachers";
         } else if (roleName.equals("admin")){
             role = roleService.findByName("ROLE_ADMIN");
+            redirect = "redirect:/admin/user/teachers";
         }
 
         String password = PasswordGenerator.generateStrongPassword();
+        System.out.println(password);
         Set<Role> roleSet = new HashSet<>();
         roleSet.add(role);
         user.setRoles(roleSet);
-        user.setPassword(password);
+        user.setPassword(passwordEncoder.encode(password));
         user.setEnabled(1);
         userService.save(user);
+        emailSender.sendEmail(user, password);
 
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("egrades@buziaczek.pl");
-        message.setTo(user.getEmail());
-        message.setSubject(subject);
-        message.setText("Dzień dobry " + user.getName() + "/n" +
-               "Twój adres e-mail został zarejestrowany w dzienniku elektronicznym eGrades." + "/n" +
-                "Login: " + user.getEmail() + "/n" +
-                "Hasło: " + password + "/n" +
-                "PAMIĘTAJ ABY ZMIENIĆ HASŁO PO PIERWSZYM ZALOGOWANIU! /n" +
-                "Jeżeli wiadomość Ciebie nie dotyczy skontaktuj się z egrades@buziaczek.pl /n" +
-                "Miłego dnia! /n Zespół eGrades");
-        return "redirect:/admin/user/students";
+        return redirect;
     }
 }

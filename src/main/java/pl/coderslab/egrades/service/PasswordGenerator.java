@@ -1,10 +1,6 @@
 package pl.coderslab.egrades.service;
 
 import java.security.SecureRandom;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class PasswordGenerator {
 
@@ -48,7 +44,6 @@ public class PasswordGenerator {
 
         String password = result.toString();
         System.out.format("%-20s: %s%n", "Password", password);
-        System.out.format("%-20s: %s%n", "Final Password", shuffleString(password));
         System.out.format("%-20s: %s%n%n", "Password Length", password.length());
 
         return password;
@@ -65,10 +60,5 @@ public class PasswordGenerator {
             result.append(input.charAt(index));
         }
         return result.toString();
-    }
-    public static String shuffleString(String input) {
-        List<String> result = Arrays.asList(input.split(""));
-        Collections.shuffle(result);
-        return result.stream().collect(Collectors.joining());
     }
 }
