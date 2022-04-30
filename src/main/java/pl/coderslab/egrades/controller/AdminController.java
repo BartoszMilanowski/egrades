@@ -46,6 +46,11 @@ public class AdminController {
         return classService.findAll();
     }
 
+    @ModelAttribute(name = "subjects")
+    protected List<Subject> getSubjects(){
+        return subjectService.findAll();
+    }
+
     @GetMapping("/user/{userId}")
     private String userDetails(Model model, @PathVariable Long userId){
 
@@ -93,7 +98,7 @@ public class AdminController {
             view = "admin/addTeacher";
         } else if (roleName.equals("admin")){
             role = roleService.findByName("ROLE_ADMIN");
-            view = "admin/addAdmin";
+            view = "admin/addTeacher";
         }
 
         User user = new User();

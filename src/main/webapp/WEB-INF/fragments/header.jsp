@@ -44,6 +44,8 @@
     </li>
     </sec:authorize>
 
+    <hr class="sidebar-divider my-0">
+
     <sec:authorize access="hasRole('ROLE_ADMIN')">
         <li class="nav-item active">
             <a class="nav-link" href="/admin/add-user/student">
@@ -51,18 +53,27 @@
         </li>
     </sec:authorize>
 
-    <sec:authorize access="isAuthenticated()">
-            <li class="nav-item active">
-                <form action="<c:url value="/logout"/>" method="post">
-                    <input type="submit" value="Wyloguj" class="btn btn-primary btn-user nav-link">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                </form>
-            </li>
+    <hr class="sidebar-divider my-0">
 
+    <sec:authorize access="hasRole('ROLE_ADMIN')">
+        <li class="nav-item active">
+            <a class="nav-link" href="/admin/add-user/teacher">
+                <span>Nowy nauczyciel</span></a>
+        </li>
+    </sec:authorize>
+
+    <hr class="sidebar-divider my-0">
+
+    <sec:authorize access="isAuthenticated()">
+        <li class="nav-item active">
+            <form action="<c:url value="/logout"/>" method="post">
+                <input type="submit" value="Wyloguj" class="btn btn-primary btn-user nav-link">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            </form>
+        </li>
     </sec:authorize>
 
     <hr class="sidebar-divider d-none d-md-block">
-
 
     </ul>
 
