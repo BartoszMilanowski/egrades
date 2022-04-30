@@ -8,6 +8,7 @@ import pl.coderslab.egrades.repository.SubjectRepository;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -50,5 +51,12 @@ public class SubjectService {
 
     public Subject findSubjectByGradeId(Long gradeId){
         return subjectRepository.findSubjectByGradeId(gradeId);
+    }
+
+    public void addTeacherToSubject(Subject subject, User teacher){
+        Set<User> teachers = subject.getTeachers();
+        teachers.add(teacher);
+        subject.setTeachers(teachers);
+        update(subject);
     }
 }

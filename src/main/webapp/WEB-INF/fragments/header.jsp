@@ -1,9 +1,9 @@
-<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
-<!-- Page Wrapper -->
-<div id="wrapper"/>
+    <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+    <!-- Page Wrapper -->
+    <div id="wrapper"/>
 
-<!-- Sidebar -->
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <sec:authorize access="isAnonymous()">
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
@@ -29,7 +29,6 @@
     <sec:authorize access="isAuthenticated()">
         <li class="nav-item active">
             <a class="nav-link" href="/user/my-account">
-<%--                <i class="fas fa-fw fa-tachometer-alt"></i>--%>
                 <span>Mój profil</span></a>
         </li>
     </sec:authorize>
@@ -45,6 +44,26 @@
     </li>
     </sec:authorize>
 
+    <hr class="sidebar-divider my-0">
+
+    <sec:authorize access="hasRole('ROLE_ADMIN')">
+        <li class="nav-item active">
+            <a class="nav-link" href="/admin/add-user/student">
+                <span>Nowy uczeń</span></a>
+        </li>
+    </sec:authorize>
+
+    <hr class="sidebar-divider my-0">
+
+    <sec:authorize access="hasRole('ROLE_ADMIN')">
+        <li class="nav-item active">
+            <a class="nav-link" href="/admin/add-user/teacher">
+                <span>Nowy nauczyciel</span></a>
+        </li>
+    </sec:authorize>
+
+    <hr class="sidebar-divider my-0">
+
     <sec:authorize access="isAuthenticated()">
         <li class="nav-item active">
             <form action="<c:url value="/logout"/>" method="post">
@@ -52,39 +71,37 @@
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </form>
         </li>
-
     </sec:authorize>
 
     <hr class="sidebar-divider d-none d-md-block">
 
+    </ul>
 
-</ul>
+    <div id="content-wrapper" class="d-flex flex-column"/>
 
-<div id="content-wrapper" class="d-flex flex-column"/>
+    <!-- Main Content -->
+    <div id="content"/>
 
-<!-- Main Content -->
-<div id="content"/>
+    <!-- Topbar -->
+    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+        <sec:authorize access="isAuthenticated()">
+            <sec:authentication property="principal.user.name"/>
+        </sec:authorize>
+    </nav>
 
-<!-- Topbar -->
-<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-    <sec:authorize access="isAuthenticated()">
-        <sec:authentication property="principal.user.name"/>
-    </sec:authorize>
-</nav>
+    <!-- Sidebar Toggle (Topbar) -->
+    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+        <i class="fa fa-bars"></i>
+    </button>
 
-<!-- Sidebar Toggle (Topbar) -->
-<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-    <i class="fa fa-bars"></i>
-</button>
-
-<!-- Topbar Navbar -->
-<ul class="navbar-nav ml-auto">
+    <!-- Topbar Navbar -->
+    <ul class="navbar-nav ml-auto">
 
 
-    <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-    <li class="nav-item dropdown no-arrow d-sm-none">
-        <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-search fa-fw"></i>
-        </a></li></ul>
+        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+        <li class="nav-item dropdown no-arrow d-sm-none">
+            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-search fa-fw"></i>
+            </a></li></ul>
 
