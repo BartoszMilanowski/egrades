@@ -11,10 +11,12 @@
     <meta name="author" content="">
     <link href="/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
     <title>Dodaj ucznia</title>
+    <script type="text/javascript" src="/js/validators/newUserValidator.js"></script>
 </head>
 <body>
 <%@include file="../../fragments/header.jsp"%>
@@ -29,10 +31,10 @@
         </div>
         <form class="user" method="post" id="form">
             <div class="form-group"><br/>
-                <form:form cssClass="user" modelAttribute="user" method="post">
-                    <span>Imię: <form:input path="firstName"/></span><br/><br/>
-                    <span>Nazwisko: <form:input path="lastName"/></span><br/><br/>
-                    <span>Adres e-mail: <form:input path="email"/></span><br/><br/>
+                <form:form cssClass="user" modelAttribute="user" method="post" id="form">
+                    <span>Imię: <form:input path="firstName" id="firstName"/></span><br/><br/>
+                    <span>Nazwisko: <form:input path="lastName" id="lastName"/></span><br/><br/>
+                    <span>Adres e-mail: <form:input type="email" path="email" id="email"/></span><br/><br/>
                     <span>Klasa: <form:select path="classes" items="${classes}" itemLabel="className" itemValue="id"
                     multiple="false"/>
                     </span><br/><br/>
