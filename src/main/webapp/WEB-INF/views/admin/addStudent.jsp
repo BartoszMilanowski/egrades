@@ -31,10 +31,10 @@
         </div>
          <form:form cssClass="user" modelAttribute="user" method="post" id="form">
             <div class="form-group">
-                    <span>&nbspImię: <form:input path="firstName" id="firstName"/></span><br/><br/>
-                    <span>&nbspNazwisko: <form:input path="lastName" id="lastName"/></span><br/><br/>
-                    <span>&nbspAdres e-mail: <form:input type="email" path="email" id="email"/></span><br/><br/>
-                    <span>&nbspKlasa: <form:select path="classes" items="${classes}" itemLabel="className" itemValue="id"
+                    <span>&nbsp;Imię: <form:input path="firstName" id="firstName"/></span><br/><br/>
+                    <span>&nbsp;Nazwisko: <form:input path="lastName" id="lastName"/></span><br/><br/>
+                    <span>&nbsp;Adres e-mail: <form:input type="email" path="email" id="email"/></span><br/><br/>
+                    <span>&nbsp;Klasa: <form:select path="classes" items="${classes}" itemLabel="className" itemValue="id"
                     multiple="false"/>
                     </span><br/><br/>
                     <input type="submit" value="Dodaj ucznia" class="btn btn-primary btn-user">

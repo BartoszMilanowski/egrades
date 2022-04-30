@@ -33,9 +33,9 @@
     <div class="card-body">
       <form:form cssClass="user" action="/teacher/grade/add" method="post" modelAttribute="grade" id="gradeForm">
           <div class="form-group"><br/>
-          ${subject.subjectName}<input type="hidden" name="subject" value="${subject.id}"><br/>
-         ${student.firstName} ${student.lastName}<input type="hidden" name="student" value="${student.id}"><br/>
-       Ocena: <form:select path="gradeValue">
+          &nbsp;${subject.subjectName}&nbsp;<input type="hidden" name="subject" value="${subject.id}"><br/>
+         &nbsp;${student.firstName} ${student.lastName}&nbsp;<input type="hidden" name="student" value="${student.id}"><br/>
+       &nbsp;Ocena:&nbsp;<form:select path="gradeValue">
           <form:option value="1.0" label="1"/>
           <form:option value="2.0" label="2"/>
           <form:option value="2.5" label="2+"/>
@@ -50,10 +50,10 @@
           <form:option value="5.5" label="5+"/>
           <form:option value="6.0" label="6"/>
       </form:select><br/><br/>
-         Opis: <form:textarea path="gradeDescription" id="desc"/>
+         &nbsp;Opis:&nbsp;<form:textarea path="gradeDescription" id="desc"/>
           <form:errors path="gradeDescription" cssClass="error" element="p"/>
           <br/><br/>
-          <input type="submit" value="Dodaj ocenę" class="btn btn-primary btn-user">
+          &nbsp;<input type="submit" value="Dodaj ocenę" class="btn btn-primary btn-user">
           </div>
       </form:form>
     </div>

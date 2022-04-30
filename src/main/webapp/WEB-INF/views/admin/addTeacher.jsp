@@ -31,15 +31,15 @@
         </div>
     <form:form cssClass="user" modelAttribute="user" method="post" id="form">
         <div class="form-group"><br/><br/>
-            <span>&nbspImię: <form:input path="firstName" id="firstName"/></span><br/><br/>
-            <span>&nbspNazwisko: <form:input path="lastName" id="lastName"/></span><br/><br/>
-            <span>&nbspAdres e-mail: <form:input type="email" path="email" id="email"/></span><br/><br/>
-            <span>&nbspPrzedmioty:<br/>
+            <span>&nbsp;Imię:&nbsp;<form:input path="firstName" id="firstName"/></span><br/><br/>
+            <span>&nbsp;Nazwisko:&nbsp;<form:input path="lastName" id="lastName"/></span><br/><br/>
+            <span>&nbsp;Adres e-mail:&nbsp;<form:input type="email" path="email" id="email"/></span><br/><br/>
+            <span>&nbsp;Przedmioty:<br/>
                 <c:forEach items="${subjects}" var="subject">
-                    &nbsp<input type="checkbox" name="subjects" value="${subject.id}">${subject.subjectName}&nbsp
+                    &nbsp;<input type="checkbox" name="subject" value="${subject.id}">&nbsp;${subject.subjectName}&nbsp;
                 </c:forEach>
             </span><br/><br/>
-            &nbsp<span><input type="checkbox" name="admin" value="true">Administrator</span><br/><br/>
+            &nbsp;<span><input type="checkbox" name="admin">&nbsp;Administrator</span><br/><br/>
             <input type="submit" value="Dodaj nauczyciela" class="btn btn-primary btn-user">
         </div>
     </form:form>

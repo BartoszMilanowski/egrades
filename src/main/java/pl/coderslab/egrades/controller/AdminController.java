@@ -10,6 +10,7 @@ import pl.coderslab.egrades.entity.Subject;
 import pl.coderslab.egrades.entity.User;
 import pl.coderslab.egrades.service.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -96,11 +97,7 @@ public class AdminController {
         } else if (roleName.equals("teacher")){
             role = roleService.findByName("ROLE_TEACHER");
             view = "admin/addTeacher";
-        } else if (roleName.equals("admin")){
-            role = roleService.findByName("ROLE_ADMIN");
-            view = "admin/addTeacher";
         }
-
         User user = new User();
         model.addAttribute("user", user);
         model.addAttribute("role", role);
@@ -109,22 +106,29 @@ public class AdminController {
     }
 
     @PostMapping("/add-user/{roleName}")
-    public String addUser(User user, @PathVariable String roleName){
+    public String addUser(User user, @PathVariable String roleName, HttpServletRequest request){
 
         String redirect = new String();
+        userService.save(user);
 
         Role role = new Role();
         if (roleName.equals("student")){
             role = roleService.findByName("ROLE_STUDENT");
             redirect = "redirect:/admin/user/students";
         } else if (roleName.equals("teacher")){
-            role = roleService.findByName("ROLE_TEACHER");
             redirect = "redirect:/admin/user/teachers";
-        } else if (roleName.equals("admin")){
-            role = roleService.findByName("ROLE_ADMIN");
-            redirect = "redirect:/admin/user/teachers";
+            String[] checkedSubjects = request.getParameterValues("subject");
+            for (String s : checkedSubjects){
+                Subject subject = subjectService.findById(Long.parseLong(s));
+                subjectService.addTeacherToSubject(subject, user);
+            }
+            String admin = request.getParameter("admin");
+            if (admin != null){
+                role = roleService.findByName("ROLE_ADMIN");
+            } else {
+                role = roleService.findByName("ROLE_TEACHER");
+            }
         }
-
         String password = PasswordGenerator.generateStrongPassword();
         System.out.println(password);
         Set<Role> roleSet = new HashSet<>();
@@ -132,7 +136,7 @@ public class AdminController {
         user.setRoles(roleSet);
         user.setPassword(passwordEncoder.encode(password));
         user.setEnabled(1);
-        userService.save(user);
+        userService.update(user);
         emailSender.sendEmail(user, password);
 
         return redirect;
