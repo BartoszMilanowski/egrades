@@ -22,7 +22,7 @@ public class EmailSender {
         try {
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setTo(user.getEmail());
-            helper.setFrom("egrades@buziaczek.pl");
+            helper.setFrom("info.egrades@gmail.com");
             helper.setSubject("Rejestracja w eGrades");
             helper.setText(user.getName() + "/n" + user.getEmail() + "/n" + password);
 
