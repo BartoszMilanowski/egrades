@@ -33,16 +33,14 @@
                     <span>Imię: <form:input path="firstName"/></span><br/><br/>
                     <span>Nazwisko: <form:input path="lastName"/></span><br/><br/>
                     <span>Adres e-mail: <form:input path="email"/></span><br/><br/>
-                    <span>Klasa: <form:select path="class" items="${classes}" itemLabel="className" itemValue="id"/>
+                    <span>Klasa: <form:select path="classes" items="${classes}" itemLabel="className" itemValue="id"
+                    multiple="false"/>
                     </span><br/><br/>
                     <input type="submit" value="Dodaj ucznia">
                 </form:form>
             </div>
         </form>
     </div>
-
-
-
 </div>
 </body>
 </html>

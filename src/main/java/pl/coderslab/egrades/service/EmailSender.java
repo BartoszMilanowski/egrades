@@ -24,7 +24,9 @@ public class EmailSender {
             helper.setTo(user.getEmail());
             helper.setFrom("info.egrades@gmail.com");
             helper.setSubject("Rejestracja w eGrades");
-            helper.setText(user.getName() + "/n" + user.getEmail() + "/n" + password);
+            helper.setText("Cześć " + user.getName() + "\nZostałeś dodany do dziennika eGrades."
+                    + "\nLogin: " + user.getEmail() + "\nHasło: " + password +
+                    "\nPamiętaj, aby zmienić hasło po pierwszym logowaniu!\nPozdrawiamy,\nZespół eGrades.");
 
         } catch (MessagingException e){
             e.printStackTrace();
