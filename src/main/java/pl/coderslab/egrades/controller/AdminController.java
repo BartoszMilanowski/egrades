@@ -141,4 +141,41 @@ public class AdminController {
 
         return redirect;
     }
+
+    @GetMapping("/edit-user/{roleName}/{userId}")
+    public String editUserForm(Model model, @PathVariable String roleName, @PathVariable Long userId){
+
+        String view = new String();
+        User user = userService.findById(userId);
+        Role role = new Role();
+
+        model.addAttribute("user", user);
+        if (roleName.equals("student")){
+            role = roleService.findByName("ROLE_STUDENT");
+            Class group = classService.findByStudent(user);
+            model.addAttribute("group", group);
+            List<Class> classes = classService.findOtherClasses(group);
+            model.addAttribute("otherClasses", classes);
+            view = "admin/editStudent";
+        }
+
+        return view;
+    }
+
+    @PostMapping("/edit-user/{roleName}/{userId}")
+    public String editUser(User user, @PathVariable String roleName, @PathVariable Long userId){
+        String redirect = new String();
+        Role role = new Role();
+        if (roleName.equals("student")){
+            role = roleService.findByName("ROLE_STUDENT");
+            Set<Role> roles = user.getRoles();
+            roles.add(role);
+            user.setRoles(roles);
+            user.setId(userId);
+            userService.update(user);
+            redirect = "redirect:/admin/user/students";
+        }
+
+        return redirect;
+    }
 }
