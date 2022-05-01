@@ -40,7 +40,8 @@
                         <td>${teacher.firstName}</td>
                         <td>${teacher.lastName}</td>
                         <td><a href="/admin/user/${teacher.id}">Szczegóły</a></td>
-                        <td><a href="/">Usuń z przedmiotu</a></td>
+                        <td><a href="/admin/subject/remove-teacher/${subject.id}/${teacher.id}">
+                            Usuń z przedmiotu</a></td>
                     </tr>
                 </c:forEach>
                 </tbody>

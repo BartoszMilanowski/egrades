@@ -17,8 +17,11 @@ public class SubjectService {
 
     private final SubjectRepository subjectRepository;
 
-    public SubjectService(SubjectRepository subjectRepository) {
+    private final UserService userService;
+
+    public SubjectService(SubjectRepository subjectRepository, UserService userService) {
         this.subjectRepository = subjectRepository;
+        this.userService = userService;
     }
 
     public void save(Subject subject){
@@ -76,5 +79,17 @@ public class SubjectService {
 
     public List<User> findTeachers(Subject subject){
         return subjectRepository.findTeachers(subject);
+    }
+
+    public void removeTeacherFromSubject(Long subjectId, Long teacherId){
+        Subject subject = findById(subjectId);
+        List<User> teachers = findTeachers(subject);
+        List<User> newTeachers = new ArrayList<>();
+        for (User t : teachers){
+            if (t.getId() != teacherId){
+                newTeachers.add(t);
+            }
+        }
+        subject.setTeachers(Set.copyOf(newTeachers));
     }
 }

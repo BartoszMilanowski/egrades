@@ -16,7 +16,6 @@ public class Subject {
     @NotBlank
     private String subjectName;
 
-    @NotBlank
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "subject_teachers", joinColumns = @JoinColumn(name = "subject_id"),
     inverseJoinColumns = @JoinColumn(name = "teacher_id"))

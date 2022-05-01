@@ -219,12 +219,18 @@ public class AdminController {
         return "admin/subjectsList";
     }
 
-    @GetMapping("subject/{subjectId}")
+    @GetMapping("/subject/{subjectId}")
     public String subjectDetails(Model model, @PathVariable Long subjectId){
         Subject subject = subjectService.findById(subjectId);
         List<User> teachers = subjectService.findTeachers(subject);
         model.addAttribute("subject", subject);
         model.addAttribute("teachers", teachers);
         return "admin/subjectDetails";
+    }
+
+    @GetMapping("/subject/remove-teacher/{subjectId}/{teacherId}")
+    public String removeTeacherFromSubject(@PathVariable Long subjectId, @PathVariable Long teacherId){
+        subjectService.removeTeacherFromSubject(subjectId, teacherId);
+        return "redirect:/admin/subject/" + subjectId;
     }
 }
