@@ -64,19 +64,6 @@ public class SubjectService {
         update(subject);
     }
 
-    public List<Subject> otherSubjects(List<Subject> tSubject){
-        List<Subject> allSubjects = new ArrayList<>();
-        List<Subject> otherSubjects = new ArrayList<>();
-        for (int i = 0; i < allSubjects.size(); i++){
-            for (int j = 0; j < tSubject.size(); j++){
-                if (allSubjects.get(i) == tSubject.get(j)){
-                    otherSubjects.add(allSubjects.get(i));
-                }
-            }
-        }
-        return otherSubjects;
-    }
-
     public List<User> findTeachers(Subject subject){
         return subjectRepository.findTeachers(subject);
     }
@@ -91,5 +78,26 @@ public class SubjectService {
             }
         }
         subject.setTeachers(Set.copyOf(newTeachers));
+    }
+
+    public List<User> showOtherTeachers(Long subjectId){
+        Subject subject = findById(subjectId);
+        List<User> currentTeachers = findTeachers(subject);
+        List<User> otherTeachers = userService.findTeachersAndAdmins();
+        otherTeachers.removeAll(currentTeachers);
+        return otherTeachers;
+    }
+
+    public void addTeachersToSubject(Long subjectId, String[] newTeachersArray){
+        Subject subject = findById(subjectId);
+        List<User> currentTeachers = findTeachers(subject);
+        List<User> newTeachers = new ArrayList<>();
+
+        for (String s : newTeachersArray){
+            newTeachers.add(userService.findById(Long.parseLong(s)));
+        }
+        for (User u : newTeachers){
+            currentTeachers.add(u);
+        }
     }
 }

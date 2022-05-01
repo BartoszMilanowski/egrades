@@ -11,9 +11,7 @@ import pl.coderslab.egrades.entity.User;
 import pl.coderslab.egrades.service.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @RequestMapping("/admin")
@@ -158,8 +156,6 @@ public class AdminController {
         } else if (roleName.equals("teacher")){
             List<Subject> subjects = subjectService.findByTeachers(user);
             model.addAttribute("tSubjects", subjects);
-            List<Subject> otherSubjects = subjectService.otherSubjects(subjects);
-            model.addAttribute("otherSubjects", otherSubjects);
             if (user.hasRole("ROLE_ADMIN")){
                 model.addAttribute("admin", "admin");
             }
@@ -231,6 +227,24 @@ public class AdminController {
     @GetMapping("/subject/remove-teacher/{subjectId}/{teacherId}")
     public String removeTeacherFromSubject(@PathVariable Long subjectId, @PathVariable Long teacherId){
         subjectService.removeTeacherFromSubject(subjectId, teacherId);
+        return "redirect:/admin/subject/" + subjectId;
+    }
+
+    @GetMapping("/subject/add-teacher/{subjectId}")
+    public String addTeacherToSubjectForm(Model model, @PathVariable Long subjectId){
+
+        Subject subject = subjectService.findById(subjectId);
+        model.addAttribute("subject", subject);
+        List<User> otherTeachers = subjectService.showOtherTeachers(subjectId);
+        model.addAttribute("otherTeachers", otherTeachers);
+        return "admin/addTeacherToSubject";
+    }
+
+    @PostMapping("/subject/add-teacher/{subjectId}")
+    public String addTeacherToSubject(@PathVariable Long subjectId, HttpServletRequest request){
+
+        String[] newTeachersArray = request.getParameterValues("teachers");
+        subjectService.addTeachersToSubject(subjectId, newTeachersArray);
         return "redirect:/admin/subject/" + subjectId;
     }
 }
