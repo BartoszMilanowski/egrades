@@ -73,4 +73,8 @@ public class SubjectService {
         }
         return otherSubjects;
     }
+
+    public List<User> findTeachers(Subject subject){
+        return subjectRepository.findTeachers(subject);
+    }
 }

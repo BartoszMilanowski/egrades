@@ -13,7 +13,7 @@
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
-    <title>${user.firstName} ${user.lastName}</title>
+    <title>${subject.subjectName}</title>
 </head>
 <body>
 <%@include file="../../fragments/header.jsp"%>
@@ -24,42 +24,32 @@
     </div>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">${user.firstName} ${user.lastName}</h6>
+            <h6 class="m-0 font-weight-bold text-primary">${subject.subjectName}</h6>
         </div>
         <div class="card-body">
             <table class="table">
                 <thead>
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                </tr>
+                <th scope="col">Imię</th>
+                <th scope="col">Nazwisko</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>Imię:</td>
-                    <td>${user.firstName}</td>
-                </tr>
-                <tr>
-                    <td>Nazwisko:</td>
-                    <td>${user.lastName}</td>
-                </tr>
-                <tr>
-                    <td>Adres e-mail:</td>
-                    <td>${user.email}</td>
-                </tr>
-                <tr>
-                    <td>Klasa:</td>
-                    <td>${group.className}</td>
-                </tr>
+                <c:forEach items="${teachers}" var="teacher">
+                    <tr>
+                        <td>${teacher.firstName}</td>
+                        <td>${teacher.lastName}</td>
+                        <td><a href="/admin/user/${teacher.id}">Szczegóły</a></td>
+                        <td><a href="/">Usuń z przedmiotu</a></td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
     </div>
-    <a href="/admin/edit-user/student/${user.id}"
+    <a href="/"
        class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Edytuj</a>
-<%--    <a href="/admin/disable-user/${user.id}"--%>
-<%--       class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Dezaktywuj</a>--%>
-    <a href="/admin/user/students"
+    <a href="/admin/subjects"
        class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Wróć</a>
 </div>
 </body>

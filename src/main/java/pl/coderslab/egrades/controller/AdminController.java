@@ -1,6 +1,5 @@
 package pl.coderslab.egrades.controller;
 
-import org.springframework.boot.Banner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -211,5 +210,21 @@ public class AdminController {
             redirect = "redirect:/admin/user/teachers";
         }
         return redirect;
+    }
+
+    @GetMapping("/subjects")
+    public String subjectsList(Model model){
+        List<Subject> subjects = subjectService.findAll();
+        model.addAttribute("subjects", subjects);
+        return "admin/subjectsList";
+    }
+
+    @GetMapping("subject/{subjectId}")
+    public String subjectDetails(Model model, @PathVariable Long subjectId){
+        Subject subject = subjectService.findById(subjectId);
+        List<User> teachers = subjectService.findTeachers(subject);
+        model.addAttribute("subject", subject);
+        model.addAttribute("teachers", teachers);
+        return "admin/subjectDetails";
     }
 }
