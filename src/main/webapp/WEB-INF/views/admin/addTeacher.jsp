@@ -39,7 +39,7 @@
                     &nbsp;<input type="checkbox" name="subject" value="${subject.id}">&nbsp;${subject.subjectName}&nbsp;
                 </c:forEach>
             </span><br/><br/>
-            &nbsp;<span><input type="checkbox" name="admin">&nbsp;Administrator</span><br/><br/>
+            <span><input type="checkbox" name="admin">&nbsp;Administrator</span><br/><br/>
             <input type="submit" value="Dodaj nauczyciela" class="btn btn-primary btn-user">
         </div>
     </form:form>

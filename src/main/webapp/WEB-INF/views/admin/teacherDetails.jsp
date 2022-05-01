@@ -61,6 +61,8 @@
             </table>
         </div>
     </div>
+    <a href="/admin/edit-user/teacher/${user.id}"
+       class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Edytuj</a>
     <a href="/dashboard"
        class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Wróć</a>
 </div>

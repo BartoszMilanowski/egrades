@@ -147,25 +147,34 @@ public class AdminController {
 
         String view = new String();
         User user = userService.findById(userId);
-        Role role = new Role();
-
         model.addAttribute("user", user);
+
         if (roleName.equals("student")){
-            role = roleService.findByName("ROLE_STUDENT");
             Class group = classService.findByStudent(user);
             model.addAttribute("group", group);
             List<Class> classes = classService.findOtherClasses(group);
             model.addAttribute("otherClasses", classes);
             view = "admin/editStudent";
+        } else if (roleName.equals("teacher")){
+            List<Subject> subjects = subjectService.findByTeachers(user);
+            model.addAttribute("tSubjects", subjects);
+            List<Subject> otherSubjects = subjectService.otherSubjects(subjects);
+            model.addAttribute("otherSubjects", otherSubjects);
+            if (user.hasRole("ROLE_ADMIN")){
+                model.addAttribute("admin", "admin");
+            }
+            view = "admin/editTeacher";
         }
 
         return view;
     }
 
     @PostMapping("/edit-user/{roleName}/{userId}")
-    public String editUser(User user, @PathVariable String roleName, @PathVariable Long userId){
+    public String editUser(User user, @PathVariable String roleName, @PathVariable Long userId,
+                           HttpServletRequest request){
+
         String redirect = new String();
-        Role role = new Role();
+        Role role;
         if (roleName.equals("student")){
             role = roleService.findByName("ROLE_STUDENT");
             Set<Role> roles = user.getRoles();
@@ -174,8 +183,20 @@ public class AdminController {
             user.setId(userId);
             userService.update(user);
             redirect = "redirect:/admin/user/students";
+        } else if (roleName.equals("teacher")){
+            redirect = "redirect:/admin/user/teachers";
+            String admin = request.getParameter("admin");
+            Set<Role> roles = user.getRoles();
+            if (admin != null){
+                role = roleService.findByName("ROLE_ADMIN");
+            } else {
+                role = roleService.findByName("ROLE_TEACHER");
+            }
+            roles.add(role);
+            user.setRoles(roles);
+            user.setId(userId);
+            userService.update(user);
         }
-
         return redirect;
     }
 }
