@@ -1,5 +1,6 @@
 package pl.coderslab.egrades.controller;
 
+import org.springframework.boot.Banner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -196,6 +197,18 @@ public class AdminController {
             user.setRoles(roles);
             user.setId(userId);
             userService.update(user);
+        }
+        return redirect;
+    }
+
+    @GetMapping("/disable-user/{userId}")
+    public String disableUser(@PathVariable Long userId){
+        userService.changeEnabled(userId);
+        String redirect = new String();
+        if (userService.findById(userId).hasRole("ROLE_STUDENT")){
+            redirect = "redirect:/admin/user/students";
+        } else {
+            redirect = "redirect:/admin/user/teachers";
         }
         return redirect;
     }

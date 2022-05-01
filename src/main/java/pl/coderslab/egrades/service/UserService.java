@@ -74,4 +74,13 @@ public class UserService{
         List<User> admins = findByRoles(roleService.findById(3));
         return Stream.concat(teachers.stream(), admins.stream()).collect(Collectors.toList());
     }
+
+    public void changeEnabled(Long userId){
+        User user = findById(userId);
+        if (user.getEnabled() == 1){
+            user.setEnabled(0);
+        } else {
+            user.setEnabled(1);
+        }
+    }
 }

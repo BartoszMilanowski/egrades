@@ -63,7 +63,9 @@
     </div>
     <a href="/admin/edit-user/teacher/${user.id}"
        class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Edytuj</a>
-    <a href="/dashboard"
+<%--    <a href="/admin/disable-user/${user.id}"--%>
+<%--       class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Dezaktywuj</a>--%>
+    <a href="/admin/user/teachers"
        class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Wróć</a>
 </div>
 </body>
