@@ -1,5 +1,6 @@
 package pl.coderslab.egrades.service;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.coderslab.egrades.entity.Class;
 import pl.coderslab.egrades.entity.Role;
@@ -20,9 +21,12 @@ public class UserService{
 
     private final RoleService roleService;
 
-    public UserService(UserRepository userRepository, RoleService roleService) {
+    private final BCryptPasswordEncoder passwordEncoder;
+
+    public UserService(UserRepository userRepository, RoleService roleService, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleService = roleService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public void save(User user){
@@ -30,6 +34,9 @@ public class UserService{
     }
 
     public void update(User user){
+        user.setEnabled(1);
+        String password = findById(user.getId()).getPassword();
+        user.setPassword(password);
         userRepository.save(user);
     }
 
@@ -66,5 +73,14 @@ public class UserService{
         List<User> teachers = findByRoles(roleService.findById(2));
         List<User> admins = findByRoles(roleService.findById(3));
         return Stream.concat(teachers.stream(), admins.stream()).collect(Collectors.toList());
+    }
+
+    public void changeEnabled(Long userId){
+        User user = findById(userId);
+        if (user.getEnabled() == 1){
+            user.setEnabled(0);
+        } else {
+            user.setEnabled(1);
+        }
     }
 }

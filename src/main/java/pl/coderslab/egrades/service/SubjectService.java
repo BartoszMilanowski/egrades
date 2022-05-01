@@ -6,6 +6,7 @@ import pl.coderslab.egrades.entity.User;
 import pl.coderslab.egrades.repository.SubjectRepository;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -58,5 +59,18 @@ public class SubjectService {
         teachers.add(teacher);
         subject.setTeachers(teachers);
         update(subject);
+    }
+
+    public List<Subject> otherSubjects(List<Subject> tSubject){
+        List<Subject> allSubjects = new ArrayList<>();
+        List<Subject> otherSubjects = new ArrayList<>();
+        for (int i = 0; i < allSubjects.size(); i++){
+            for (int j = 0; j < tSubject.size(); j++){
+                if (allSubjects.get(i) == tSubject.get(j)){
+                    otherSubjects.add(allSubjects.get(i));
+                }
+            }
+        }
+        return otherSubjects;
     }
 }

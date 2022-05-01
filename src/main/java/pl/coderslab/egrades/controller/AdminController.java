@@ -1,5 +1,6 @@
 package pl.coderslab.egrades.controller;
 
+import org.springframework.boot.Banner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -139,6 +140,76 @@ public class AdminController {
         userService.update(user);
         emailSender.sendEmail(user, password);
 
+        return redirect;
+    }
+
+    @GetMapping("/edit-user/{roleName}/{userId}")
+    public String editUserForm(Model model, @PathVariable String roleName, @PathVariable Long userId){
+
+        String view = new String();
+        User user = userService.findById(userId);
+        model.addAttribute("user", user);
+
+        if (roleName.equals("student")){
+            Class group = classService.findByStudent(user);
+            model.addAttribute("group", group);
+            List<Class> classes = classService.findOtherClasses(group);
+            model.addAttribute("otherClasses", classes);
+            view = "admin/editStudent";
+        } else if (roleName.equals("teacher")){
+            List<Subject> subjects = subjectService.findByTeachers(user);
+            model.addAttribute("tSubjects", subjects);
+            List<Subject> otherSubjects = subjectService.otherSubjects(subjects);
+            model.addAttribute("otherSubjects", otherSubjects);
+            if (user.hasRole("ROLE_ADMIN")){
+                model.addAttribute("admin", "admin");
+            }
+            view = "admin/editTeacher";
+        }
+
+        return view;
+    }
+
+    @PostMapping("/edit-user/{roleName}/{userId}")
+    public String editUser(User user, @PathVariable String roleName, @PathVariable Long userId,
+                           HttpServletRequest request){
+
+        String redirect = new String();
+        Role role;
+        if (roleName.equals("student")){
+            role = roleService.findByName("ROLE_STUDENT");
+            Set<Role> roles = user.getRoles();
+            roles.add(role);
+            user.setRoles(roles);
+            user.setId(userId);
+            userService.update(user);
+            redirect = "redirect:/admin/user/students";
+        } else if (roleName.equals("teacher")){
+            redirect = "redirect:/admin/user/teachers";
+            String admin = request.getParameter("admin");
+            Set<Role> roles = user.getRoles();
+            if (admin != null){
+                role = roleService.findByName("ROLE_ADMIN");
+            } else {
+                role = roleService.findByName("ROLE_TEACHER");
+            }
+            roles.add(role);
+            user.setRoles(roles);
+            user.setId(userId);
+            userService.update(user);
+        }
+        return redirect;
+    }
+
+    @GetMapping("/disable-user/{userId}")
+    public String disableUser(@PathVariable Long userId){
+        userService.changeEnabled(userId);
+        String redirect = new String();
+        if (userService.findById(userId).hasRole("ROLE_STUDENT")){
+            redirect = "redirect:/admin/user/students";
+        } else {
+            redirect = "redirect:/admin/user/teachers";
+        }
         return redirect;
     }
 }

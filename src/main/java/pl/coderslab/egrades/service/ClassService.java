@@ -42,4 +42,10 @@ public class ClassService {
     public Class findByStudent(User student){
         return classRepository.findByStudent(student);
     }
+
+    public List<Class> findOtherClasses(Class group){
+        List<Class> classes = classRepository.findAll();
+        classes.remove(group);
+        return classes;
+    }
 }
