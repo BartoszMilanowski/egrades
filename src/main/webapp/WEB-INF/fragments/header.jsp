@@ -86,6 +86,14 @@
         <hr class="sidebar-divider my-0">
     </sec:authorize>
 
+    <sec:authorize access="hasRole('ROLE_ADMIN')">
+        <li class="nav-item active">
+            <a class="nav-link" href="/admin/add-class">
+                <span>Nowa klasa</span></a>
+        </li>
+        <hr class="sidebar-divider my-0">
+    </sec:authorize>
+
     <sec:authorize access="isAuthenticated()">
         <li class="nav-item active">
             <form action="<c:url value="/logout"/>" method="post">

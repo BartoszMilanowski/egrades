@@ -6,10 +6,8 @@ import pl.coderslab.egrades.entity.User;
 import pl.coderslab.egrades.repository.ClassRepository;
 
 import javax.transaction.Transactional;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 @Transactional
