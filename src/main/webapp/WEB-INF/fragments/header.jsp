@@ -31,38 +31,52 @@
             <a class="nav-link" href="/user/my-account">
                 <span>Mój profil</span></a>
         </li>
+        <hr class="sidebar-divider my-0">
     </sec:authorize>
 
 
-    <hr class="sidebar-divider my-0">
+
 
     <sec:authorize access="isAnonymous()">
-    <li class="nav-item active">
-        <a class="nav-link" href="/login">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Zaloguj</span></a>
-    </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="/login">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Zaloguj</span></a>
+        </li>
+        <hr class="sidebar-divider my-0">
     </sec:authorize>
 
-    <hr class="sidebar-divider my-0">
+    <sec:authorize access="hasRole('ROLE_ADMIN')">
+        <li class="nav-item active">
+            <a class="nav-link" href="/admin/user/students">
+                <span>Uczniowie</span></a>
+        </li>
+        <hr class="sidebar-divider my-0">
+    </sec:authorize>
+
+    <sec:authorize access="hasRole('ROLE_ADMIN')">
+        <li class="nav-item active">
+            <a class="nav-link" href="/admin/user/teachers">
+                <span>Nauczyciele</span></a>
+        </li>
+        <hr class="sidebar-divider my-0">
+    </sec:authorize>
 
     <sec:authorize access="hasRole('ROLE_ADMIN')">
         <li class="nav-item active">
             <a class="nav-link" href="/admin/add-user/student">
                 <span>Nowy uczeń</span></a>
         </li>
+        <hr class="sidebar-divider my-0">
     </sec:authorize>
-
-    <hr class="sidebar-divider my-0">
 
     <sec:authorize access="hasRole('ROLE_ADMIN')">
         <li class="nav-item active">
             <a class="nav-link" href="/admin/add-user/teacher">
                 <span>Nowy nauczyciel</span></a>
         </li>
+        <hr class="sidebar-divider my-0">
     </sec:authorize>
-
-    <hr class="sidebar-divider my-0">
 
     <sec:authorize access="isAuthenticated()">
         <li class="nav-item active">

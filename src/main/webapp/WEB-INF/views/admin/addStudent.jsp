@@ -30,7 +30,7 @@
             <h6 class="m-0 font-weight-bold text-primary">Dodaj ucznia</h6>
         </div>
          <form:form cssClass="user" modelAttribute="user" method="post" id="form">
-            <div class="form-group">
+            <div class="form-group"><br/><br/>
                     <span>&nbsp;Imię: <form:input path="firstName" id="firstName"/></span><br/><br/>
                     <span>&nbsp;Nazwisko: <form:input path="lastName" id="lastName"/></span><br/><br/>
                     <span>&nbsp;Adres e-mail: <form:input type="email" path="email" id="email"/></span><br/><br/>
