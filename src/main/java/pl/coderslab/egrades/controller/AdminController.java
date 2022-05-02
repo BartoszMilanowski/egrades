@@ -258,7 +258,20 @@ public class AdminController {
             User teacher = userService.findById(Long.parseLong(t));
             subjectService.addTeacherToSubject(subject, teacher);
         }
-
         return "redirect:/admin/subject/" + subject.getId();
+    }
+
+    @GetMapping("/classes")
+    public String showClassesList(){
+        return "admin/classesList";
+    }
+
+    @GetMapping("/class/{classId}")
+    public String showClass(Model model, @PathVariable Long classId){
+        Class group = classService.findById(classId);
+        List<User> students = classService.findStudents(classId);
+        model.addAttribute("group", group);
+        model.addAttribute("students", students);
+        return "admin/classDetails";
     }
 }

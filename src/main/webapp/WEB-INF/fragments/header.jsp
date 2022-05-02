@@ -64,6 +64,14 @@
 
     <sec:authorize access="hasRole('ROLE_ADMIN')">
         <li class="nav-item active">
+            <a class="nav-link" href="/admin/classes">
+                <span>Klasy</span></a>
+        </li>
+        <hr class="sidebar-divider my-0">
+    </sec:authorize>
+
+    <sec:authorize access="hasRole('ROLE_ADMIN')">
+        <li class="nav-item active">
             <a class="nav-link" href="/admin/add-user/student">
                 <span>Nowy uczeń</span></a>
         </li>

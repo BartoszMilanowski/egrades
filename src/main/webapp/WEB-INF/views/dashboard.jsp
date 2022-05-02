@@ -86,7 +86,8 @@
         <sec:authorize access="hasRole('ROLE_ADMIN')">
             <a href="/admin/user/students">Uczniowie</a><br/>
             <a href="/admin/user/teachers">Nauczyciele</a><br/>
-            <a href="/admin/subjects">Przedmioty</a>
+            <a href="/admin/subjects">Przedmioty</a><br/>
+            <a href="/admin/classes">Klasy</a>
         </sec:authorize>
     </div>
 </body>

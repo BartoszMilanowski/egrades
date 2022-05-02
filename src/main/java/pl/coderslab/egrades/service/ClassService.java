@@ -6,8 +6,10 @@ import pl.coderslab.egrades.entity.User;
 import pl.coderslab.egrades.repository.ClassRepository;
 
 import javax.transaction.Transactional;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -47,5 +49,10 @@ public class ClassService {
         List<Class> classes = classRepository.findAll();
         classes.remove(group);
         return classes;
+    }
+
+    public List<User> findStudents(Long groupId){
+        Class group = findById(groupId);
+        return classRepository.findStudents(group);
     }
 }
