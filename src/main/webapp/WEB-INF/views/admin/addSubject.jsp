@@ -15,8 +15,7 @@
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
-    <title>Dodaj nauczyciela - ${subject.subjectName}</title>
-    <script type="text/javascript" src="/js/validators/newUserValidator.js"></script>
+    <title>Dodaj przedmiot</title>
 </head>
 <body>
 <%@include file="../../fragments/header.jsp"%>
@@ -27,19 +26,21 @@
     </div>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Dodaj nauczyciela - ${subject.subjectName}</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Dodaj przedmiot</h6>
         </div>
         <br/><br/>
-    <form method="post" class="user">
-        <div class="form-group">
-               <c:forEach items="${otherTeachers}" var="oTeacher">
-                    &nbsp;<input type="checkbox" name="teacher" value="${oTeacher.id}">&nbsp;${oTeacher.name}<br/>
-               </c:forEach><br/><br/>
-               <input type="submit" value="Dodaj" class="btn btn-primary btn-user">
-        </div>
-    </form>
+        <form:form cssClass="user" modelAttribute="subject" method="post" id="form">
+            <div class="form-group">
+                <span>&nbsp;Nazwa przedmiotu:&nbsp;<form:input path="subjectName" id="subjectName"/></span><br/><br/>
+                <span>&nbsp;Nauczyciele:</span><br/><br/>
+                <c:forEach items="${allTeachers}" var="teacher">
+                    &nbsp;<input type="checkbox" name="teacher" value="${teacher.id}" multiple="multiple">
+                    &nbsp;${teacher.name}<br/>
+                </c:forEach>
+                <br/><br/>&nbsp;<input type="submit" value="Dodaj przedmiot" class="btn btn-primary btn-user">
+            </div>
+        </form:form>
     </div>
-
 </div>
 </body>
 </html>

@@ -42,9 +42,11 @@
                 </tbody>
             </table>
         </div>
+        <a href="/admin/add-subject"
+           class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Dodaj przedmiot</a>
+        <a href="/dashboard"
+        class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Wróć</a>
     </div>
-    <a href="/dashboard"
-       class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Wróć</a>
 </div>
 </body>
 </html>

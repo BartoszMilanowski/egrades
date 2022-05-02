@@ -55,10 +55,10 @@ public class SubjectService {
     }
 
     public void addTeacherToSubject(Subject subject, User teacher){
-        Set<User> teachers = new HashSet<>();
-        teachers.add(teacher);
-        subject.setTeachers(teachers);
-        update(subject);
+      List<User> teachers = findTeachers(subject);
+      teachers.add(teacher);
+      subject.setTeachers(Set.copyOf(teachers));
+      update(subject);
     }
 
     public List<User> findTeachers(Subject subject){

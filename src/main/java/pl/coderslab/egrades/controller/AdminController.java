@@ -50,6 +50,11 @@ public class AdminController {
         return subjectService.findAll();
     }
 
+    @ModelAttribute(name = "allTeachers")
+    private List<User> getAllTeachers(){
+        return userService.findTeachersAndAdmins();
+    }
+
     @GetMapping("/user/{userId}")
     private String userDetails(Model model, @PathVariable Long userId){
 
@@ -235,5 +240,25 @@ public class AdminController {
     public String removeTeacherFromSubject(@PathVariable Long subjectId, @PathVariable Long teacherId){
         subjectService.removeTeacherFromSubject(subjectId, teacherId);
         return "redirect:/admin/subject/" + subjectId;
+    }
+
+    @GetMapping("/add-subject")
+    public String addSubjectForm(Model model){
+        Subject subject = new Subject();
+        model.addAttribute("subject", subject);
+        return "admin/addSubject";
+    }
+
+    @PostMapping("/add-subject")
+    public String addSubject(Subject subject, HttpServletRequest request){
+
+        subjectService.save(subject);
+        String[] teachers = request.getParameterValues("teacher");
+        for (String t : teachers) {
+            User teacher = userService.findById(Long.parseLong(t));
+            subjectService.addTeacherToSubject(subject, teacher);
+        }
+
+        return "redirect:/admin/subject/" + subject.getId();
     }
 }

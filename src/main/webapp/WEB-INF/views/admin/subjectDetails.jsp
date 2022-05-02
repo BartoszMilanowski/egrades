@@ -48,8 +48,6 @@
             </table>
         </div>
     </div>
-    <a href="/admin/subject/add-teacher/${subject.id}"
-       class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Dodaj nauczyciela</a>
     <a href="/admin/subjects"
        class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Wróć</a>
 </div>
