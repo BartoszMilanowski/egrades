@@ -6,10 +6,7 @@ import pl.coderslab.egrades.entity.User;
 import pl.coderslab.egrades.repository.SubjectRepository;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional
@@ -17,8 +14,11 @@ public class SubjectService {
 
     private final SubjectRepository subjectRepository;
 
-    public SubjectService(SubjectRepository subjectRepository) {
+    private final UserService userService;
+
+    public SubjectService(SubjectRepository subjectRepository, UserService userService) {
         this.subjectRepository = subjectRepository;
+        this.userService = userService;
     }
 
     public void save(Subject subject){
@@ -55,22 +55,32 @@ public class SubjectService {
     }
 
     public void addTeacherToSubject(Subject subject, User teacher){
-        Set<User> teachers = subject.getTeachers();
-        teachers.add(teacher);
-        subject.setTeachers(teachers);
-        update(subject);
+      List<User> teachers = findTeachers(subject);
+      teachers.add(teacher);
+      subject.setTeachers(Set.copyOf(teachers));
+      update(subject);
     }
 
-    public List<Subject> otherSubjects(List<Subject> tSubject){
-        List<Subject> allSubjects = new ArrayList<>();
-        List<Subject> otherSubjects = new ArrayList<>();
-        for (int i = 0; i < allSubjects.size(); i++){
-            for (int j = 0; j < tSubject.size(); j++){
-                if (allSubjects.get(i) == tSubject.get(j)){
-                    otherSubjects.add(allSubjects.get(i));
-                }
+    public List<User> findTeachers(Subject subject){
+        return subjectRepository.findTeachers(subject);
+    }
+
+    public void removeTeacherFromSubject(Long subjectId, Long teacherId){
+        Subject subject = findById(subjectId);
+        List<User> teachers = findTeachers(subject);
+        List<User> newTeachers = new ArrayList<>();
+        for (User t : teachers){
+            if (t.getId() != teacherId){
+                newTeachers.add(t);
             }
         }
+        subject.setTeachers(Set.copyOf(newTeachers));
+    }
+
+    public List<Subject> showOtherSubjects(User teacher){
+        List<Subject> currentSubjects = findByTeachers(teacher);
+        List<Subject> otherSubjects = findAll();
+        otherSubjects.removeAll(currentSubjects);
         return otherSubjects;
     }
 }

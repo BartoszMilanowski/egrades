@@ -34,6 +34,16 @@
                     <span>&nbsp;Imię:&nbsp;<form:input path="firstName" id="firstName"/></span><br/><br/>
                     <span>&nbsp;Nazwisko:&nbsp;<form:input path="lastName" id="lastName"/></span><br/><br/>
                     <span>&nbsp;Adres e-mail:&nbsp;<form:input type="email" path="email" id="email"/></span><br/><br/>
+                    <span>&nbsp;Przedmioty:<br/>
+                <c:forEach items="${tSubjects}" var="tSubject">
+                    &nbsp;<input type="checkbox" name="subject" value="${tSubject.id}" checked="checked">&nbsp;
+                    ${tSubject.subjectName}&nbsp;
+                </c:forEach>
+                <c:forEach items="${oSubjects}" var="oSubject">
+                    &nbsp;<input type="checkbox" name="subject" value="${oSubject.id}">&nbsp;
+                    ${oSubject.subjectName}&nbsp;
+                </c:forEach>
+            </span><br/><br/>
                     <c:choose>
                         <c:when test="${admin.equals('admin')}">
                             <span><input type="checkbox" name="admin" checked="checked">&nbsp;Administrator</span><br/><br/>

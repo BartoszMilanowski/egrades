@@ -1,6 +1,5 @@
 package pl.coderslab.egrades.controller;
 
-import org.springframework.boot.Banner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,9 +11,7 @@ import pl.coderslab.egrades.entity.User;
 import pl.coderslab.egrades.service.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @RequestMapping("/admin")
@@ -51,6 +48,11 @@ public class AdminController {
     @ModelAttribute(name = "subjects")
     protected List<Subject> getSubjects(){
         return subjectService.findAll();
+    }
+
+    @ModelAttribute(name = "allTeachers")
+    private List<User> getAllTeachers(){
+        return userService.findTeachersAndAdmins();
     }
 
     @GetMapping("/user/{userId}")
@@ -158,9 +160,9 @@ public class AdminController {
             view = "admin/editStudent";
         } else if (roleName.equals("teacher")){
             List<Subject> subjects = subjectService.findByTeachers(user);
+            List<Subject> otherSubjects = subjectService.showOtherSubjects(user);
             model.addAttribute("tSubjects", subjects);
-            List<Subject> otherSubjects = subjectService.otherSubjects(subjects);
-            model.addAttribute("otherSubjects", otherSubjects);
+            model.addAttribute("oSubjects", otherSubjects);
             if (user.hasRole("ROLE_ADMIN")){
                 model.addAttribute("admin", "admin");
             }
@@ -197,6 +199,11 @@ public class AdminController {
             user.setRoles(roles);
             user.setId(userId);
             userService.update(user);
+            String[] checkedSubjects = request.getParameterValues("subject");
+            for (String s : checkedSubjects){
+                Subject subject = subjectService.findById(Long.parseLong(s));
+                subjectService.addTeacherToSubject(subject, user);
+            }
         }
         return redirect;
     }
@@ -211,5 +218,47 @@ public class AdminController {
             redirect = "redirect:/admin/user/teachers";
         }
         return redirect;
+    }
+
+    @GetMapping("/subjects")
+    public String subjectsList(Model model){
+        List<Subject> subjects = subjectService.findAll();
+        model.addAttribute("subjects", subjects);
+        return "admin/subjectsList";
+    }
+
+    @GetMapping("/subject/{subjectId}")
+    public String subjectDetails(Model model, @PathVariable Long subjectId){
+        Subject subject = subjectService.findById(subjectId);
+        List<User> teachers = subjectService.findTeachers(subject);
+        model.addAttribute("subject", subject);
+        model.addAttribute("teachers", teachers);
+        return "admin/subjectDetails";
+    }
+
+    @GetMapping("/subject/remove-teacher/{subjectId}/{teacherId}")
+    public String removeTeacherFromSubject(@PathVariable Long subjectId, @PathVariable Long teacherId){
+        subjectService.removeTeacherFromSubject(subjectId, teacherId);
+        return "redirect:/admin/subject/" + subjectId;
+    }
+
+    @GetMapping("/add-subject")
+    public String addSubjectForm(Model model){
+        Subject subject = new Subject();
+        model.addAttribute("subject", subject);
+        return "admin/addSubject";
+    }
+
+    @PostMapping("/add-subject")
+    public String addSubject(Subject subject, HttpServletRequest request){
+
+        subjectService.save(subject);
+        String[] teachers = request.getParameterValues("teacher");
+        for (String t : teachers) {
+            User teacher = userService.findById(Long.parseLong(t));
+            subjectService.addTeacherToSubject(subject, teacher);
+        }
+
+        return "redirect:/admin/subject/" + subject.getId();
     }
 }

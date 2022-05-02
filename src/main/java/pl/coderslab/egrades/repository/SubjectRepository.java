@@ -23,5 +23,6 @@ public interface SubjectRepository extends JpaRepository<Subject, Long> {
     @Query("select g.subject from Grade g where g.id = ?1")
     Subject findSubjectByGradeId(Long gradeId);
 
-
+    @Query("select s.teachers from Subject s where s = ?1")
+    List<User> findTeachers(Subject subject);
 }

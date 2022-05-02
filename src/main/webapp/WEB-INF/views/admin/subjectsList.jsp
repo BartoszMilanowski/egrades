@@ -13,7 +13,7 @@
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
-    <title>${user.firstName} ${user.lastName}</title>
+    <title>Przedmioty</title>
 </head>
 <body>
 <%@include file="../../fragments/header.jsp"%>
@@ -23,44 +23,30 @@
         <h1 class="h3 mb-0 text-gray-800">Dziennik elektroniczny eGrades</h1>
     </div>
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">${user.firstName} ${user.lastName}</h6>
-        </div>
+        <div class="card-header py-3"/>
         <div class="card-body">
             <table class="table">
                 <thead>
                 <tr>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
+                    <th scope="col">Przedmiot</th>
+                    <th scope="col">Nauczyciele</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>Imię:</td>
-                    <td>${user.firstName}</td>
-                </tr>
-                <tr>
-                    <td>Nazwisko:</td>
-                    <td>${user.lastName}</td>
-                </tr>
-                <tr>
-                    <td>Adres e-mail:</td>
-                    <td>${user.email}</td>
-                </tr>
-                <tr>
-                    <td>Klasa:</td>
-                    <td>${group.className}</td>
-                </tr>
+                <c:forEach items="${subjects}" var="subject">
+                    <tr>
+                        <td>${subject.subjectName}</td>
+                        <td><a href="/admin/subject/${subject.id}">Pokaż</a></td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
+        <a href="/admin/add-subject"
+           class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Dodaj przedmiot</a>
+        <a href="/dashboard"
+        class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Wróć</a>
     </div>
-    <a href="/admin/edit-user/student/${user.id}"
-       class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Edytuj</a>
-<%--    <a href="/admin/disable-user/${user.id}"--%>
-<%--       class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Dezaktywuj</a>--%>
-    <a href="/admin/user/students"
-       class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Wróć</a>
 </div>
 </body>
 </html>
