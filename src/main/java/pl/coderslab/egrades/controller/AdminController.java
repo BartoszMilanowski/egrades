@@ -155,7 +155,9 @@ public class AdminController {
             view = "admin/editStudent";
         } else if (roleName.equals("teacher")){
             List<Subject> subjects = subjectService.findByTeachers(user);
+            List<Subject> otherSubjects = subjectService.showOtherSubjects(user);
             model.addAttribute("tSubjects", subjects);
+            model.addAttribute("oSubjects", otherSubjects);
             if (user.hasRole("ROLE_ADMIN")){
                 model.addAttribute("admin", "admin");
             }
@@ -192,6 +194,11 @@ public class AdminController {
             user.setRoles(roles);
             user.setId(userId);
             userService.update(user);
+            String[] checkedSubjects = request.getParameterValues("subject");
+            for (String s : checkedSubjects){
+                Subject subject = subjectService.findById(Long.parseLong(s));
+                subjectService.addTeacherToSubject(subject, user);
+            }
         }
         return redirect;
     }
@@ -227,24 +234,6 @@ public class AdminController {
     @GetMapping("/subject/remove-teacher/{subjectId}/{teacherId}")
     public String removeTeacherFromSubject(@PathVariable Long subjectId, @PathVariable Long teacherId){
         subjectService.removeTeacherFromSubject(subjectId, teacherId);
-        return "redirect:/admin/subject/" + subjectId;
-    }
-
-    @GetMapping("/subject/add-teacher/{subjectId}")
-    public String addTeacherToSubjectForm(Model model, @PathVariable Long subjectId){
-
-        Subject subject = subjectService.findById(subjectId);
-        model.addAttribute("subject", subject);
-        List<User> otherTeachers = subjectService.showOtherTeachers(subjectId);
-        model.addAttribute("otherTeachers", otherTeachers);
-        return "admin/addTeacherToSubject";
-    }
-
-    @PostMapping("/subject/add-teacher/{subjectId}")
-    public String addTeacherToSubject(@PathVariable Long subjectId, HttpServletRequest request){
-
-        String[] newTeachersArray = request.getParameterValues("teachers");
-        subjectService.addTeachersToSubject(subjectId, newTeachersArray);
         return "redirect:/admin/subject/" + subjectId;
     }
 }

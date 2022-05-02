@@ -6,10 +6,7 @@ import pl.coderslab.egrades.entity.User;
 import pl.coderslab.egrades.repository.SubjectRepository;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional
@@ -58,7 +55,7 @@ public class SubjectService {
     }
 
     public void addTeacherToSubject(Subject subject, User teacher){
-        Set<User> teachers = subject.getTeachers();
+        Set<User> teachers = new HashSet<>();
         teachers.add(teacher);
         subject.setTeachers(teachers);
         update(subject);
@@ -80,24 +77,10 @@ public class SubjectService {
         subject.setTeachers(Set.copyOf(newTeachers));
     }
 
-    public List<User> showOtherTeachers(Long subjectId){
-        Subject subject = findById(subjectId);
-        List<User> currentTeachers = findTeachers(subject);
-        List<User> otherTeachers = userService.findTeachersAndAdmins();
-        otherTeachers.removeAll(currentTeachers);
-        return otherTeachers;
-    }
-
-    public void addTeachersToSubject(Long subjectId, String[] newTeachersArray){
-        Subject subject = findById(subjectId);
-        List<User> currentTeachers = findTeachers(subject);
-        List<User> newTeachers = new ArrayList<>();
-
-        for (String s : newTeachersArray){
-            newTeachers.add(userService.findById(Long.parseLong(s)));
-        }
-        for (User u : newTeachers){
-            currentTeachers.add(u);
-        }
+    public List<Subject> showOtherSubjects(User teacher){
+        List<Subject> currentSubjects = findByTeachers(teacher);
+        List<Subject> otherSubjects = findAll();
+        otherSubjects.removeAll(currentSubjects);
+        return otherSubjects;
     }
 }
