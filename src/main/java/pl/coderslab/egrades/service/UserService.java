@@ -8,6 +8,7 @@ import pl.coderslab.egrades.entity.User;
 import pl.coderslab.egrades.repository.UserRepository;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -82,5 +83,16 @@ public class UserService{
         } else {
             user.setEnabled(1);
         }
+    }
+
+    public List<User> showOtherTeachers(User teacher){
+        List<User> teachers = findTeachersAndAdmins();
+        List<User> otherTeachers = new ArrayList<>();
+        for (User t : teachers){
+            if (t.getId() != teacher.getId()){
+                otherTeachers.add(t);
+            }
+        }
+        return otherTeachers;
     }
 }

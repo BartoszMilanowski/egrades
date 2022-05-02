@@ -48,4 +48,9 @@ public class ClassService {
         classes.remove(group);
         return classes;
     }
+
+    public List<User> findStudents(Long groupId){
+        Class group = findById(groupId);
+        return classRepository.findStudents(group);
+    }
 }

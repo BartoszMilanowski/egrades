@@ -258,7 +258,48 @@ public class AdminController {
             User teacher = userService.findById(Long.parseLong(t));
             subjectService.addTeacherToSubject(subject, teacher);
         }
-
         return "redirect:/admin/subject/" + subject.getId();
+    }
+
+    @GetMapping("/classes")
+    public String showClassesList(){
+        return "admin/classesList";
+    }
+
+    @GetMapping("/class/{classId}")
+    public String showClass(Model model, @PathVariable Long classId){
+        Class group = classService.findById(classId);
+        List<User> students = classService.findStudents(classId);
+        model.addAttribute("group", group);
+        model.addAttribute("students", students);
+        return "admin/classDetails";
+    }
+
+    @GetMapping("/add-class")
+    public String addClassForm(Model model){
+        Class group = new Class();
+        model.addAttribute("group", group);
+        return "admin/addClass";
+    }
+
+    @PostMapping("/add-class")
+    public String addClass(Class group){
+        classService.save(group);
+        return "redirect:/admin/classes";
+    }
+
+    @GetMapping("/edit-class/{classId}")
+    public String editClassForm(Model model, @PathVariable Long classId){
+        Class group = classService.findById(classId);
+        List<User> otherTeachers = userService.showOtherTeachers(group.getSupervisingTeacher());
+        model.addAttribute("otherTeachers", otherTeachers);
+        model.addAttribute("group", group);
+        return "admin/editClass";
+    }
+
+    @PostMapping("/edit-class/{classId}")
+    public String editClass(Class group){
+        classService.update(group);
+        return "redirect:/admin/class/" + group.getId();
     }
 }
