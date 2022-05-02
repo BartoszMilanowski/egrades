@@ -1,7 +1,9 @@
 package pl.coderslab.egrades.service;
 
 import org.springframework.stereotype.Service;
+import pl.coderslab.egrades.entity.Class;
 import pl.coderslab.egrades.entity.Presence;
+import pl.coderslab.egrades.entity.Subject;
 import pl.coderslab.egrades.entity.User;
 import pl.coderslab.egrades.repository.PresenceRepository;
 
@@ -50,5 +52,9 @@ public class PresenceService {
 
     public List<Presence> findByTeacher(User teacher){
         return presenceRepository.findByTeacher(teacher);
+    }
+
+    public List<Presence> findBySubjectAndClass(Subject subject, Class group){
+        return presenceRepository.findBySubjectAndClass(subject, group);
     }
 }

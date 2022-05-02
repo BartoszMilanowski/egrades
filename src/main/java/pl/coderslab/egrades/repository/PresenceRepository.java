@@ -3,7 +3,9 @@ package pl.coderslab.egrades.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import pl.coderslab.egrades.entity.Class;
 import pl.coderslab.egrades.entity.Presence;
+import pl.coderslab.egrades.entity.Subject;
 import pl.coderslab.egrades.entity.User;
 
 import java.util.List;
@@ -25,4 +27,7 @@ public interface PresenceRepository extends JpaRepository<Presence, Long> {
     List<Presence> findByAbsentStudent(User student);
 
     List<Presence> findByTeacher(User teacher);
+
+    @Query("select p from Presence p where p.subject = ?1 and p.group = ?2")
+    List<Presence> findBySubjectAndClass(Subject subject, Class group);
 }

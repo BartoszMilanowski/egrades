@@ -52,10 +52,10 @@
         </div>
     </sec:authorize>
 
-    <sec:authorize access="hasRole('ROLE_TEACHER')">
+    <sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_ADMIN')">
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Lista klas</h6>
+        <div class="card-header py-3" id="grades">
+            <h6 class="m-0 font-weight-bold text-primary">Oceny</h6>
         </div>
         <div class="card-body">
             <table class="table">
@@ -75,6 +75,33 @@
                         <td>${group.supervisingTeacher}</td>
                         <c:forEach var="subject" items="${subjects}">
                         <td><a href="/teacher/class/${group.id}/${subject.id}">${subject.subjectName}</a></td>
+                        </c:forEach>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-header py-3" id="presence">
+            <h6 class="m-0 font-weight-bold text-primary">Obecności</h6>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Klasa</th>
+                    <th scope="col">Wychowawca</th>
+                    <c:forEach var="subject" items="${subjects}">
+                        <th scope="col"></th>
+                    </c:forEach>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="group" items="${classes}">
+                    <tr>
+                        <td>${group.className}</td>
+                        <td>${group.supervisingTeacher}</td>
+                        <c:forEach var="subject" items="${subjects}">
+                            <td><a href="/teacher/presence/class/${group.id}/${subject.id}">${subject.subjectName}</a></td>
                         </c:forEach>
                     </tr>
                 </c:forEach>

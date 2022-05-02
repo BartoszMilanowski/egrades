@@ -105,3 +105,12 @@ insert into egrades.grades (date_time, grade_description, grade_value, student_i
 
 #Oceny końcowe
 insert into egrades.grades (date_time, grade_value, student_id, subject_id, teacher_id, is_final) VALUES ( CURDATE(),3, 1, 1, 1, true);
+
+#Obecności
+insert into egrades.presence (date, class_id, subject_id, teacher_id) VALUES (CURDATE(), 1, 1, 11);
+
+insert into egrades.present_students (presence_id, student_id) VALUES (1,1);
+insert into egrades.present_students (presence_id, student_id) VALUES (1,2);
+insert into egrades.present_students (presence_id, student_id) VALUES (1,3);
+insert into egrades.absent_students (presence_id, student_id) VALUES (1,4);
+insert into egrades.absent_students (presence_id, student_id) VALUES (1,5);

@@ -67,14 +67,11 @@ public class HomeController {
            model.addAttribute("avg", df.format(avg));
 
            //Pulpit nauczyciela
-        } else if (user.hasRole("ROLE_TEACHER")){
+        } else if (user.hasRole("ROLE_TEACHER") || user.hasRole("ROLE_ADMIN")){
             List<Class> classes = classService.findAll();
             List<Subject> subjects = subjectService.findByTeachers(user);
             model.addAttribute("subjects", subjects);
             model.addAttribute("classes", classes);
-        } else if (user.hasRole("ROLE_ADMIN")){
-            List<User> users = userService.findAll();
-            model.addAttribute("users", users);
         }
         return "dashboard";
     }

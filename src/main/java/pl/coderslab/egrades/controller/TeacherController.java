@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import pl.coderslab.egrades.entity.Class;
 import pl.coderslab.egrades.entity.*;
 import pl.coderslab.egrades.login.CurrentUser;
-import pl.coderslab.egrades.service.ClassService;
-import pl.coderslab.egrades.service.GradeService;
-import pl.coderslab.egrades.service.SubjectService;
-import pl.coderslab.egrades.service.UserService;
+import pl.coderslab.egrades.service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
@@ -28,13 +25,17 @@ public class TeacherController {
     private final SubjectService subjectService;
     private final ClassService classService;
 
+    private final PresenceService presenceService;
+
 
     public TeacherController(UserService userService, GradeService gradeService,
-                             SubjectService subjectService, ClassService classService) {
+                             SubjectService subjectService, ClassService classService,
+                             PresenceService presenceService) {
         this.userService = userService;
         this.gradeService = gradeService;
         this.subjectService = subjectService;
         this.classService = classService;
+        this.presenceService = presenceService;
     }
 
     @GetMapping("/class/{classId}/{subjectId}")
@@ -200,5 +201,20 @@ public class TeacherController {
         gradeService.deleteById(gradeId);
         gradeService.update(grade);
         return "redirect:/teacher/class/" + groupId + "/" + subjectId + "/" + studentId;
+    }
+
+    @GetMapping("/presence/class/{classId}/{subjectId}")
+    public String showPresenceList(Model model, @PathVariable Long classId,
+                                   @PathVariable Long subjectId, @AuthenticationPrincipal CurrentUser currentUser){
+
+        Class group = classService.findById(classId);
+        Subject subject = subjectService.findById(subjectId);
+        User teacher = currentUser.getUser();
+        List<Presence> presences = presenceService.findBySubjectAndClass(subject, group);
+        model.addAttribute("group", group);
+        model.addAttribute("subject", subject);
+        model.addAttribute("teacher", teacher);
+        model.addAttribute("presences", presences);
+        return "teacher/presencesList";
     }
 }
