@@ -43,7 +43,7 @@
                     <c:forEach items="${presences}" var="presence">
                         <tr>
                             <td>${presence.date}</td>
-                            <td><a href="/">Szczegóły</a></td>
+                            <td><a href="/teacher/presence/${presence.id}">Szczegóły</a></td>
                         </tr>
                     </c:forEach>
                 </tbody>

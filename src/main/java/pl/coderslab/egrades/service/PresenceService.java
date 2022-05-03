@@ -57,4 +57,12 @@ public class PresenceService {
     public List<Presence> findBySubjectAndClass(Subject subject, Class group){
         return presenceRepository.findBySubjectAndClass(subject, group);
     }
+
+    public List<User> findPresentStudents(Presence presence){
+        return presenceRepository.findPresentStudents(presence);
+    }
+
+    public List<User> findAbsentStudents(Presence presence){
+        return presenceRepository.findAbsentStudents(presence);
+    }
 }

@@ -30,4 +30,12 @@ public interface PresenceRepository extends JpaRepository<Presence, Long> {
 
     @Query("select p from Presence p where p.subject = ?1 and p.group = ?2")
     List<Presence> findBySubjectAndClass(Subject subject, Class group);
+
+    @Query("select p.presentStudents from Presence p where p = ?1")
+    List<User> findPresentStudents(Presence presence);
+
+    @Query("select p.absentStudents from Presence p where p = ?1")
+    List<User> findAbsentStudents(Presence presence);
+
+
 }

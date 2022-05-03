@@ -217,4 +217,21 @@ public class TeacherController {
         model.addAttribute("presences", presences);
         return "teacher/presencesList";
     }
+
+    @GetMapping("/presence/{presenceId}")
+    public String showPresence(Model model, @PathVariable Long presenceId){
+
+        Presence presence = presenceService.findById(presenceId);
+        model.addAttribute("presence", presence);
+        List<User> presentStudents = presenceService.findPresentStudents(presence);
+        List<User> absentStudents = presenceService.findAbsentStudents(presence);
+        int presentNmb = presentStudents.size();
+        int absentNbb = absentStudents.size();
+        model.addAttribute("presentStudents", presentStudents);
+        model.addAttribute("absentStudents", absentStudents);
+        model.addAttribute("presentNmb", presentNmb);
+        model.addAttribute("absentNmb", absentNbb);
+
+        return "teacher/presence";
+    }
 }
