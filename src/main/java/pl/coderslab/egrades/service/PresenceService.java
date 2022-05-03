@@ -8,6 +8,7 @@ import pl.coderslab.egrades.entity.User;
 import pl.coderslab.egrades.repository.PresenceRepository;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,8 +18,14 @@ public class PresenceService {
 
     private final PresenceRepository presenceRepository;
 
-    public PresenceService(PresenceRepository presenceRepository) {
+    private final UserService userService;
+
+    private final ClassService classService;
+
+    public PresenceService(PresenceRepository presenceRepository, UserService userService, ClassService classService) {
         this.presenceRepository = presenceRepository;
+        this.userService = userService;
+        this.classService = classService;
     }
 
     public void save(Presence presence){
@@ -64,5 +71,14 @@ public class PresenceService {
 
     public List<User> findAbsentStudents(Presence presence){
         return presenceRepository.findAbsentStudents(presence);
+    }
+
+    public List<User> studentsArrayToList(String[] array){
+        List<User> list = new ArrayList<>();
+        for (String s : array){
+            User student = userService.findById(Long.parseLong(s));
+            list.add(student);
+        }
+        return list;
     }
 }

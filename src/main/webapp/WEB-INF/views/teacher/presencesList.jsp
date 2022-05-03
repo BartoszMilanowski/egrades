@@ -29,7 +29,8 @@
                 przedmiot: ${subject.subjectName}</h6>
         </div>
         <div class="card-header py-3">
-            <a href="/">Sprawdź obecność</a>
+            <a href="/teacher/presence/check-presence/${group.id}/${subject.id}">
+                Sprawdź obecność</a>
         </div>
         <div class="card-body">
             <table class="table">

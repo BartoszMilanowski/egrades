@@ -15,6 +15,7 @@ import pl.coderslab.egrades.service.*;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/teacher")
@@ -233,5 +234,40 @@ public class TeacherController {
         model.addAttribute("absentNmb", absentNbb);
 
         return "teacher/presence";
+    }
+
+    @GetMapping("/presence/check-presence/{classId}/{subjectId}")
+    public String checkPresenceForm(Model model, @PathVariable Long classId, @PathVariable Long subjectId,
+                                   @AuthenticationPrincipal CurrentUser currentUser){
+        User teacher = currentUser.getUser();
+        Presence presence = new Presence();
+        Class group = classService.findById(classId);
+        Subject subject = subjectService.findById(subjectId);
+        List<User> students = userService.findStudentByClasses(group);
+        LocalDate date = LocalDate.now();
+
+        model.addAttribute("teacher", teacher);
+        model.addAttribute("presence", presence);
+        model.addAttribute("group", group);
+        model.addAttribute("subject", subject);
+        model.addAttribute("students", students);
+        model.addAttribute("date", date);
+        return "teacher/checkPresence";
+    }
+
+    @PostMapping("/presence/check-presence/{classId}/{subjectId}")
+    public String checkPresence(Presence presence, @PathVariable Long classId, @PathVariable Long subjectId,
+                                HttpServletRequest request){
+
+        String[] presentStudentsArr = request.getParameterValues("present");
+        String[] absentStudentsArr = request.getParameterValues("absent");
+        List<User> presentStudents = presenceService.studentsArrayToList(presentStudentsArr);
+        List<User> absentStudents = presenceService.studentsArrayToList(absentStudentsArr);
+        presence.setPresentStudents(Set.copyOf(presentStudents));
+        presence.setAbsentStudents(Set.copyOf(absentStudents));
+        presence.setDate(LocalDate.now());
+        presenceService.save(presence);
+
+        return "redirect:/teacher/presence/class/" + classId + "/" + subjectId;
     }
 }

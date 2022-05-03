@@ -107,7 +107,7 @@ insert into egrades.grades (date_time, grade_description, grade_value, student_i
 insert into egrades.grades (date_time, grade_value, student_id, subject_id, teacher_id, is_final) VALUES ( CURDATE(),3, 1, 1, 1, true);
 
 #Obecności
-insert into egrades.presence (date, class_id, subject_id, teacher_id) VALUES (CURDATE(), 1, 1, 11);
+insert into egrades.presence (date, class_id, subject_id, teacher_id) VALUES ('2022-04-28', 1, 1, 11);
 
 insert into egrades.present_students (presence_id, student_id) VALUES (1,1);
 insert into egrades.present_students (presence_id, student_id) VALUES (1,2);
