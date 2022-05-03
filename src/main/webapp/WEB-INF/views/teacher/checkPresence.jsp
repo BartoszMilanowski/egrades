@@ -40,7 +40,7 @@
                             <th scope="col">&nbsp;Nazwisko</th>
                             <th scope="col">&nbsp;Imię</th>
                             <th scope="col">&nbsp;Obecny</th>
-                            <th scope="col">&nbsp;Nieobecny</th>
+<%--                            <th scope="col">&nbsp;Nieobecny</th>--%>
                         </tr>
                         </thead>
                         <tbody>
@@ -48,8 +48,7 @@
                                 <tr id="student">
                                     <td id="lastName">${student.lastName}</td>
                                     <td id="firstName">${student.firstName}</td>
-                                    <td><input type="checkbox" name="present" value="${student.id}" id="present"></td>
-                                    <td><input type="checkbox" name="absent" value="${student.id}" id="absent"></td>
+                                    <td><input type="checkbox" name="present" value="${student.id}"></td>
                                 </tr>
                             </c:forEach>
                         </tbody>

@@ -81,4 +81,17 @@ public class PresenceService {
         }
         return list;
     }
+
+    public List<User> absentStudentsList(Long classId, List<User> presentStudents){
+       List<User> holeClassList = userService.findStudentByClasses(classService.findById(classId));
+//       List<User> absentStudents = new ArrayList<>();
+       for (int i = 0; i < holeClassList.size(); i++){
+           for (int j = 0; j < presentStudents.size(); j++){
+               if (holeClassList.get(i).getId().equals(presentStudents.get(j).getId())){
+                   holeClassList.remove(holeClassList.get(i));
+               }
+           }
+       }
+       return holeClassList;
+    }
 }

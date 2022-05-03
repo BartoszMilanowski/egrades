@@ -260,9 +260,8 @@ public class TeacherController {
                                 HttpServletRequest request){
 
         String[] presentStudentsArr = request.getParameterValues("present");
-        String[] absentStudentsArr = request.getParameterValues("absent");
         List<User> presentStudents = presenceService.studentsArrayToList(presentStudentsArr);
-        List<User> absentStudents = presenceService.studentsArrayToList(absentStudentsArr);
+        List<User> absentStudents = presenceService.absentStudentsList(classId, presentStudents);
         presence.setPresentStudents(Set.copyOf(presentStudents));
         presence.setAbsentStudents(Set.copyOf(absentStudents));
         presence.setDate(LocalDate.now());
