@@ -89,6 +89,8 @@
             ${presence.comment}
         </div>
     </div>
+    <a href="/teacher/edit-presence/${presence.id}"
+       class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Edytuj</a>
     <a href="/teacher/presence/class/${presence.group.id}/${presence.subject.id}"
        class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Wróć</a>
 </div>

@@ -269,4 +269,37 @@ public class TeacherController {
 
         return "redirect:/teacher/presence/class/" + classId + "/" + subjectId;
     }
+
+    @GetMapping("/edit-presence/{presenceId}")
+    public String editPresenceForm(Model model, @PathVariable Long presenceId){
+
+        Presence presence = presenceService.findById(presenceId);
+        List<User> presentStudents = presenceService.findPresentStudents(presence);
+        List<User> absentStudents = presenceService.findAbsentStudents(presence);
+        String dateStr = presence.getDate().toString();
+        model.addAttribute("presence", presence);
+        model.addAttribute("presentStudents", presentStudents);
+        model.addAttribute("absentStudents",absentStudents);
+        model.addAttribute("dateStr", dateStr);
+
+        return "teacher/editPresence";
+    }
+
+    @PostMapping("/edit-presence/{presenceId}")
+    public String editPresence(Presence presence, @PathVariable Long presenceId,
+                               HttpServletRequest request){
+
+        Class group = presence.getGroup();
+        String[] presentStudentsArr = request.getParameterValues("present");
+        List<User> presentStudents = presenceService.studentsArrayToList(presentStudentsArr);
+        List<User> absentStudents = presenceService.absentStudentsList(group.getId(), presentStudents);
+        presence.setPresentStudents(Set.copyOf(presentStudents));
+        presence.setAbsentStudents(Set.copyOf(absentStudents));
+        String dateStr = request.getParameter("dateStr");
+        LocalDate date = LocalDate.parse(dateStr);
+        presence.setDate(date);
+        presenceService.update(presence);
+
+        return "redirect:/teacher/presence/" + presenceId;
+    }
 }
