@@ -31,17 +31,20 @@
         <form:form cssClass="user" modelAttribute="group" method="post" id="form">
             <div class="form-group"><br/><br/>
                 <form:hidden path="id" value="${group.id}"/>
-                <span>&nbspOznaczenie:&nbsp;<form:input path="className" id="className"/></span><br/><br/>
+                <span>&nbspOznaczenie:<br/><br/>&nbsp;<form:input path="className" id="className"/></span><br/><br/>
                 <span>&nbsp;Wychowawca: <br/><br/>
-                    <form:select path="supervisingTeacher">
+                    &nbsp;<form:select path="supervisingTeacher">
                         <form:option value="${group.supervisingTeacher.id}" label="${group.supervisingTeacher.name}"/>
                         <form:options items="${otherTeachers}" itemValue="id" itemLabel="name"/>
                     </form:select>
                 </span><br/><br/>
-                <input type="submit" value="Edytuj klasę" class="btn btn-primary btn-user">
+                &nbsp;<input type="submit" value="Edytuj klasę" class="btn btn-primary btn-user">
             </div>
         </form:form>
     </div>
+    <a href="/dashboard#classes"
+       class="d-none d-inline-block btn btn-sm btn-primary shadow-sm"
+       onclick="return confirm('Podane dane nie zostaną zapisane!')">Anuluj</a>
 </div>
 </body>
 </html>

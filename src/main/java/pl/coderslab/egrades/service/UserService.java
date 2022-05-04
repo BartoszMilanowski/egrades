@@ -71,9 +71,13 @@ public class UserService{
     }
 
     public List<User> findTeachersAndAdmins(){
-        List<User> teachers = findByRoles(roleService.findById(2));
-        List<User> admins = findByRoles(roleService.findById(3));
+        List<User> teachers = findByRoles(roleService.findByName("ROLE_TEACHER"));
+        List<User> admins = findByRoles(roleService.findByName("ROLE_ADMIN"));
         return Stream.concat(teachers.stream(), admins.stream()).collect(Collectors.toList());
+    }
+
+    public List<User> findAllStudents(){
+        return findByRoles(roleService.findByName("ROLE_STUDENT"));
     }
 
     public void changeEnabled(Long userId){

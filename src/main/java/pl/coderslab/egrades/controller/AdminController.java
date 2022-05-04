@@ -73,22 +73,6 @@ public class AdminController {
         return view;
     }
 
-    @GetMapping("/user/students")
-    private String studentList(Model model){
-
-        List<User> students = userService.findByRoles(roleService.findById(1));
-        model.addAttribute("users", students);
-        return "admin/userList";
-    }
-
-    @GetMapping("/user/teachers")
-    private String teachersList(Model model){
-
-        List<User> users = userService.findTeachersAndAdmins();
-        model.addAttribute("users", users);
-        return "admin/userList";
-    }
-
     @GetMapping("/add-user/{roleName}")
     public String addUserForm(Model model, @PathVariable String roleName){
 
@@ -220,13 +204,6 @@ public class AdminController {
         return redirect;
     }
 
-    @GetMapping("/subjects")
-    public String subjectsList(Model model){
-        List<Subject> subjects = subjectService.findAll();
-        model.addAttribute("subjects", subjects);
-        return "admin/subjectsList";
-    }
-
     @GetMapping("/subject/{subjectId}")
     public String subjectDetails(Model model, @PathVariable Long subjectId){
         Subject subject = subjectService.findById(subjectId);
@@ -259,11 +236,6 @@ public class AdminController {
             subjectService.addTeacherToSubject(subject, teacher);
         }
         return "redirect:/admin/subject/" + subject.getId();
-    }
-
-    @GetMapping("/classes")
-    public String showClassesList(){
-        return "admin/classesList";
     }
 
     @GetMapping("/class/{classId}")

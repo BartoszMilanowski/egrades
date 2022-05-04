@@ -28,16 +28,20 @@ public class HomeController {
 
     private final PresenceService presenceService;
 
+    private final RoleService roleService;
+
     private final BCryptPasswordEncoder passwordEncoder;
 
     public HomeController(UserService userService, GradeService gradeService,
                           SubjectService subjectService, ClassService classService,
-                          PresenceService presenceService, BCryptPasswordEncoder passwordEncoder) {
+                          PresenceService presenceService, RoleService roleService,
+                          BCryptPasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.gradeService = gradeService;
         this.subjectService = subjectService;
         this.classService = classService;
         this.presenceService = presenceService;
+        this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -80,6 +84,17 @@ public class HomeController {
             List<Subject> subjects = subjectService.findByTeachers(user);
             model.addAttribute("subjects", subjects);
             model.addAttribute("classes", classes);
+        }
+
+        if (user.hasRole("ROLE_ADMIN")){
+            List<User> students = userService.findAllStudents();
+            List<User> teachers = userService.findTeachersAndAdmins();
+            List<Class> classes = classService.findAll();
+            List<Subject> subjectsList = subjectService.findAll();
+            model.addAttribute("students", students);
+            model.addAttribute("teachers", teachers);
+            model.addAttribute("classes", classes);
+            model.addAttribute("subjectsList", subjectsList);
         }
         return "dashboard";
     }

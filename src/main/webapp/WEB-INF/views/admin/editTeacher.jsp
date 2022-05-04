@@ -56,6 +56,9 @@
                 </div>
             </form:form>
         </div>
+        <a href="/dashboard#teachers"
+           class="d-none d-inline-block btn btn-sm btn-primary shadow-sm"
+           onclick="return confirm('Podane dane nie zostaną zapisane!')">Anuluj</a>
     </div>
 </body>
 </html>

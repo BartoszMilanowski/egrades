@@ -57,9 +57,7 @@
     </div>
     <a href="/admin/edit-user/student/${user.id}"
        class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Edytuj</a>
-<%--    <a href="/admin/disable-user/${user.id}"--%>
-<%--       class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Dezaktywuj</a>--%>
-    <a href="/admin/user/students"
+    <a href="/admin/class/${group.id}"
        class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Wróć</a>
 </div>
 </body>
