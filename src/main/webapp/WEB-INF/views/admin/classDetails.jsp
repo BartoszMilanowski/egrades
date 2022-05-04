@@ -55,7 +55,7 @@
     </div>
     <a href="/admin/edit-class/${group.id}"
        class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Edytuj</a>
-    <a href="/admin/classes"
+    <a href="/dashboard#classes"
        class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Wróć</a>
 </div>
 </body>

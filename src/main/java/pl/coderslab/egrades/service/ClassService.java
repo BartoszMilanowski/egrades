@@ -6,6 +6,7 @@ import pl.coderslab.egrades.entity.User;
 import pl.coderslab.egrades.repository.ClassRepository;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,8 +45,13 @@ public class ClassService {
     }
 
     public List<Class> findOtherClasses(Class group){
-        List<Class> classes = classRepository.findAll();
-        classes.remove(group);
+       List<Class> allClasses = findAll();
+       List<Class> classes = new ArrayList<>();
+       for (Class c : allClasses){
+           if (c.getId() != group.getId()){
+               classes.add(c);
+           }
+       }
         return classes;
     }
 

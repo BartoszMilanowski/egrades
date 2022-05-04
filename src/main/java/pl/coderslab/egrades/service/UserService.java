@@ -80,15 +80,6 @@ public class UserService{
         return findByRoles(roleService.findByName("ROLE_STUDENT"));
     }
 
-    public void changeEnabled(Long userId){
-        User user = findById(userId);
-        if (user.getEnabled() == 1){
-            user.setEnabled(0);
-        } else {
-            user.setEnabled(1);
-        }
-    }
-
     public List<User> showOtherTeachers(User teacher){
         List<User> teachers = findTeachersAndAdmins();
         List<User> otherTeachers = new ArrayList<>();

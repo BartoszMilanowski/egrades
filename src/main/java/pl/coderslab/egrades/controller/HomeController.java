@@ -113,14 +113,14 @@ public class HomeController {
             List<Subject> subjects = subjectService.findByTeachers(user);
             model.addAttribute("subjects", subjects);
         }
-        return "myAccount";
+        return "allUsers/myAccount";
     }
 
     @GetMapping("/user/change-password")
     public String changePassForm(Model model, @AuthenticationPrincipal CurrentUser currentUser){
         User user = currentUser.getUser();
         model.addAttribute("user", user);
-        return "changePass";
+        return "allUser/changePass";
     }
 
     @PostMapping("/user/change-password")
@@ -129,6 +129,6 @@ public class HomeController {
         String pass = request.getParameter("password");
         user.setPassword(passwordEncoder.encode(pass));
         userService.save(user);
-        return "passChanged";
+        return "allUsers/passChanged";
     }
 }

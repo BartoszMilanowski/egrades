@@ -40,7 +40,8 @@
                 </c:forEach>
             </span><br/><br/>
             <span>&nbsp;<input type="checkbox" name="admin">&nbsp;Administrator</span><br/><br/>
-            &nbsp;<input type="submit" value="Dodaj nauczyciela" class="btn btn-primary btn-user">
+            &nbsp;<input type="submit" value="Dodaj nauczyciela"
+                         class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">
         </div>
     </form:form>
     </div>

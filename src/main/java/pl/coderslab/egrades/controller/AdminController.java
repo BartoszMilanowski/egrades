@@ -169,9 +169,9 @@ public class AdminController {
             user.setRoles(roles);
             user.setId(userId);
             userService.update(user);
-            redirect = "redirect:/admin/user/students";
+            redirect = "redirect:/dashboard#students";
         } else if (roleName.equals("teacher")){
-            redirect = "redirect:/admin/user/teachers";
+            redirect = "redirect:/dashboard#teachers";
             String admin = request.getParameter("admin");
             Set<Role> roles = user.getRoles();
             if (admin != null){
@@ -188,18 +188,6 @@ public class AdminController {
                 Subject subject = subjectService.findById(Long.parseLong(s));
                 subjectService.addTeacherToSubject(subject, user);
             }
-        }
-        return redirect;
-    }
-
-    @GetMapping("/disable-user/{userId}")
-    public String disableUser(@PathVariable Long userId){
-        userService.changeEnabled(userId);
-        String redirect = new String();
-        if (userService.findById(userId).hasRole("ROLE_STUDENT")){
-            redirect = "redirect:/admin/user/students";
-        } else {
-            redirect = "redirect:/admin/user/teachers";
         }
         return redirect;
     }
@@ -257,7 +245,7 @@ public class AdminController {
     @PostMapping("/add-class")
     public String addClass(Class group){
         classService.save(group);
-        return "redirect:/admin/classes";
+        return "redirect:/dashboard#classes";
     }
 
     @GetMapping("/edit-class/{classId}")

@@ -52,7 +52,8 @@
                             <span><input type="checkbox" name="admin">&nbsp;Administrator</span><br/><br/>
                         </c:otherwise>
                     </c:choose>
-                    <input type="submit" value="Edytuj nauczyciela" class="btn btn-primary btn-user">
+                    <input type="submit" value="Edytuj nauczyciela"
+                           class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">
                 </div>
             </form:form>
         </div>

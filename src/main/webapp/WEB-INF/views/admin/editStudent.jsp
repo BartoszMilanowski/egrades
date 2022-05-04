@@ -40,7 +40,8 @@
                     <form:options items="${otherClasses}" itemValue="id" itemLabel="className"/>
                 </form:select>
                     </span><br/><br/>
-                <input type="submit" value="Edytuj ucznia" class="btn btn-primary btn-user">
+                <input type="submit" value="Edytuj ucznia"
+                       class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">
             </div>
         </form:form>
     </div>

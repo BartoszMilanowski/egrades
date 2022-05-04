@@ -38,7 +38,8 @@
                         <form:options items="${otherTeachers}" itemValue="id" itemLabel="name"/>
                     </form:select>
                 </span><br/><br/>
-                &nbsp;<input type="submit" value="Edytuj klasę" class="btn btn-primary btn-user">
+                &nbsp;<input type="submit" value="Edytuj klasę"
+                             class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">
             </div>
         </form:form>
     </div>

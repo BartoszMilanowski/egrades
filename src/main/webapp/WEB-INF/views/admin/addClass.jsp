@@ -29,12 +29,13 @@
             <h6 class="m-0 font-weight-bold text-primary">Dodaj klasę</h6>
         </div>
         <form:form cssClass="user" modelAttribute="group" method="post" id="form">
-            <div class="form-group"><br/><br/>
-                <span>&nbspOznaczenie:<br/><br/>&nbsp;<form:input path="className" id="className"/></span><br/><br/>
-                <span>&nbsp;Wychowawca: <br/><br/>
+            <div class="form-group"><br/>
+                <span>&nbspOznaczenie:<br/>&nbsp;<form:input path="className" id="className"/></span><br/><br/>
+                <span>&nbsp;Wychowawca: <br/>
                     &nbsp;<form:select path="supervisingTeacher" items="${allTeachers}" itemValue="id" itemLabel="name"/>
                 </span><br/><br/>
-                &nbsp;<input type="submit" value="Dodaj klasę" class="btn btn-primary btn-user">
+                &nbsp;<input type="submit" value="Dodaj klasę"
+                             class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">
             </div>
         </form:form>
     </div>
