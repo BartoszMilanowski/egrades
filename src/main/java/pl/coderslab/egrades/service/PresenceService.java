@@ -22,10 +22,15 @@ public class PresenceService {
 
     private final ClassService classService;
 
-    public PresenceService(PresenceRepository presenceRepository, UserService userService, ClassService classService) {
+    private final SubjectService subjectService;
+
+    public PresenceService(PresenceRepository presenceRepository,
+                           UserService userService, ClassService classService,
+                           SubjectService subjectService) {
         this.presenceRepository = presenceRepository;
         this.userService = userService;
         this.classService = classService;
+        this.subjectService = subjectService;
     }
 
     public void save(Presence presence){
@@ -49,12 +54,12 @@ public class PresenceService {
         return presenceRepository.findByStudent(student);
     }
 
-    public List<Presence> findByPresentStudent(User student){
-        return presenceRepository.findByPresentStudent(student);
+    public List<Presence> findByPresentStudent(User student, Subject subject){
+        return presenceRepository.findByPresentStudent(student, subject);
     }
 
-    public List<Presence> findByAbsentStudent(User student){
-        return presenceRepository.findByAbsentStudent(student);
+    public List<Presence> findByAbsentStudent(User student, Subject subject){
+        return presenceRepository.findByAbsentStudent(student, subject);
     }
 
     public List<Presence> findByTeacher(User teacher){
@@ -93,5 +98,28 @@ public class PresenceService {
            }
        }
        return holeClassList;
+    }
+
+    public double avgPresence(Subject subject, User student){
+
+        double wasPresent =  findByPresentStudent(student, subject).size();
+        double wasAbsent = findByAbsentStudent(student, subject).size();
+        return (wasPresent/(wasPresent+wasAbsent))*100;
+    }
+
+    public double totalFrequency(User student){
+
+        List<Subject> subjects = subjectService.findAll();
+        List<Double> frequencies = new ArrayList<>();
+        double sum = 0;
+        for (Subject s : subjects){
+            if (!Double.isNaN(avgPresence(s, student))){
+                frequencies.add(avgPresence(s, student));
+            }
+        }
+        for (Double f : frequencies){
+            sum += f;
+        }
+        return sum/frequencies.size();
     }
 }

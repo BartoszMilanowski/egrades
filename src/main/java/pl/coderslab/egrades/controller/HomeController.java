@@ -11,10 +11,7 @@ import pl.coderslab.egrades.entity.Grade;
 import pl.coderslab.egrades.entity.Subject;
 import pl.coderslab.egrades.entity.User;
 import pl.coderslab.egrades.login.CurrentUser;
-import pl.coderslab.egrades.service.ClassService;
-import pl.coderslab.egrades.service.GradeService;
-import pl.coderslab.egrades.service.SubjectService;
-import pl.coderslab.egrades.service.UserService;
+import pl.coderslab.egrades.service.*;
 
 import javax.annotation.security.PermitAll;
 import javax.servlet.http.HttpServletRequest;
@@ -29,15 +26,18 @@ public class HomeController {
     private final SubjectService subjectService;
     private final ClassService classService;
 
+    private final PresenceService presenceService;
+
     private final BCryptPasswordEncoder passwordEncoder;
 
     public HomeController(UserService userService, GradeService gradeService,
                           SubjectService subjectService, ClassService classService,
-                          BCryptPasswordEncoder passwordEncoder) {
+                          PresenceService presenceService, BCryptPasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.gradeService = gradeService;
         this.subjectService = subjectService;
         this.classService = classService;
+        this.presenceService = presenceService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -58,15 +58,23 @@ public class HomeController {
     String dashboard(@AuthenticationPrincipal CurrentUser currentUser, Model model){
         User user = currentUser.getUser();
         model.addAttribute("user", user);
-//Pulpit studenta
         if (user.hasRole("ROLE_STUDENT")){
-            List<Subject> subjects = subjectService.findAll();
-            model.addAttribute("subjects", subjects);
+           List<Subject> subjects = subjectService.findAll();
            List<Grade> finalGrades  = gradeService.findFinalByStudent(user.getId());
            double avg = gradeService.averageFinalGrade(finalGrades);
-           model.addAttribute("avg", df.format(avg));
+           double totalFrequency = presenceService.totalFrequency(user);
+           model.addAttribute("subjects", subjects);
+           if (avg != 0){
+               model.addAttribute("avg", df.format(avg));
+           } else {
+               model.addAttribute("avg", "-");
+           }
+           if (!Double.isNaN(totalFrequency)){
+               model.addAttribute("totalFrequency", totalFrequency + "%");
+           } else {
+               model.addAttribute("totalFrequency", "-");
+           }
 
-           //Pulpit nauczyciela
         } else if (user.hasRole("ROLE_TEACHER") || user.hasRole("ROLE_ADMIN")){
             List<Class> classes = classService.findAll();
             List<Subject> subjects = subjectService.findByTeachers(user);

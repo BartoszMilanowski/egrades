@@ -46,6 +46,10 @@
                         <td><b>Średnia semestralna</b></td>
                         <td>${avg}</td>
                     </tr>
+                    <tr>
+                        <td><b>Frekwencja</b></td>
+                        <td>${totalFrequency}</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
