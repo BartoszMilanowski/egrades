@@ -26,17 +26,13 @@
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Klasa ${group.className}</h6>
         </div>
+        <div class="card-header py-3">
+            Wychowawca: <a href="/admin/user/${group.supervisingTeacher.id}">${group.supervisingTeacher.name}</a>
+        </div>
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Lista uczniów</h6>
+        </div>
         <div class="card-body">
-            <table class="table">
-                <tr>
-                    <td>Wychowawca</td>
-                    <td>${group.supervisingTeacher.name}</td>
-                    <td><a href="/admin/user/${group.supervisingTeacher.id}">
-                        Szczegóły
-                    </a></td>
-                </tr>
-            </table>
-            Lista uczniów
             <table class="table">
                 <thead>
                     <tr>
@@ -59,7 +55,7 @@
     </div>
     <a href="/admin/edit-class/${group.id}"
        class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Edytuj</a>
-    <a href="/admin/classes"
+    <a href="/dashboard#classes"
        class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Wróć</a>
 </div>
 </body>

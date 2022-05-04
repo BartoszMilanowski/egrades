@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import pl.coderslab.egrades.entity.Class;
 import pl.coderslab.egrades.entity.*;
 import pl.coderslab.egrades.login.CurrentUser;
+import pl.coderslab.egrades.model.Frequency;
 import pl.coderslab.egrades.service.*;
 
 import javax.servlet.http.HttpServletRequest;

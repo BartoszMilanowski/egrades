@@ -55,24 +55,32 @@
 
     <sec:authorize access="hasRole('ROLE_ADMIN')">
         <li class="nav-item active">
-            <a class="nav-link" href="/admin/user/students">
-                <span>Uczniowie</span></a>
+            <a class="nav-link" href="/dashboard#students">
+                <span>Lista uczniów</span></a>
         </li>
         <hr class="sidebar-divider my-0">
     </sec:authorize>
 
     <sec:authorize access="hasRole('ROLE_ADMIN')">
         <li class="nav-item active">
-            <a class="nav-link" href="/admin/user/teachers">
-                <span>Nauczyciele</span></a>
+            <a class="nav-link" href="/dashboard#teachers">
+                <span>Lista nauczycieli</span></a>
         </li>
         <hr class="sidebar-divider my-0">
     </sec:authorize>
 
     <sec:authorize access="hasRole('ROLE_ADMIN')">
         <li class="nav-item active">
-            <a class="nav-link" href="/admin/classes">
-                <span>Klasy</span></a>
+            <a class="nav-link" href="/dashboard#classes">
+                <span>Lista klas</span></a>
+        </li>
+        <hr class="sidebar-divider my-0">
+    </sec:authorize>
+
+    <sec:authorize access="hasRole('ROLE_ADMIN')">
+        <li class="nav-item active">
+            <a class="nav-link" href="/dashboard#subjects">
+                <span>Lista przedmiotów</span></a>
         </li>
         <hr class="sidebar-divider my-0">
     </sec:authorize>
@@ -80,7 +88,7 @@
     <sec:authorize access="hasRole('ROLE_ADMIN')">
         <li class="nav-item active">
             <a class="nav-link" href="/admin/add-user/student">
-                <span>Nowy uczeń</span></a>
+                <span>Dodaj ucznia</span></a>
         </li>
         <hr class="sidebar-divider my-0">
     </sec:authorize>
@@ -88,7 +96,7 @@
     <sec:authorize access="hasRole('ROLE_ADMIN')">
         <li class="nav-item active">
             <a class="nav-link" href="/admin/add-user/teacher">
-                <span>Nowy nauczyciel</span></a>
+                <span>Dodaj nauczyciela</span></a>
         </li>
         <hr class="sidebar-divider my-0">
     </sec:authorize>
@@ -96,7 +104,15 @@
     <sec:authorize access="hasRole('ROLE_ADMIN')">
         <li class="nav-item active">
             <a class="nav-link" href="/admin/add-class">
-                <span>Nowa klasa</span></a>
+                <span>Dodaj klasę</span></a>
+        </li>
+        <hr class="sidebar-divider my-0">
+    </sec:authorize>
+
+    <sec:authorize access="hasRole('ROLE_ADMIN')">
+        <li class="nav-item active">
+            <a class="nav-link" href="/admin/add-subject">
+                <span>Dodaj przedmiot</span></a>
         </li>
         <hr class="sidebar-divider my-0">
     </sec:authorize>

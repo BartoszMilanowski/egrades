@@ -16,7 +16,7 @@
     <title>${user.firstName} ${user.lastName}</title>
 </head>
 <body>
-<%@include file="../fragments/header.jsp"%>
+<%@include file="../../fragments/header.jsp"%>
 <div class="container-fluid">
 
     <div class="d-sm-flex align-items-center justify-content-between mb-4">

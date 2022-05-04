@@ -39,12 +39,15 @@
                     &nbsp;<input type="checkbox" name="subject" value="${subject.id}">&nbsp;${subject.subjectName}&nbsp;
                 </c:forEach>
             </span><br/><br/>
-            <span><input type="checkbox" name="admin">&nbsp;Administrator</span><br/><br/>
-            <input type="submit" value="Dodaj nauczyciela" class="btn btn-primary btn-user">
+            <span>&nbsp;<input type="checkbox" name="admin">&nbsp;Administrator</span><br/><br/>
+            &nbsp;<input type="submit" value="Dodaj nauczyciela"
+                         class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">
         </div>
     </form:form>
     </div>
-
+    <a href="/dashboard#teachers"
+       class="d-none d-inline-block btn btn-sm btn-primary shadow-sm"
+       onclick="return confirm('Podane dane nie zostaną zapisane!')">Anuluj</a>
 </div>
 </body>
 </html>

@@ -48,7 +48,7 @@
             </table>
         </div>
     </div>
-    <a href="/admin/subjects"
+    <a href="/dashboard#subjects"
        class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Wróć</a>
 </div>
 </body>

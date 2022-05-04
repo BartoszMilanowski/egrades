@@ -73,22 +73,6 @@ public class AdminController {
         return view;
     }
 
-    @GetMapping("/user/students")
-    private String studentList(Model model){
-
-        List<User> students = userService.findByRoles(roleService.findById(1));
-        model.addAttribute("users", students);
-        return "admin/userList";
-    }
-
-    @GetMapping("/user/teachers")
-    private String teachersList(Model model){
-
-        List<User> users = userService.findTeachersAndAdmins();
-        model.addAttribute("users", users);
-        return "admin/userList";
-    }
-
     @GetMapping("/add-user/{roleName}")
     public String addUserForm(Model model, @PathVariable String roleName){
 
@@ -185,9 +169,9 @@ public class AdminController {
             user.setRoles(roles);
             user.setId(userId);
             userService.update(user);
-            redirect = "redirect:/admin/user/students";
+            redirect = "redirect:/dashboard#students";
         } else if (roleName.equals("teacher")){
-            redirect = "redirect:/admin/user/teachers";
+            redirect = "redirect:/dashboard#teachers";
             String admin = request.getParameter("admin");
             Set<Role> roles = user.getRoles();
             if (admin != null){
@@ -206,25 +190,6 @@ public class AdminController {
             }
         }
         return redirect;
-    }
-
-    @GetMapping("/disable-user/{userId}")
-    public String disableUser(@PathVariable Long userId){
-        userService.changeEnabled(userId);
-        String redirect = new String();
-        if (userService.findById(userId).hasRole("ROLE_STUDENT")){
-            redirect = "redirect:/admin/user/students";
-        } else {
-            redirect = "redirect:/admin/user/teachers";
-        }
-        return redirect;
-    }
-
-    @GetMapping("/subjects")
-    public String subjectsList(Model model){
-        List<Subject> subjects = subjectService.findAll();
-        model.addAttribute("subjects", subjects);
-        return "admin/subjectsList";
     }
 
     @GetMapping("/subject/{subjectId}")
@@ -261,11 +226,6 @@ public class AdminController {
         return "redirect:/admin/subject/" + subject.getId();
     }
 
-    @GetMapping("/classes")
-    public String showClassesList(){
-        return "admin/classesList";
-    }
-
     @GetMapping("/class/{classId}")
     public String showClass(Model model, @PathVariable Long classId){
         Class group = classService.findById(classId);
@@ -285,7 +245,7 @@ public class AdminController {
     @PostMapping("/add-class")
     public String addClass(Class group){
         classService.save(group);
-        return "redirect:/admin/classes";
+        return "redirect:/dashboard#classes";
     }
 
     @GetMapping("/edit-class/{classId}")

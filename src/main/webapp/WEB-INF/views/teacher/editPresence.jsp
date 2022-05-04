@@ -64,7 +64,7 @@
                     </table><br/><br/>
                     &nbsp;Uwagi dodatkowe:<br/><form:textarea path="comment" value="${presence.comment}"/>
                     <br/><br/><br/>
-                    <input type="submit" value="Zapisz" class="btn btn-primary btn-user">
+                    <input type="submit" value="Zapisz" class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">
                 </div>
             </form:form>
         </div>

@@ -37,10 +37,14 @@
                     &nbsp;<input type="checkbox" name="teacher" value="${teacher.id}" multiple="multiple">
                     &nbsp;${teacher.name}<br/>
                 </c:forEach>
-                <br/><br/>&nbsp;<input type="submit" value="Dodaj przedmiot" class="btn btn-primary btn-user">
+                <br/><br/>&nbsp;<input type="submit" value="Dodaj przedmiot"
+                                       class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">
             </div>
         </form:form>
     </div>
+    <a href="/dashboard#subjects"
+       class="d-none d-inline-block btn btn-sm btn-primary shadow-sm"
+       onclick="return confirm('Podane dane nie zostaną zapisane!')">Anuluj</a>
 </div>
 </body>
 </html>

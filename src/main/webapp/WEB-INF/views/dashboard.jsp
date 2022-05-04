@@ -114,12 +114,133 @@
         </div>
     </div>
     </sec:authorize>
-        <sec:authorize access="hasRole('ROLE_ADMIN')">
-            <a href="/admin/user/students">Uczniowie</a><br/>
-            <a href="/admin/user/teachers">Nauczyciele</a><br/>
-            <a href="/admin/subjects">Przedmioty</a><br/>
-            <a href="/admin/classes">Klasy</a>
-        </sec:authorize>
+    <sec:authorize access="hasRole('ROLE_ADMIN')">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4" id="adminDashboard">
+            <h1 class="h3 mb-0 text-gray-800">Panel administratora</h1>
+        </div>
+        <div class="card shadow mb-4">
+            <div class="card-header py-3" id="students">
+                <h6 class="m-0 font-weight-bold text-primary">Uczniowie</h6>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Imię</th>
+                        <th scope="col">Nazwisko</th>
+                        <th scope="col">Rola</th>
+                        <th scope="col">Adres e-mail</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${students}" var="student">
+                        <tr>
+                            <td>${student.firstName}</td>
+                            <td>${student.lastName}</td>
+                            <td>${student.roles}</td>
+                            <td>${student.email}</td>
+                            <td><a href="/admin/user/${student.id}">Szczegóły</a></td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+                <a href="/admin/add-user/student"
+                   class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Dodaj ucznia</a>
+                <a href="/dashboard"
+                   class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Wróć</a>
+            </div>
+        </div>
+        <div class="card shadow mb-4">
+            <div class="card-header py-3" id="teachers">
+                <h6 class="m-0 font-weight-bold text-primary">Nauczyciele</h6>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Imię</th>
+                        <th scope="col">Nazwisko</th>
+                        <th scope="col">Rola</th>
+                        <th scope="col">Adres e-mail</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${teachers}" var="teacher">
+                        <tr>
+                            <td>${teacher.firstName}</td>
+                            <td>${teacher.lastName}</td>
+                            <td>${teacher.roles}</td>
+                            <td>${teacher.email}</td>
+                            <td><a href="/admin/user/${teacher.id}">Szczegóły</a></td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+                <a href="/admin/add-user/teacher"
+                   class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Dodaj nauczyciela</a>
+                <a href="/dashboard"
+                   class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Wróć</a>
+            </div>
+        </div>
+        <div class="card shadow mb-4">
+            <div class="card-header py-3" id="classes">
+            <h6 class="m-0 font-weight-bold text-primary">Klasy</h6>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Klasa</th>
+                        <th scope="col">Wychowawca</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${classes}" var="group">
+                        <tr>
+                            <td>${group.className}</td>
+                            <td>${group.supervisingTeacher.name}</td>
+                            <td><a href="/admin/class/${group.id}">Szczegóły</a></td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+                <a href="/admin/add-class"
+                   class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Dodaj klasę</a>
+                <a href="/dashboard"
+                   class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Wróć</a>
+            </div>
+        </div>
+        <div class="card shadow mb-4">
+            <div class="card-header py-3" id="subjects">
+                <h6 class="m-0 font-weight-bold text-primary">Przedmioty</h6>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Przedmiot</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${subjectsList}" var="s">
+                        <tr>
+                            <td>${s.subjectName}</td>
+                            <td><a href="/admin/subject/${s.id}">Nauczyciele</a></td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+                <a href="/admin/add-subject"
+                           class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Dodaj przedmiot</a>
+                <a href="/dashboard"
+                   class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Wróć</a>
+            </div>
+        </div>
+    </sec:authorize>
     </div>
 </body>
 </html>

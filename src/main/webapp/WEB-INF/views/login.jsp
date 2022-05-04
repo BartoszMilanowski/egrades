@@ -27,9 +27,9 @@
     <div class="card shadow mb-4">
         <form class="user" method="post">
             <div class="form-group"><br/>
-            <label> Login: <input type="text" name="username" class="form-control form-control-user"/> </label><br/>
-            <label> Hasło: <input type="password" name="password" class="form-control form-control-user"/> </label><br/>
-            <input type="submit" value="Zaloguj" class="btn btn-primary btn-user"/>
+            <label>&nbsp;Login:<br/>&nbsp;<input type="text" name="username"/></label><br/>
+            <label>&nbsp;Hasło:<br/>&nbsp;<input type="password" name="password"/></label><br/><br/>
+            &nbsp;<input type="submit" value="Zaloguj" class="d-none d-inline-block btn btn-sm btn-primary shadow-sm"/>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </div>
         </form>

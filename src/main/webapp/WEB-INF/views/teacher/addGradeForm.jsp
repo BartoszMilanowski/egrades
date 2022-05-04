@@ -51,7 +51,7 @@
          &nbsp;Opis:&nbsp;<form:textarea path="gradeDescription" id="desc"/>
           <form:errors path="gradeDescription" cssClass="error" element="p"/>
           <br/><br/>
-          &nbsp;<input type="submit" value="Dodaj ocenę" class="btn btn-primary btn-user">
+          &nbsp;<input type="submit" value="Dodaj ocenę" class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">
           </div>
       </form:form>
     </div>
