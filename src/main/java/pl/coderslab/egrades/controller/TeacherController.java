@@ -14,6 +14,7 @@ import pl.coderslab.egrades.service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -217,6 +218,25 @@ public class TeacherController {
         model.addAttribute("teacher", teacher);
         model.addAttribute("presences", presences);
         return "teacher/presencesList";
+    }
+
+    @GetMapping("/frequency/class/{classId}/{subjectId}")
+    public String showClassFrequency(Model model, @PathVariable Long classId, @PathVariable Long subjectId){
+
+        Class group = classService.findById(classId);
+        Subject subject = subjectService.findById(subjectId);
+        List<User> students = userService.findStudentByClasses(group);
+        List<Frequency> frequencies = new ArrayList<>();
+        for (User s : students){
+            double freq = presenceService.avgPresence(subject, s);
+            if (!Double.isNaN(freq)){
+                frequencies.add(new Frequency(s, freq));
+            }
+        }
+        model.addAttribute("frequencies", frequencies);
+        model.addAttribute("group", group);
+        model.addAttribute("subject", subject);
+        return "teacher/classFrequency";
     }
 
     @GetMapping("/presence/{presenceId}")
