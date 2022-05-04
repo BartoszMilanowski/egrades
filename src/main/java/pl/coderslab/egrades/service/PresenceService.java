@@ -100,6 +100,10 @@ public class PresenceService {
        return holeClassList;
     }
 
+    public List<User> allStudentsAbsent(Long classId){
+        return userService.findStudentByClasses(classService.findById(classId));
+    }
+
     public double avgPresence(Subject subject, User student){
 
         double wasPresent =  findByPresentStudent(student, subject).size();
