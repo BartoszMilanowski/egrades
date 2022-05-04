@@ -10,14 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import pl.coderslab.egrades.entity.Class;
 import pl.coderslab.egrades.entity.*;
 import pl.coderslab.egrades.login.CurrentUser;
-import pl.coderslab.egrades.service.ClassService;
-import pl.coderslab.egrades.service.GradeService;
-import pl.coderslab.egrades.service.SubjectService;
-import pl.coderslab.egrades.service.UserService;
+import pl.coderslab.egrades.service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/teacher")
@@ -28,13 +27,17 @@ public class TeacherController {
     private final SubjectService subjectService;
     private final ClassService classService;
 
+    private final PresenceService presenceService;
+
 
     public TeacherController(UserService userService, GradeService gradeService,
-                             SubjectService subjectService, ClassService classService) {
+                             SubjectService subjectService, ClassService classService,
+                             PresenceService presenceService) {
         this.userService = userService;
         this.gradeService = gradeService;
         this.subjectService = subjectService;
         this.classService = classService;
+        this.presenceService = presenceService;
     }
 
     @GetMapping("/class/{classId}/{subjectId}")
@@ -200,5 +203,123 @@ public class TeacherController {
         gradeService.deleteById(gradeId);
         gradeService.update(grade);
         return "redirect:/teacher/class/" + groupId + "/" + subjectId + "/" + studentId;
+    }
+
+    @GetMapping("/presence/class/{classId}/{subjectId}")
+    public String showPresenceList(Model model, @PathVariable Long classId,
+                                   @PathVariable Long subjectId, @AuthenticationPrincipal CurrentUser currentUser){
+
+        Class group = classService.findById(classId);
+        Subject subject = subjectService.findById(subjectId);
+        User teacher = currentUser.getUser();
+        List<Presence> presences = presenceService.findBySubjectAndClass(subject, group);
+        model.addAttribute("group", group);
+        model.addAttribute("subject", subject);
+        model.addAttribute("teacher", teacher);
+        model.addAttribute("presences", presences);
+        return "teacher/presencesList";
+    }
+
+    @GetMapping("/frequency/class/{classId}/{subjectId}")
+    public String showClassFrequency(Model model, @PathVariable Long classId, @PathVariable Long subjectId){
+
+        Class group = classService.findById(classId);
+        Subject subject = subjectService.findById(subjectId);
+        List<User> students = userService.findStudentByClasses(group);
+        List<Frequency> frequencies = new ArrayList<>();
+        for (User s : students){
+            double freq = presenceService.avgPresence(subject, s);
+            if (!Double.isNaN(freq)){
+                frequencies.add(new Frequency(s, freq));
+            }
+        }
+        model.addAttribute("frequencies", frequencies);
+        model.addAttribute("group", group);
+        model.addAttribute("subject", subject);
+        return "teacher/classFrequency";
+    }
+
+    @GetMapping("/presence/{presenceId}")
+    public String showPresence(Model model, @PathVariable Long presenceId){
+
+        Presence presence = presenceService.findById(presenceId);
+        model.addAttribute("presence", presence);
+        List<User> presentStudents = presenceService.findPresentStudents(presence);
+        List<User> absentStudents = presenceService.findAbsentStudents(presence);
+        int presentNmb = presentStudents.size();
+        int absentNbb = absentStudents.size();
+        model.addAttribute("presentStudents", presentStudents);
+        model.addAttribute("absentStudents", absentStudents);
+        model.addAttribute("presentNmb", presentNmb);
+        model.addAttribute("absentNmb", absentNbb);
+
+        return "teacher/presence";
+    }
+
+    @GetMapping("/presence/check-presence/{classId}/{subjectId}")
+    public String checkPresenceForm(Model model, @PathVariable Long classId, @PathVariable Long subjectId,
+                                   @AuthenticationPrincipal CurrentUser currentUser){
+        User teacher = currentUser.getUser();
+        Presence presence = new Presence();
+        Class group = classService.findById(classId);
+        Subject subject = subjectService.findById(subjectId);
+        List<User> students = userService.findStudentByClasses(group);
+        LocalDate date = LocalDate.now();
+
+        model.addAttribute("teacher", teacher);
+        model.addAttribute("presence", presence);
+        model.addAttribute("group", group);
+        model.addAttribute("subject", subject);
+        model.addAttribute("students", students);
+        model.addAttribute("date", date);
+        return "teacher/checkPresence";
+    }
+
+    @PostMapping("/presence/check-presence/{classId}/{subjectId}")
+    public String checkPresence(Presence presence, @PathVariable Long classId, @PathVariable Long subjectId,
+                                HttpServletRequest request){
+
+        String[] presentStudentsArr = request.getParameterValues("present");
+        List<User> presentStudents = presenceService.studentsArrayToList(presentStudentsArr);
+        List<User> absentStudents = presenceService.absentStudentsList(classId, presentStudents);
+        presence.setPresentStudents(Set.copyOf(presentStudents));
+        presence.setAbsentStudents(Set.copyOf(absentStudents));
+        presence.setDate(LocalDate.now());
+        presenceService.save(presence);
+
+        return "redirect:/teacher/presence/class/" + classId + "/" + subjectId;
+    }
+
+    @GetMapping("/edit-presence/{presenceId}")
+    public String editPresenceForm(Model model, @PathVariable Long presenceId){
+
+        Presence presence = presenceService.findById(presenceId);
+        List<User> presentStudents = presenceService.findPresentStudents(presence);
+        List<User> absentStudents = presenceService.findAbsentStudents(presence);
+        String dateStr = presence.getDate().toString();
+        model.addAttribute("presence", presence);
+        model.addAttribute("presentStudents", presentStudents);
+        model.addAttribute("absentStudents",absentStudents);
+        model.addAttribute("dateStr", dateStr);
+
+        return "teacher/editPresence";
+    }
+
+    @PostMapping("/edit-presence/{presenceId}")
+    public String editPresence(Presence presence, @PathVariable Long presenceId,
+                               HttpServletRequest request){
+
+        Class group = presence.getGroup();
+        String[] presentStudentsArr = request.getParameterValues("present");
+        List<User> presentStudents = presenceService.studentsArrayToList(presentStudentsArr);
+        List<User> absentStudents = presenceService.absentStudentsList(group.getId(), presentStudents);
+        presence.setPresentStudents(Set.copyOf(presentStudents));
+        presence.setAbsentStudents(Set.copyOf(absentStudents));
+        String dateStr = request.getParameter("dateStr");
+        LocalDate date = LocalDate.parse(dateStr);
+        presence.setDate(date);
+        presenceService.update(presence);
+
+        return "redirect:/teacher/presence/" + presenceId;
     }
 }

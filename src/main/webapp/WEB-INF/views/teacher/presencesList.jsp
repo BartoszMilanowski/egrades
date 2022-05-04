@@ -13,7 +13,7 @@
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
-    <title> Oceny ${group.className}</title>
+    <title>Obecności ${group.className}</title>
 </head>
 <body>
 
@@ -25,28 +25,32 @@
     </div>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Oceny: klasa ${group.className},
+            <h6 class="m-0 font-weight-bold text-primary">Obecności: klasa ${group.className},
                 przedmiot: ${subject.subjectName}</h6>
+        </div>
+        <div class="card-header py-3">
+            <a href="/teacher/presence/check-presence/${group.id}/${subject.id}">
+                Sprawdź obecność</a>
+        </div>
+        <div class="card-header py-3">
+            <a href="/teacher/frequency/class/${group.id}/${subject.id}">
+                Frekwencja</a>
         </div>
         <div class="card-body">
             <table class="table">
                 <thead>
-                <tr>
-                    <th scope="col">Nazwisko</th>
-                    <th scope="col">Imię</th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                </tr>
+                    <tr>
+                        <th scope="col">Data</th>
+                        <th scope="col"></th>
+                    </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${students}" var="student">
-                    <tr>
-                        <td>${student.lastName}</td>
-                        <td>${student.firstName}</td>
-                        <td><a href="/teacher/class/${group.id}/${subject.id}/${student.id}">Oceny</a></td>
-                        <td><a href="/teacher/grade/add/${subject.id}/${student.id}">Dodaj ocenę</a></td>
-                    </tr>
-                </c:forEach>
+                    <c:forEach items="${presences}" var="presence">
+                        <tr>
+                            <td>${presence.date}</td>
+                            <td><a href="/teacher/presence/${presence.id}">Szczegóły</a></td>
+                        </tr>
+                    </c:forEach>
                 </tbody>
             </table>
         </div>

@@ -26,15 +26,6 @@
 
     <hr class="sidebar-divider my-0">
 
-    <sec:authorize access="isAuthenticated()">
-        <li class="nav-item active">
-            <a class="nav-link" href="/user/my-account">
-                <span>Mój profil</span></a>
-        </li>
-        <hr class="sidebar-divider my-0">
-    </sec:authorize>
-
-
 
 
     <sec:authorize access="isAnonymous()">
@@ -42,6 +33,22 @@
             <a class="nav-link" href="/login">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Zaloguj</span></a>
+        </li>
+        <hr class="sidebar-divider my-0">
+    </sec:authorize>
+
+    <sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_ADMIN')">
+        <li class="nav-item active">
+            <a class="nav-link" href="/dashboard#grades">
+                <span>Oceny</span></a>
+        </li>
+        <hr class="sidebar-divider my-0">
+    </sec:authorize>
+
+    <sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_ADMIN')">
+        <li class="nav-item active">
+            <a class="nav-link" href="/dashboard#presence">
+                <span>Obecności</span></a>
         </li>
         <hr class="sidebar-divider my-0">
     </sec:authorize>
@@ -90,6 +97,14 @@
         <li class="nav-item active">
             <a class="nav-link" href="/admin/add-class">
                 <span>Nowa klasa</span></a>
+        </li>
+        <hr class="sidebar-divider my-0">
+    </sec:authorize>
+
+    <sec:authorize access="isAuthenticated()">
+        <li class="nav-item active">
+            <a class="nav-link" href="/user/my-account">
+                <span>Mój profil</span></a>
         </li>
         <hr class="sidebar-divider my-0">
     </sec:authorize>

@@ -50,7 +50,6 @@
                 <form:option value="6.0" label="6"/>
             </form:select><br/><br/>
                 Opis: <form:textarea path="gradeDescription" id="desc"/>
-                <form:errors path="gradeDescription" cssClass="error" element="p"/>
                 <br/><br/>
                 <input type="submit" value="Edytuj ocenę" class="btn btn-primary btn-user">
             </form:form>

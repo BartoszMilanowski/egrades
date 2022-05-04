@@ -33,7 +33,11 @@ public class Presence {
     @JoinColumn(name = "class_id")
     private Class group;
 
+    private String topic;
+
     private LocalDate date;
+
+    private String comment;
 
     public Long getId() {
         return id;
@@ -83,11 +87,27 @@ public class Presence {
         this.group = group;
     }
 
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
+
     public LocalDate getDate() {
         return date;
     }
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }
