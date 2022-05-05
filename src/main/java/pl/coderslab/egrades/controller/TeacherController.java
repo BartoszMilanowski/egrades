@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import pl.coderslab.egrades.entity.Class;
 import pl.coderslab.egrades.entity.*;
 import pl.coderslab.egrades.login.CurrentUser;
-import pl.coderslab.egrades.model.Frequency;
 import pl.coderslab.egrades.model.StudentAtList;
 import pl.coderslab.egrades.service.*;
 
@@ -40,6 +39,13 @@ public class TeacherController {
         this.subjectService = subjectService;
         this.classService = classService;
         this.presenceService = presenceService;
+    }
+
+    @PostMapping("/select-class")
+    public String selectClass(HttpServletRequest request){
+        Long classId = Long.parseLong(request.getParameter("group"));
+        Long subjectId = Long.parseLong(request.getParameter("subject"));
+        return "redirect:/teacher/class/" + classId + "/" + subjectId;
     }
 
     @GetMapping("/class/{classId}/{subjectId}")
@@ -77,13 +83,22 @@ public class TeacherController {
         User student = userService.findById(studentId);
         Class group = classService.findById(classId);
         Grade finalGrade = gradeService.findFinalBySubjectAndStudent(subjectId, studentId);
+        double avgGrade = gradeService.avgGrade(subject, student);
 
         model.addAttribute("group", group);
         model.addAttribute("subject", subject);
         model.addAttribute("student", student);
 
+        if (avgGrade != 0) {
+            model.addAttribute("avgGrade", avgGrade);
+        } else {
+            model.addAttribute("avgGrade", "-");
+        }
+
         if (finalGrade != null){
             model.addAttribute("finalGrade", finalGrade.getGradeValue());
+        } else {
+            model.addAttribute("finalGrade", "-");
         }
 
         List<Grade> grades = gradeService.findBySubjectAndStudent(subjectId, studentId);
@@ -233,25 +248,6 @@ public class TeacherController {
         return "teacher/presencesList";
     }
 
-    @GetMapping("/frequency/class/{classId}/{subjectId}")
-    public String showClassFrequency(Model model, @PathVariable Long classId, @PathVariable Long subjectId){
-
-        Class group = classService.findById(classId);
-        Subject subject = subjectService.findById(subjectId);
-        List<User> students = userService.findStudentByClasses(group);
-        List<Frequency> frequencies = new ArrayList<>();
-        for (User s : students){
-            double freq = presenceService.avgPresence(subject, s);
-            if (!Double.isNaN(freq)){
-                frequencies.add(new Frequency(s, freq));
-            }
-        }
-        model.addAttribute("frequencies", frequencies);
-        model.addAttribute("group", group);
-        model.addAttribute("subject", subject);
-        return "teacher/classFrequency";
-    }
-
     @GetMapping("/presence/{presenceId}")
     public String showPresence(Model model, @PathVariable Long presenceId){
 
@@ -306,7 +302,7 @@ public class TeacherController {
         presence.setDate(LocalDate.now());
         presenceService.save(presence);
 
-        return "redirect:/teacher/presence/class/" + classId + "/" + subjectId;
+        return "redirect:/teacher/class/" + classId + "/" + subjectId;
     }
 
     @GetMapping("/edit-presence/{presenceId}")

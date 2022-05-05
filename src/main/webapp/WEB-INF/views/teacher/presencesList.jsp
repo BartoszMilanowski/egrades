@@ -25,16 +25,8 @@
     </div>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Obecności: klasa ${group.className},
+            <h6 class="m-0 font-weight-bold text-primary">Listy obecności: klasa ${group.className},
                 przedmiot: ${subject.subjectName}</h6>
-        </div>
-        <div class="card-header py-3">
-            <a href="/teacher/presence/check-presence/${group.id}/${subject.id}">
-                Sprawdź obecność</a>
-        </div>
-        <div class="card-header py-3">
-            <a href="/teacher/frequency/class/${group.id}/${subject.id}">
-                Frekwencja</a>
         </div>
         <div class="card-body">
             <table class="table">
@@ -55,7 +47,8 @@
             </table>
         </div>
     </div>
-    <a href="/dashboard" class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Wróć</a>
+    <a href="/teacher/class/${group.id}/${subject.id}"
+       class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Wróć</a>
 </div>
 </body>
 </html>

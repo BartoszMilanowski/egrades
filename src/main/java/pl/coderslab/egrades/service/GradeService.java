@@ -71,11 +71,20 @@ public class GradeService {
         String gradesToList = new String();
 
         for (Grade g : grades){
-            gradesToList = String.valueOf(new StringBuilder(gradesToList).append(g.getGradeValue()) + ", ");
+            gradesToList = new StringBuilder(gradesToList).append(g.getGradeValue()) + " ";
         }
-        System.out.println(gradesToList);
-
         return gradesToList;
+    }
+
+    public double avgGrade(Subject subject, User student){
+        List<Grade> grades = findBySubjectAndStudent(subject.getId(), student.getId());
+        double sum = 0;
+
+        for (Grade g : grades){
+            sum += g.getGradeValue();
+        }
+
+        return sum/grades.size();
     }
 
 }

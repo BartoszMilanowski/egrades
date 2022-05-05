@@ -28,6 +28,15 @@
             <h6 class="m-0 font-weight-bold text-primary">Oceny: klasa ${group.className},
                 przedmiot: ${subject.subjectName}</h6>
         </div>
+        <div class="card-header py-3">
+            <a href="/teacher/presence/check-presence/${group.id}/${subject.id}"
+               class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Sprawdź obecność</a>
+            <a href="/teacher/presence/class/${group.id}/${subject.id}"
+               class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Listy obecności</a>
+        </div>
+        <div class="card-header py-3">
+            Wychowawca: ${group.supervisingTeacher.name}
+        </div>
         <div class="card-body">
             <table class="table">
                 <thead>
@@ -43,9 +52,9 @@
                     <tr>
                         <td>${student.student.lastName}</td>
                         <td>${student.student.firstName}</td>
-                        <td>${student.grades}</td>
+                        <td><a href="/teacher/class/${group.id}/${subject.id}/${student.student.id}">
+                                ${student.grades}</a></td>
                         <td>${student.frequency}%</td>
-<%--                        <td><a href="/teacher/class/${group.id}/${subject.id}/${student.id}">Oceny</a></td>--%>
 <%--                        <td><a href="/teacher/grade/add/${subject.id}/${student.id}">Dodaj ocenę</a></td>--%>
                     </tr>
                 </c:forEach>
