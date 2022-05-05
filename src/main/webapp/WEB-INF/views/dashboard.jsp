@@ -66,7 +66,7 @@
                 <div class="form-group"><br/>
                     <label>Klasa:<br/>
                         <select name="group">
-                            <option value="">--Wybierz klasę--</option>
+                            <option value="0">--Wybierz klasę--</option>
                             <c:forEach items="${classes}" var="group">
                                 <option value="${group.id}">${group.className}</option>
                             </c:forEach>

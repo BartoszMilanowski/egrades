@@ -44,6 +44,10 @@ public class TeacherController {
     @PostMapping("/select-class")
     public String selectClass(HttpServletRequest request){
         Long classId = Long.parseLong(request.getParameter("group"));
+        List<Class> groups = classService.findAll();
+        if (!groups.contains(classService.findById(classId))){
+            return "wrongData";
+        }
         Long subjectId = Long.parseLong(request.getParameter("subject"));
         return "redirect:/teacher/class/" + classId + "/" + subjectId;
     }
