@@ -34,17 +34,19 @@
                 <tr>
                     <th scope="col">Nazwisko</th>
                     <th scope="col">Imię</th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
+                    <th scope="col">Oceny</th>
+                    <th scope="col">Frekwencja</th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach items="${students}" var="student">
                     <tr>
-                        <td>${student.lastName}</td>
-                        <td>${student.firstName}</td>
-                        <td><a href="/teacher/class/${group.id}/${subject.id}/${student.id}">Oceny</a></td>
-                        <td><a href="/teacher/grade/add/${subject.id}/${student.id}">Dodaj ocenę</a></td>
+                        <td>${student.student.lastName}</td>
+                        <td>${student.student.firstName}</td>
+                        <td>${student.grades}</td>
+                        <td>${student.frequency}%</td>
+<%--                        <td><a href="/teacher/class/${group.id}/${subject.id}/${student.id}">Oceny</a></td>--%>
+<%--                        <td><a href="/teacher/grade/add/${subject.id}/${student.id}">Dodaj ocenę</a></td>--%>
                     </tr>
                 </c:forEach>
                 </tbody>

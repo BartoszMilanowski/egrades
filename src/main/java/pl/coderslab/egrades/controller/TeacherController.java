@@ -11,6 +11,7 @@ import pl.coderslab.egrades.entity.Class;
 import pl.coderslab.egrades.entity.*;
 import pl.coderslab.egrades.login.CurrentUser;
 import pl.coderslab.egrades.model.Frequency;
+import pl.coderslab.egrades.model.StudentAtList;
 import pl.coderslab.egrades.service.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,10 +50,21 @@ public class TeacherController {
         Class group = classService.findById(classId);
         model.addAttribute("group", group);
         List<User> students = userService.findStudentByClasses(group);
+        List<StudentAtList> studentAtLists = new ArrayList<>();
 
         if (!students.isEmpty()){
-            model.addAttribute("students", students);
+            for (User s : students){
+                String grades = gradeService.gradesToList(subject, s);
+                double freq = presenceService.avgPresence(subject, s);
+                StudentAtList student = new StudentAtList(s, grades);
+                if (!Double.isNaN(freq)){
+                    student.setFrequency(freq);
+                }
+                studentAtLists.add(student);
+            }
         }
+
+        model.addAttribute("students", studentAtLists);
         return "teacher/classList";
     }
 
