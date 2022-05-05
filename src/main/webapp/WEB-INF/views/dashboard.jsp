@@ -89,6 +89,7 @@
                 </div>
             </form>
         </div>
+    </div>
     </sec:authorize>
     <sec:authorize access="hasRole('ROLE_ADMIN')">
         <div class="d-sm-flex align-items-center justify-content-between mb-4" id="adminDashboard">

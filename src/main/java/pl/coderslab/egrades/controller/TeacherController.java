@@ -89,16 +89,16 @@ public class TeacherController {
         model.addAttribute("subject", subject);
         model.addAttribute("student", student);
 
-        if (avgGrade != 0) {
+        if (!Double.isNaN(avgGrade)){
             model.addAttribute("avgGrade", avgGrade);
         } else {
-            model.addAttribute("avgGrade", "-");
+            model.addAttribute("avgGrade", " - ");
         }
 
         if (finalGrade != null){
             model.addAttribute("finalGrade", finalGrade.getGradeValue());
         } else {
-            model.addAttribute("finalGrade", "-");
+            model.addAttribute("finalGrade", " - ");
         }
 
         List<Grade> grades = gradeService.findBySubjectAndStudent(subjectId, studentId);

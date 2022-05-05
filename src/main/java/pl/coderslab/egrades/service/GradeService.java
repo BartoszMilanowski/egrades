@@ -70,8 +70,12 @@ public class GradeService {
         List<Grade> grades = findBySubjectAndStudent(subject.getId(), student.getId());
         String gradesToList = new String();
 
-        for (Grade g : grades){
-            gradesToList = new StringBuilder(gradesToList).append(g.getGradeValue()) + " ";
+        if (grades.size() != 0) {
+            for (Grade g : grades) {
+                gradesToList = new StringBuilder(gradesToList).append(g.getGradeValue()) + " ";
+            }
+        } else {
+            gradesToList = "Wstaw";
         }
         return gradesToList;
     }
