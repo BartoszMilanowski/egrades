@@ -81,6 +81,7 @@
                             <c:forEach items="${oSubjects}" var="oSubject">
                                 <option value="${oSubject.id}">${oSubject.subjectName}</option>
                             </c:forEach>
+                                <option value="avg">Średnie semestralne</option>
                         </select>
                     </label><br/><br/>
                     <input type="submit" value="Dalej"

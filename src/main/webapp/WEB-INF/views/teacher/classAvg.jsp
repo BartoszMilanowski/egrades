@@ -13,7 +13,7 @@
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
-    <title> Oceny ${group.className}</title>
+    <title> Oceny końcowe ${group.className}</title>
 </head>
 <body>
 
@@ -25,14 +25,7 @@
     </div>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Oceny: klasa ${group.className},
-                przedmiot: ${subject.subjectName}</h6>
-        </div>
-        <div class="card-header py-3">
-            <a href="/teacher/presence/check-presence/${group.id}/${subject.id}"
-               class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Sprawdź obecność</a>
-            <a href="/teacher/presence/class/${group.id}/${subject.id}"
-               class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Listy obecności</a>
+            <h6 class="m-0 font-weight-bold text-primary">Średnie semestralne: klasa ${group.className}</h6>
         </div>
         <div class="card-header py-3">
             Wychowawca: ${group.supervisingTeacher.name}
@@ -43,7 +36,7 @@
                 <tr>
                     <th scope="col">Nazwisko</th>
                     <th scope="col">Imię</th>
-                    <th scope="col">Oceny</th>
+                    <th scope="col">Średnia semestralna</th>
                     <th scope="col">Frekwencja</th>
                 </tr>
                 </thead>
@@ -52,8 +45,8 @@
                     <tr>
                         <td>${student.student.lastName}</td>
                         <td>${student.student.firstName}</td>
-                        <td><a href="/teacher/class/${group.id}/${subject.id}/${student.student.id}">
-                                ${student.grades}</a></td>
+                        <td>${student.grades}
+                        <a href="/teacher/student/final-grades/${student.student.id}">&nbsp;Zobacz oceny</a> </td>
                         <td>${student.frequency}%</td>
                     </tr>
                 </c:forEach>

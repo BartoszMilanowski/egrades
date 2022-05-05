@@ -44,8 +44,15 @@ public class TeacherController {
     @PostMapping("/select-class")
     public String selectClass(HttpServletRequest request){
         Long classId = Long.parseLong(request.getParameter("group"));
-        Long subjectId = Long.parseLong(request.getParameter("subject"));
-        return "redirect:/teacher/class/" + classId + "/" + subjectId;
+        String subject = request.getParameter("subject");
+        String redirect = new String();
+        if (subject.equals("avg")){
+            redirect =  "redirect:/teacher/class/avg/" + classId;
+        } else {
+            Long subjectId = Long.parseLong(subject);
+        redirect = "redirect:/teacher/class/" + classId + "/" + subjectId;
+        }
+        return redirect;
     }
 
     @GetMapping("/class/{classId}/{subjectId}")
@@ -105,6 +112,47 @@ public class TeacherController {
         model.addAttribute("grades", grades);
         return "teacher/studentGrades";
     }
+
+    @GetMapping("/class/avg/{classId}")
+    public String showClassAvg(Model model, @PathVariable Long classId){
+
+        Class group = classService.findById(classId);
+        List<User> students = userService.findStudentByClasses(group);
+        List<StudentAtList> studentAtLists = new ArrayList<>();
+        for (User s : students){
+            List<Grade> finalGrades = gradeService.findFinalByStudent(s.getId());
+            double avg = gradeService.averageFinalGrade(finalGrades);
+            double totalFrequency = presenceService.totalFrequency(s);
+            StudentAtList student = new StudentAtList();
+            student.setStudent(s);
+            if (!Double.isNaN(avg)){
+                student.setGrades(String.valueOf(avg));
+            }
+            if (!Double.isNaN(totalFrequency)){
+                student.setFrequency(totalFrequency);
+            }
+            studentAtLists.add(student);
+        }
+        model.addAttribute("students", studentAtLists);
+        model.addAttribute("group", group);
+
+
+       return "teacher/classAvg";
+    }
+
+    @GetMapping("/student/final-grades/{studentId}")
+    public String showStudentFinalGrades(Model model, @PathVariable Long studentId){
+
+        User student = userService.findById(studentId);
+        List<Grade> finalGrades = gradeService.findFinalByStudent(studentId);
+        Class group = classService.findByStudent(student);
+        model.addAttribute("student", student);
+        model.addAttribute("finalGrades", finalGrades);
+        model.addAttribute("group", group);
+
+        return "/teacher/studentFinalGrades";
+    }
+
     @GetMapping("/grade/add/{subjectId}/{studentId}")
     public String addGradeForm(Model model, @PathVariable Long subjectId, @PathVariable Long studentId){
         User student = userService.findById(studentId);
