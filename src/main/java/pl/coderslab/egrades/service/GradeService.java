@@ -2,6 +2,8 @@ package pl.coderslab.egrades.service;
 
 import org.springframework.stereotype.Service;
 import pl.coderslab.egrades.entity.Grade;
+import pl.coderslab.egrades.entity.Subject;
+import pl.coderslab.egrades.entity.User;
 import pl.coderslab.egrades.repository.GradeRepository;
 
 import javax.transaction.Transactional;
@@ -61,6 +63,32 @@ public class GradeService {
             avg = sum / finalGrades.size();
         }
         return avg;
+    }
+
+    public String gradesToList(Subject subject, User student){
+
+        List<Grade> grades = findBySubjectAndStudent(subject.getId(), student.getId());
+        String gradesToList = new String();
+
+        if (grades.size() != 0) {
+            for (Grade g : grades) {
+                gradesToList = new StringBuilder(gradesToList).append(g.getGradeValue()) + " ";
+            }
+        } else {
+            gradesToList = "Wstaw";
+        }
+        return gradesToList;
+    }
+
+    public double avgGrade(Subject subject, User student){
+        List<Grade> grades = findBySubjectAndStudent(subject.getId(), student.getId());
+        double sum = 0;
+
+        for (Grade g : grades){
+            sum += g.getGradeValue();
+        }
+
+        return sum/grades.size();
     }
 
 }

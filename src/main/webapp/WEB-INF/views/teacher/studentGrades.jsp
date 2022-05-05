@@ -29,7 +29,15 @@
             <h6 class="m-0 font-weight-bold text-primary">Klasa: ${group.className},
                 Uczeń: ${student.lastName} ${student.firstName},
                 Przedmiot: ${subject.subjectName}</h6>
-            Ocena końcowa: ${finalGrade}
+        </div>
+        <div class="card-header py-3">
+            Średnia: ${avgGrade}, Ocena końcowa: ${finalGrade}
+        </div>
+        <div class="card-header py-3">
+            <a href="/teacher/grade/add/${subject.id}/${student.id}"
+               class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Dodaj ocenę</a>
+            <a href="/teacher/final-grade/${subject.id}/${student.id}"
+               class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Wystaw ocenę końcową</a>
         </div>
         <div class="card-body">
             <table class="table">
@@ -58,11 +66,8 @@
             </table>
         </div>
     </div>
-    <a href="/teacher/final-grade/${subject.id}/${student.id}"
-       class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">Wystaw ocenę końcową</a>
     <a href="/teacher/class/${group.id}/${subject.id}" class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">
         Wróć</a>
 </div>
-
 </body>
 </html>

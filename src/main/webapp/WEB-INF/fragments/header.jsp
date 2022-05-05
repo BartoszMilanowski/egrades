@@ -39,16 +39,8 @@
 
     <sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_ADMIN')">
         <li class="nav-item active">
-            <a class="nav-link" href="/dashboard#grades">
-                <span>Oceny</span></a>
-        </li>
-        <hr class="sidebar-divider my-0">
-    </sec:authorize>
-
-    <sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_ADMIN')">
-        <li class="nav-item active">
-            <a class="nav-link" href="/dashboard#presence">
-                <span>Obecności</span></a>
+            <a class="nav-link" href="/dashboard#selectClass">
+                <span>Przejdź do klasy</span></a>
         </li>
         <hr class="sidebar-divider my-0">
     </sec:authorize>

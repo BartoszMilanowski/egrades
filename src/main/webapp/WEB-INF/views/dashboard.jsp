@@ -13,6 +13,7 @@
         <link
                 href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
                 rel="stylesheet">
+        <script type="text/javascript" src="/js/validators/selectClassValidator.js"></script>
            <title>eGrades ${user.name}</title>
     </head>
     <body>
@@ -58,59 +59,36 @@
 
     <sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_ADMIN')">
     <div class="card shadow mb-4">
-        <div class="card-header py-3" id="grades">
-            <h6 class="m-0 font-weight-bold text-primary">Oceny</h6>
+        <div class="card-header py-3" id="selectClass">
+            <h6 class="m-0 font-weight-bold text-primary">Przejdź do klasy</h6>
         </div>
         <div class="card-body">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">Klasa</th>
-                    <th scope="col">Wychowawca</th>
-                    <c:forEach var="subject" items="${subjects}">
-                    <th scope="col"></th>
-                    </c:forEach>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="group" items="${classes}">
-                    <tr>
-                        <td>${group.className}</td>
-                        <td>${group.supervisingTeacher}</td>
-                        <c:forEach var="subject" items="${subjects}">
-                        <td><a href="/teacher/class/${group.id}/${subject.id}">${subject.subjectName}</a></td>
-                        </c:forEach>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </div>
-        <div class="card-header py-3" id="presence">
-            <h6 class="m-0 font-weight-bold text-primary">Obecności</h6>
-        </div>
-        <div class="card-body">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">Klasa</th>
-                    <th scope="col">Wychowawca</th>
-                    <c:forEach var="subject" items="${subjects}">
-                        <th scope="col"></th>
-                    </c:forEach>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="group" items="${classes}">
-                    <tr>
-                        <td>${group.className}</td>
-                        <td>${group.supervisingTeacher}</td>
-                        <c:forEach var="subject" items="${subjects}">
-                            <td><a href="/teacher/presence/class/${group.id}/${subject.id}">${subject.subjectName}</a></td>
-                        </c:forEach>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
+            <form class="user" method="post" action="/teacher/select-class" id="selectClassForm">
+                <div class="form-group"><br/>
+                    <label>Klasa:<br/>
+                        <select name="group" id="group">
+                            <option value=0>--Wybierz klasę--</option>
+                            <c:forEach items="${classes}" var="group">
+                                <option value="${group.id}">${group.className}</option>
+                            </c:forEach>
+                        </select>
+                    </label><br/>
+                    <label>Przedmiot:<br/>
+                        <select name="subject">
+                            <c:forEach items="${tSubjects}" var="tSubject">
+                                <option value="${tSubject.id}">${tSubject.subjectName}</option>
+                            </c:forEach>
+                            <c:forEach items="${oSubjects}" var="oSubject">
+                                <option value="${oSubject.id}">${oSubject.subjectName}</option>
+                            </c:forEach>
+                                <option value="avg">Średnie semestralne</option>
+                        </select>
+                    </label><br/><br/>
+                    <input type="submit" value="Dalej"
+                           class="d-none d-inline-block btn btn-sm btn-primary shadow-sm">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                </div>
+            </form>
         </div>
     </div>
     </sec:authorize>

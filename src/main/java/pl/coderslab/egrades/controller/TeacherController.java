@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import pl.coderslab.egrades.entity.Class;
 import pl.coderslab.egrades.entity.*;
 import pl.coderslab.egrades.login.CurrentUser;
-import pl.coderslab.egrades.model.Frequency;
+import pl.coderslab.egrades.model.StudentAtList;
 import pl.coderslab.egrades.service.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,6 +41,20 @@ public class TeacherController {
         this.presenceService = presenceService;
     }
 
+    @PostMapping("/select-class")
+    public String selectClass(HttpServletRequest request){
+        Long classId = Long.parseLong(request.getParameter("group"));
+        String subject = request.getParameter("subject");
+        String redirect = new String();
+        if (subject.equals("avg")){
+            redirect =  "redirect:/teacher/class/avg/" + classId;
+        } else {
+            Long subjectId = Long.parseLong(subject);
+        redirect = "redirect:/teacher/class/" + classId + "/" + subjectId;
+        }
+        return redirect;
+    }
+
     @GetMapping("/class/{classId}/{subjectId}")
     public String showStudents(Model model, @PathVariable Long classId, @PathVariable Long subjectId){
 
@@ -49,10 +63,21 @@ public class TeacherController {
         Class group = classService.findById(classId);
         model.addAttribute("group", group);
         List<User> students = userService.findStudentByClasses(group);
+        List<StudentAtList> studentAtLists = new ArrayList<>();
 
         if (!students.isEmpty()){
-            model.addAttribute("students", students);
+            for (User s : students){
+                String grades = gradeService.gradesToList(subject, s);
+                double freq = presenceService.avgPresence(subject, s);
+                StudentAtList student = new StudentAtList(s, grades);
+                if (!Double.isNaN(freq)){
+                    student.setFrequency(freq);
+                }
+                studentAtLists.add(student);
+            }
         }
+
+        model.addAttribute("students", studentAtLists);
         return "teacher/classList";
     }
 
@@ -65,19 +90,69 @@ public class TeacherController {
         User student = userService.findById(studentId);
         Class group = classService.findById(classId);
         Grade finalGrade = gradeService.findFinalBySubjectAndStudent(subjectId, studentId);
+        double avgGrade = gradeService.avgGrade(subject, student);
 
         model.addAttribute("group", group);
         model.addAttribute("subject", subject);
         model.addAttribute("student", student);
 
+        if (!Double.isNaN(avgGrade)){
+            model.addAttribute("avgGrade", avgGrade);
+        } else {
+            model.addAttribute("avgGrade", " - ");
+        }
+
         if (finalGrade != null){
             model.addAttribute("finalGrade", finalGrade.getGradeValue());
+        } else {
+            model.addAttribute("finalGrade", " - ");
         }
 
         List<Grade> grades = gradeService.findBySubjectAndStudent(subjectId, studentId);
         model.addAttribute("grades", grades);
         return "teacher/studentGrades";
     }
+
+    @GetMapping("/class/avg/{classId}")
+    public String showClassAvg(Model model, @PathVariable Long classId){
+
+        Class group = classService.findById(classId);
+        List<User> students = userService.findStudentByClasses(group);
+        List<StudentAtList> studentAtLists = new ArrayList<>();
+        for (User s : students){
+            List<Grade> finalGrades = gradeService.findFinalByStudent(s.getId());
+            double avg = gradeService.averageFinalGrade(finalGrades);
+            double totalFrequency = presenceService.totalFrequency(s);
+            StudentAtList student = new StudentAtList();
+            student.setStudent(s);
+            if (!Double.isNaN(avg)){
+                student.setGrades(String.valueOf(avg));
+            }
+            if (!Double.isNaN(totalFrequency)){
+                student.setFrequency(totalFrequency);
+            }
+            studentAtLists.add(student);
+        }
+        model.addAttribute("students", studentAtLists);
+        model.addAttribute("group", group);
+
+
+       return "teacher/classAvg";
+    }
+
+    @GetMapping("/student/final-grades/{studentId}")
+    public String showStudentFinalGrades(Model model, @PathVariable Long studentId){
+
+        User student = userService.findById(studentId);
+        List<Grade> finalGrades = gradeService.findFinalByStudent(studentId);
+        Class group = classService.findByStudent(student);
+        model.addAttribute("student", student);
+        model.addAttribute("finalGrades", finalGrades);
+        model.addAttribute("group", group);
+
+        return "/teacher/studentFinalGrades";
+    }
+
     @GetMapping("/grade/add/{subjectId}/{studentId}")
     public String addGradeForm(Model model, @PathVariable Long subjectId, @PathVariable Long studentId){
         User student = userService.findById(studentId);
@@ -221,25 +296,6 @@ public class TeacherController {
         return "teacher/presencesList";
     }
 
-    @GetMapping("/frequency/class/{classId}/{subjectId}")
-    public String showClassFrequency(Model model, @PathVariable Long classId, @PathVariable Long subjectId){
-
-        Class group = classService.findById(classId);
-        Subject subject = subjectService.findById(subjectId);
-        List<User> students = userService.findStudentByClasses(group);
-        List<Frequency> frequencies = new ArrayList<>();
-        for (User s : students){
-            double freq = presenceService.avgPresence(subject, s);
-            if (!Double.isNaN(freq)){
-                frequencies.add(new Frequency(s, freq));
-            }
-        }
-        model.addAttribute("frequencies", frequencies);
-        model.addAttribute("group", group);
-        model.addAttribute("subject", subject);
-        return "teacher/classFrequency";
-    }
-
     @GetMapping("/presence/{presenceId}")
     public String showPresence(Model model, @PathVariable Long presenceId){
 
@@ -294,7 +350,7 @@ public class TeacherController {
         presence.setDate(LocalDate.now());
         presenceService.save(presence);
 
-        return "redirect:/teacher/presence/class/" + classId + "/" + subjectId;
+        return "redirect:/teacher/class/" + classId + "/" + subjectId;
     }
 
     @GetMapping("/edit-presence/{presenceId}")

@@ -82,7 +82,9 @@ public class HomeController {
         } else if (user.hasRole("ROLE_TEACHER") || user.hasRole("ROLE_ADMIN")){
             List<Class> classes = classService.findAll();
             List<Subject> subjects = subjectService.findByTeachers(user);
-            model.addAttribute("subjects", subjects);
+            List<Subject> otherSubjects = subjectService.showOtherSubjects(user);
+            model.addAttribute("tSubjects", subjects);
+            model.addAttribute("oSubjects", otherSubjects);
             model.addAttribute("classes", classes);
         }
 
