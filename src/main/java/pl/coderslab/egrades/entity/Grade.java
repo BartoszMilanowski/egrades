@@ -2,7 +2,7 @@ package pl.coderslab.egrades.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "grades")
@@ -30,14 +30,23 @@ public class Grade {
     @NotNull
     @Min(1)
     @Max(6)
-    private int gradeValue;
+    private double gradeValue;
 
-    @NotBlank
-    @Size(min = 5, max = 250)
+    @Column(columnDefinition = "boolean default false")
+    private boolean isFinal;
+
+    @Size(min = 5, max = 250, message = "Opis powinien zawierać od 5 do 250 znaków")
     private String gradeDescription;
 
-    @NotBlank
-    private LocalDateTime dateTime;
+    private LocalDate dateTime;
+
+    public boolean isFinal() {
+        return isFinal;
+    }
+
+    public void setFinal(boolean aFinal) {
+        isFinal = aFinal;
+    }
 
     public Long getId() {
         return id;
@@ -71,11 +80,11 @@ public class Grade {
         this.subject = subject;
     }
 
-    public int getGradeValue() {
+    public double getGradeValue() {
         return gradeValue;
     }
 
-    public void setGradeValue(int gradeValue) {
+    public void setGradeValue(double gradeValue) {
         this.gradeValue = gradeValue;
     }
 
@@ -87,11 +96,11 @@ public class Grade {
         this.gradeDescription = gradeDescription;
     }
 
-    public LocalDateTime getDateTime() {
+    public LocalDate getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
+    public void setDateTime(LocalDate dateTime) {
         this.dateTime = dateTime;
     }
 
@@ -106,4 +115,5 @@ public class Grade {
                 ", dateTime=" + dateTime +
                 '}';
     }
+
 }

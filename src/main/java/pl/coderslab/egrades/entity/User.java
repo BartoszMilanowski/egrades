@@ -2,42 +2,74 @@ package pl.coderslab.egrades.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
     private String firstName;
 
-    @NotBlank
     private String lastName;
 
-    @NotBlank
     @Email
     private String email;
 
-    @NotNull
     private String password;
 
-    @NotBlank
-    @ManyToOne
-    private Function function;
-
-    @NotEmpty
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "users_classes", joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "class_id"))
-    private List<Class> classes = new ArrayList<>();
+    private Set<Class> classes = new HashSet<>();
+
+    private int enabled;
+
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
+
+    public boolean hasRole(String roleName){
+        Iterator<Role> iterator = this.roles.iterator();
+        while ((iterator.hasNext())){
+            Role role = iterator.next();
+            if (role.getName().equals(roleName)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String getName(){
+        return firstName + " " + lastName;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public int getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(int enabled) {
+        this.enabled = enabled;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
 
     public Long getId() {
         return id;
@@ -71,40 +103,22 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public Function getFunction() {
-        return function;
-    }
 
-    public void setFunction(Function function) {
-        this.function = function;
-    }
-
-    public List<Class> getClasses() {
+    public Set<Class> getClasses() {
         return classes;
     }
 
-    public void setClasses(List<Class> classes) {
+    public void setClasses(Set<Class> classes) {
         this.classes = classes;
     }
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", function=" + function +
-                ", classes=" + classes +
-                '}';
+        return firstName + " " + lastName;
     }
 }

@@ -2,8 +2,8 @@ package pl.coderslab.egrades.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "subjects")
@@ -16,11 +16,10 @@ public class Subject {
     @NotBlank
     private String subjectName;
 
-    @NotBlank
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "subject_teachers", joinColumns = @JoinColumn(name = "subject_id"),
     inverseJoinColumns = @JoinColumn(name = "teacher_id"))
-    private List<User> teachers = new ArrayList<>();
+    private Set<User> teachers = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -38,11 +37,11 @@ public class Subject {
         this.subjectName = subjectName;
     }
 
-    public List<User> getTeachers() {
+    public Set<User> getTeachers() {
         return teachers;
     }
 
-    public void setTeachers(List<User> teachers) {
+    public void setTeachers(Set<User> teachers) {
         this.teachers = teachers;
     }
 
