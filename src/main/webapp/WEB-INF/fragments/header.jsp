@@ -77,38 +77,6 @@
         <hr class="sidebar-divider my-0">
     </sec:authorize>
 
-    <sec:authorize access="hasRole('ROLE_ADMIN')">
-        <li class="nav-item active">
-            <a class="nav-link" href="/admin/add-user/student">
-                <span>Dodaj ucznia</span></a>
-        </li>
-        <hr class="sidebar-divider my-0">
-    </sec:authorize>
-
-    <sec:authorize access="hasRole('ROLE_ADMIN')">
-        <li class="nav-item active">
-            <a class="nav-link" href="/admin/add-user/teacher">
-                <span>Dodaj nauczyciela</span></a>
-        </li>
-        <hr class="sidebar-divider my-0">
-    </sec:authorize>
-
-    <sec:authorize access="hasRole('ROLE_ADMIN')">
-        <li class="nav-item active">
-            <a class="nav-link" href="/admin/add-class">
-                <span>Dodaj klasę</span></a>
-        </li>
-        <hr class="sidebar-divider my-0">
-    </sec:authorize>
-
-    <sec:authorize access="hasRole('ROLE_ADMIN')">
-        <li class="nav-item active">
-            <a class="nav-link" href="/admin/add-subject">
-                <span>Dodaj przedmiot</span></a>
-        </li>
-        <hr class="sidebar-divider my-0">
-    </sec:authorize>
-
     <sec:authorize access="isAuthenticated()">
         <li class="nav-item active">
             <a class="nav-link" href="/user/my-account">
