@@ -96,14 +96,20 @@ public class AdminController {
     public String addUser(User user, @PathVariable String roleName, HttpServletRequest request){
 
         String redirect = new String();
-        userService.save(user);
 
+        String password = PasswordGenerator.generateStrongPassword();
+        user.setPassword(passwordEncoder.encode(password));
+        user.setEnabled(1);
+        userService.save(user);
+        user = userService.findById(user.getId());
         Role role = new Role();
+
         if (roleName.equals("student")){
             role = roleService.findByName("ROLE_STUDENT");
-            redirect = "redirect:/admin/user/students";
+            redirect = "redirect:/dashboard#students";
         } else if (roleName.equals("teacher")){
-            redirect = "redirect:/admin/user/teachers";
+            userService.save(user);
+            redirect = "redirect:/dashboard#teachers";
             String[] checkedSubjects = request.getParameterValues("subject");
             for (String s : checkedSubjects){
                 Subject subject = subjectService.findById(Long.parseLong(s));
@@ -116,13 +122,9 @@ public class AdminController {
                 role = roleService.findByName("ROLE_TEACHER");
             }
         }
-        String password = PasswordGenerator.generateStrongPassword();
-        System.out.println(password);
         Set<Role> roleSet = new HashSet<>();
         roleSet.add(role);
         user.setRoles(roleSet);
-        user.setPassword(passwordEncoder.encode(password));
-        user.setEnabled(1);
         userService.update(user);
         emailSender.sendEmail(user, password);
 

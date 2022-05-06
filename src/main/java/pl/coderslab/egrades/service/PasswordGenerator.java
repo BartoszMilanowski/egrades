@@ -23,29 +23,21 @@ public class PasswordGenerator {
         StringBuilder result = new StringBuilder(PASSWORD_LENGTH);
 
         String strLowerCase = generateRandomString(CHAR_LOWERCASE, 2);
-        System.out.format("%-20s: %s%n", "Chars (Lowercase)", strLowerCase);
         result.append(strLowerCase);
 
         String strUppercaseCase = generateRandomString(CHAR_UPPERCASE, 2);
-        System.out.format("%-20s: %s%n", "Chars (Uppercase)", strUppercaseCase);
         result.append(strUppercaseCase);
 
         String strDigit = generateRandomString(DIGIT, 2);
-        System.out.format("%-20s: %s%n", "Digits", strDigit);
         result.append(strDigit);
 
         String strSpecialChar = generateRandomString(OTHER_SPECIAL, 2);
-        System.out.format("%-20s: %s%n", "Special chars", strSpecialChar);
         result.append(strSpecialChar);
 
         String strOther = generateRandomString(PASSWORD_ALLOW, PASSWORD_LENGTH - 8);
-        System.out.format("%-20s: %s%n", "Others", strOther);
         result.append(strOther);
 
         String password = result.toString();
-        System.out.format("%-20s: %s%n", "Password", password);
-        System.out.format("%-20s: %s%n%n", "Password Length", password.length());
-
         return password;
     }
     private static String generateRandomString(String input, int size) {

@@ -1,5 +1,6 @@
 package pl.coderslab.egrades.controller;
 
+import org.apache.commons.math3.util.Precision;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,6 +42,8 @@ public class TeacherController {
         this.presenceService = presenceService;
     }
 
+
+
     @PostMapping("/select-class")
     public String selectClass(HttpServletRequest request){
         Long classId = Long.parseLong(request.getParameter("group"));
@@ -71,7 +74,7 @@ public class TeacherController {
                 double freq = presenceService.avgPresence(subject, s);
                 StudentAtList student = new StudentAtList(s, grades);
                 if (!Double.isNaN(freq)){
-                    student.setFrequency(freq);
+                    student.setFrequency(Precision.round(freq,2));
                 }
                 studentAtLists.add(student);
             }
@@ -97,7 +100,7 @@ public class TeacherController {
         model.addAttribute("student", student);
 
         if (!Double.isNaN(avgGrade)){
-            model.addAttribute("avgGrade", avgGrade);
+            model.addAttribute("avgGrade", Precision.round(avgGrade,2));
         } else {
             model.addAttribute("avgGrade", " - ");
         }

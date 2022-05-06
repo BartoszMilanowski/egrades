@@ -122,7 +122,7 @@ public class HomeController {
     public String changePassForm(Model model, @AuthenticationPrincipal CurrentUser currentUser){
         User user = currentUser.getUser();
         model.addAttribute("user", user);
-        return "allUser/changePass";
+        return "allUsers/changePass";
     }
 
     @PostMapping("/user/change-password")
