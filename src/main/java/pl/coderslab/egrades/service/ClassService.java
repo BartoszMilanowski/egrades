@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
 public class ClassService {
 
     private final ClassRepository classRepository;
@@ -20,14 +19,17 @@ public class ClassService {
         this.classRepository = classRepository;
     }
 
+    @Transactional
     public void save(Class group){
         classRepository.save(group);
     }
 
+    @Transactional
     public void update(Class group){
         classRepository.save(group);
     }
 
+    @Transactional
     public void deleteById(Long id){
         classRepository.deleteById(id);
     }

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
+
 public class GradeService {
 
     private final GradeRepository gradeRepository;
@@ -20,14 +20,17 @@ public class GradeService {
         this.gradeRepository = gradeRepository;
     }
 
+    @Transactional
     public void save(Grade grade){
         gradeRepository.save(grade);
     }
 
+    @Transactional
     public void update(Grade grade){
         gradeRepository.save(grade);
     }
 
+    @Transactional
     public void deleteById(Long id){
         gradeRepository.deleteById(id);
     }

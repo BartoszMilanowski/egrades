@@ -18,10 +18,12 @@ public class RoleService {
         this.roleRepository = roleRepository;
     }
 
+    @Transactional
     public void save(Role role){
         roleRepository.save(role);
     }
 
+    @Transactional
     public void update(Role role){
         roleRepository.save(role);
     }

@@ -11,10 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import pl.coderslab.egrades.entity.Class;
 import pl.coderslab.egrades.entity.*;
 import pl.coderslab.egrades.login.CurrentUser;
-import pl.coderslab.egrades.model.StudentAtList;
+import pl.coderslab.egrades.DTO.StudentAtList;
 import pl.coderslab.egrades.service.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,8 @@ public class TeacherController {
         this.classService = classService;
         this.presenceService = presenceService;
     }
+
+    private static final DecimalFormat df = new DecimalFormat("0.00");
 
 
 
@@ -129,7 +132,7 @@ public class TeacherController {
             StudentAtList student = new StudentAtList();
             student.setStudent(s);
             if (!Double.isNaN(avg)){
-                student.setGrades(String.valueOf(avg));
+                student.setGrades(String.valueOf(df.format(avg)));
             }
             if (!Double.isNaN(totalFrequency)){
                 student.setFrequency(totalFrequency);

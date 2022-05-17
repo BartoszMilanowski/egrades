@@ -1,4 +1,4 @@
-package pl.coderslab.egrades.model;
+package pl.coderslab.egrades.DTO;
 
 import pl.coderslab.egrades.entity.User;
 

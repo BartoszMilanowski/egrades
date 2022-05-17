@@ -18,7 +18,6 @@ import java.util.*;
 public class AdminController {
 
     private final UserService userService;
-    private final GradeService gradeService;
     private final SubjectService subjectService;
     private final ClassService classService;
     private final RoleService roleService;
@@ -28,11 +27,10 @@ public class AdminController {
    private final EmailSender emailSender;
 
 
-    public AdminController(UserService userService, GradeService gradeService, SubjectService subjectService,
-                           ClassService classService, RoleService roleService, BCryptPasswordEncoder passwordEncoder,
-                           EmailSender emailSender) {
+    public AdminController(UserService userService, SubjectService subjectService,
+                           ClassService classService, RoleService roleService,
+                           BCryptPasswordEncoder passwordEncoder, EmailSender emailSender) {
         this.userService = userService;
-        this.gradeService = gradeService;
         this.subjectService = subjectService;
         this.classService = classService;
         this.roleService = roleService;

@@ -9,7 +9,6 @@ import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
-@Transactional
 public class SubjectService {
 
     private final SubjectRepository subjectRepository;
@@ -21,14 +20,17 @@ public class SubjectService {
         this.userService = userService;
     }
 
+    @Transactional
     public void save(Subject subject){
         subjectRepository.save(subject);
     }
 
+    @Transactional
     public void update(Subject subject){
         subjectRepository.save(subject);
     }
 
+    @Transactional
     public void deleteById(Long id){
         subjectRepository.deleteById(id);
     }

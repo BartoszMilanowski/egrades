@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
-@Transactional
 public class UserService{
 
     private final UserRepository userRepository;
@@ -30,10 +29,12 @@ public class UserService{
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Transactional
     public void save(User user){
         userRepository.save(user);
     }
 
+    @Transactional
     public void update(User user){
         user.setEnabled(1);
         String password = findById(user.getId()).getPassword();
@@ -41,6 +42,7 @@ public class UserService{
         userRepository.save(user);
     }
 
+    @Transactional
     public void deleteById(Long id){
         userRepository.deleteById(id);
     }
